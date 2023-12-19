@@ -1,3 +1,4 @@
+-- create database and , drop and recreate tables
 CREATE DATABASE pilpal;
 
 DROP TABLE IF EXISTS users CASCADE;
@@ -14,11 +15,11 @@ DROP TABLE IF EXISTS supplements CASCADE;
 CREATE TABLE supplements (
     id serial PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description VARCHAR(255) NOT NULL,
+    description VARCHAR(512) NOT NULL,
     manufacturer VARCHAR(255) NOT NULL,
     cost NUMERIC(10, 2),
     quantity INTEGER,
-    images JSONB,
+    images JSNOB,
     created_at TIMESTAMPTZ,
     updated_at TIMESTAMPTZ,
     deleted_at TIMESTAMPTZ
