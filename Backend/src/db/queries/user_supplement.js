@@ -6,9 +6,9 @@ const db = require('../connection');
  * Get a all users from the database.
  * @return {Promise<{}>} A promise for supplement.
  */
-const getUserSupplements = () => {
+const getUserSupplements = (id) => {
   return db
-    .query('SELECT * FROM user_supplements;')
+    .query('SELECT * FROM user_supplements where userid = $1;', [id])
     .then(result => {
       let resolvedUserSupplements = null;
       const UserSupplements = result.rows;
