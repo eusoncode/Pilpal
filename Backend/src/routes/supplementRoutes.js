@@ -2,6 +2,8 @@ const express = require('express');
 const router  = express.Router();
 const supplementQueries = require('../db/queries/supplements');
 
+// Get requests
+
 // Return information about the current user (based on cookie value)
 router.get("/", (req, res) => {
   supplementQueries.getSupplements()
@@ -16,5 +18,14 @@ router.get("/", (req, res) => {
       res.status(500).send("Error fetching data");
     });
 });
+
+// ----------------------- getSupplementsById
+// ----------------------- getSupplementByName
+
+// Post requests
+
+// ----------------------- addSupplement
+// ----------------------- removeSupplement
+// ----------------------- markSupplementAsOutofStock
 
 module.exports = router;

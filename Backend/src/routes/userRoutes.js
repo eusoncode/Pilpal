@@ -2,6 +2,8 @@ const express = require('express');
 const router  = express.Router();
 const userQueries = require('../db/queries/users');
 
+// Get requests
+
 // Return information about the current user (based on cookie value)
 router.get("/", (req, res) => {
   userQueries.getUsers()
@@ -16,5 +18,13 @@ router.get("/", (req, res) => {
       res.status(500).send("Error fetching data");
     });
 });
+
+// ----------------------- getUserById
+// ----------------------- getEmailById
+
+
+// Post requests
+
+// ----------------------- addUser
 
 module.exports = router;

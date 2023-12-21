@@ -1,5 +1,7 @@
 const db = require('../connection');
 
+// Get request query
+
 /**
  * Get a all suppliments from the database.
  * @return {Promise<{}>} A promise to the user.
@@ -18,6 +20,21 @@ const getSupplements = () => {
     });
 };
 
+
+// ----------------------- getSupplementsById
+// ----------------------- getSupplementByName
+
+// Post request query
+
+// ----------------------- addSupplement
+// ----------------------- removeSupplement
+// ----------------------- markSupplementAsOutofStock
+
 module.exports = {
-  getSupplements
+  getSupplements,
+  // getSupplementById,
+  // getSupplementByName,
+  // addSupplement,
+  // removeSupplement,
+  // markSupplementAsOutofStock
 };

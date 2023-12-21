@@ -1,8 +1,10 @@
 const db = require('../connection');
 
+// Get request query
+
 /**
  * Get a all users from the database.
- * @return {Promise<{}>} A promise to the user.
+ * @return {Promise<{}>} A promise for supplement.
  */
 const getUsers = () => {
   return db
@@ -18,6 +20,16 @@ const getUsers = () => {
     });
 };
 
+// ----------------------- getUserByEmail
+// ----------------------- getUserById
+
+// Post request query
+
+// ----------------------- addUser
+
 module.exports = {
-  getUsers
+  getUsers,
+  // getUserByEmail,
+  // getUserById,
+  // addUser
 };
