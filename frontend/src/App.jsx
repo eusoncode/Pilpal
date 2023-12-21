@@ -6,7 +6,9 @@ import AddNew from './pages/AddNew';
 function App() {
   return (
     <>
-      <AddNew />
+      {/* <AddNew /> */}
+      {/* <Login /> */}
+      <Dashboard />
     </>
   );
 }
