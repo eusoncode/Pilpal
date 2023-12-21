@@ -8,33 +8,17 @@ const userSupplementQueries = require('../db/queries/user_supplement');
 
 // Get requests for user
 
-// Return information about the current user (based on cookie value)
-// router.get("/", (req, res) => {
+// User dashboard
+router.get("/:id", (req, res) => {
+  const userId = parseInt(req.params.id);
 
-//   userQueries.getUsers()
-//     .then((user) => {
-//       if (!user) {
-//         return res.status(404).send("No user found");
-//       }
-//       res.json(user);
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//       res.status(500).send("Error fetching data");
-//     });
-// });
-
-// Return information about the current user (based on cookie value)
-router.get("/login", (req, res) => {
-  const idFromCookie = req.session.userId;
-
-  if (!idFromCookie) {
+  if (!userId) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the BuyBuddy....");
   }
 
   let userData;
 
-  userQueries.getUserById(idFromCookie)
+  userQueries.getUserById(userId)
     .then((user) => {
       if (!user) {
         return res.status(404).send("No user with that ID");
@@ -60,21 +44,11 @@ router.get("/login", (req, res) => {
     });
 });
 
-
-// ----------------------- getUserById
-// ----------------------- getEmailById
-// ----------------------- getUserSupplementsById
-//router.get("/supplement/:id", (req, res)
-
-
 // Post requests for user
-
-// ----------------------- addUser
 
 // Register a new buyer user
 router.post("/signup", (req, res) => {
   const user = req.body;
-  console.log(user);
   const emailInput = user.email;
   const passwordInput = user.password;
   user.password = bcrypt.hashSync(passwordInput, 12);
@@ -109,7 +83,8 @@ router.post("/login", (req, res) => {
     return res.status(400).send("Please enter an email and password");
   }
 
-  userQueries.getUserByEmail(emailInput)
+  userQueries
+    .getUserByEmail(emailInput)
     .then((userFound) => {
       const hashedPassword = userFound.password; // Hash user password
       
@@ -122,17 +97,17 @@ router.post("/login", (req, res) => {
       }
 
       req.session.userId = userFound.id;
-      // res.redirect('/login');
-      res.json(userFound);
+      res.status(200).json({
+        message: `${userFound.username} Logged successful`,
+        userFound
+      });
     });
 });
 
 // Log a user out
 router.post("/logout", (req, res) => {
   req.session.userId = null;
+  res.status(200).send('Logged out successfully');
 });
-
-// ----------------------- removeUserSupplementsById
-//router.get("/supplement/:id", (req, res)
 
 module.exports = router;
