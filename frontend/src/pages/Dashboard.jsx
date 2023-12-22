@@ -3,17 +3,17 @@ import Header from '../components/Header';
 import SupplementCard from '../components/SupplementCard';
 import mockReminder from '../data/mocks/mockReminder';
 
-export default function Dashboard(props) {
+export default function Dashboard({logout, user, handleAddNew}) {
 
   return (
     <>
-      <Header onClick={props.logout} />
+      <Header logout={logout} handleAddNew={handleAddNew} />
       <main className="dashboard-container container">
         <section className="container-top">
           <h1 className="accent">
             Pilpal Dashboard<span>✷</span>
           </h1>
-          <h2>Hi, Luwam! Let’s make today a healthy one.</h2>
+          <h2>Hi, {user.username}! Let’s make today a healthy one.</h2>
         </section>
         <section className="container-bottom">
           <article className="container-left">

@@ -1,16 +1,16 @@
 import React from 'react';
 
-export default function Header(props) {
+export default function Header({logout, handleAddNew, goBackToDashboard}) {
   return (
     <header>
       <nav>
         <ul className="nav-container--left">
-          <li className="active">My Dashboard</li>
+          <li className="active" onClick={goBackToDashboard}>My Dashboard</li>
           <li>Supplement List</li>
         </ul>
         <ul className="nav-container--right">
-          <li>+ Add New</li>
-          <li className="logout-btn" onClick={props.onClick}>Log out</li>
+          <li onClick={handleAddNew}>+ Add New</li>
+          <li className="logout-btn" onClick={logout}>Log out</li>
         </ul>
       </nav>
     </header>
