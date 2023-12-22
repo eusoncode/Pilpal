@@ -3,10 +3,11 @@ import Header from '../components/Header';
 import SupplementCard from '../components/SupplementCard';
 import mockReminder from '../data/mocks/mockReminder';
 
-export default function Dashboard() {
+export default function Dashboard(props) {
+
   return (
     <>
-      <Header />
+      <Header onClick={props.logout} />
       <main className="dashboard-container container">
         <section className="container-top">
           <h1 className="accent">

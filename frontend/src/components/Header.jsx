@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Header() {
+export default function Header(props) {
   return (
     <header>
       <nav>
@@ -10,7 +10,7 @@ export default function Header() {
         </ul>
         <ul className="nav-container--right">
           <li>+ Add New</li>
-          <li className="logout-btn">Log out</li>
+          <li className="logout-btn" onClick={props.onClick}>Log out</li>
         </ul>
       </nav>
     </header>
