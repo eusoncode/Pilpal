@@ -98,7 +98,6 @@ router.post("/login", (req, res) => {
 
       req.session.userId = userFound.id;
       res.status(200).json({
-        message: `${userFound.username} Logged successful`,
         userFound
       });
     });

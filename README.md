@@ -12,7 +12,7 @@
 
   ```sh
   cd Backend
-  npm start
+  nodemon server
   ```
 
 ## [Frontend] Running Webpack Development Server
