@@ -1,0 +1,99 @@
+@import './variables';
+
+// Global
+.container {
+  max-width: 1200px;
+  height: calc(100vh - 192px);
+  margin: 0 auto;
+  padding: 192px 2% 2% 2%;
+}
+
+.accent {
+  font-family: $font-family-accent;
+  span {
+    color: $pink-color;
+    margin-left: $spacing-sm;
+  }
+}
+
+form {
+  margin-top: $spacing-xxl;
+
+  input:not(input[type='submit']),
+  textarea,
+  select {
+    display: block;
+    margin-bottom: $spacing-md;
+    padding: $spacing-sm;
+    resize: none;
+    -webkit-appearance: none;
+    /*webkit browsers */
+    -moz-appearance: none;
+    /*Firefox */
+    appearance: none;
+    /* modern browsers */
+    border-radius: 0;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: $black-color;
+    width: 280px;
+    font-weight: 700;
+
+    &:focus {
+      border-color: $orange-color;
+    }
+  }
+
+  label {
+    font-size: $font-size-small;
+    color: $navy-color;
+  }
+
+  input[type='submit'],
+  button[type='submit'] {
+    margin-top: $spacing-xl;
+    border-radius: 32px;
+    padding: $spacing-md;
+    min-width: 140px;
+    font-family: $font-family-primary;
+    color: $white-color;
+    background-color: $orange-color;
+    border-style: initial;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+// Login Page
+.login-container {
+  display: flex;
+  align-items: center;
+
+  a {
+    color: $orange-color;
+  }
+
+  .login-container-left {
+    flex: 1;
+
+    img {
+      padding: $spacing-lg;
+    }
+  }
+
+  .login-container-right {
+    flex: 1;
+    padding: $spacing-sm;
+
+    h1 {
+      font-size: $font-size-h1;
+    }
+
+    .accent {
+      font-size: $font-size-large;
+      span {
+        font-size: $font-size-xxl;
+      }
+    }
+  }
+}
