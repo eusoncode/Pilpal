@@ -1,0 +1,64 @@
+// Header Component
+header {
+  width: 100%;
+  background-color: $black-color;
+  position: fixed;
+  z-index: 99;
+
+  nav {
+    padding-top: $spacing-lg;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: $white-color;
+    font-family: $font-family-primary;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logout-btn {
+      position: relative;
+      &::after {
+        content: '';
+        width: 80%;
+        text-align: center;
+        position: absolute;
+        height: 3px;
+        background-color: $white-color;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    ul {
+      font-size: $font-size-xl;
+      display: flex;
+      list-style: none;
+      padding: 0;
+
+      li {
+        padding: $spacing-md;
+        transition: $transition;
+        border-radius: 34px 34px 0 0;
+        margin: 0 $spacing-md 0 0;
+        cursor: pointer;
+      }
+
+      li:not(.nav-container--right li):hover,
+      li.active {
+        background-color: $white-color;
+        color: $black-color;
+        font-weight: 700;
+      }
+
+      li:not(.nav-container--left li):hover {
+        color: $pink-color;
+      }
+
+      li:not(.nav-container--left li):hover::after {
+        background-color: $pink-color;
+      }
+    }
+  }
+}
