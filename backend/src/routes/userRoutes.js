@@ -96,7 +96,9 @@ router.post("/login", (req, res) => {
         return res.status(403).send("😒😒😒😒Email or Password is incorrect!.... Please enter a valid email and password");
       }
 
+      // Store user ID in localStorage
       req.session.userId = userFound.id;
+      // console.log(req.session);
       res.status(200).json({
         userFound
       });

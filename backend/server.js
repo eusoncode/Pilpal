@@ -25,8 +25,14 @@ app.use(
   })
 );
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true, // Indicates whether or not cross-site Access-Control requests should be made using credentials
+};
+
+
 //Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan('dev'));
 
@@ -35,10 +41,14 @@ const PORT = process.env.PORT || 8080;
 
 // Routes for each resources
 const supplementRoutes = require("./src/routes/supplementRoutes");
+const userSupplementRoutes = require("./src/routes/user_supplementRoutes");
 const userRoutes = require("./src/routes/userRoutes");
 
-// // /supplement/endpoints
+// /supplement/endpoints
 app.use("/supplements", supplementRoutes);
+
+// /user_supplement/endpoints
+app.use("/user_supplements", userSupplementRoutes);
 
 // /user/endpoints
 app.use("/users", userRoutes);

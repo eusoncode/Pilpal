@@ -3,16 +3,15 @@ const db = require('../connection');
 // Get request query
 
 /**
- * 
  * @param {{userId: Integer}} user id
  * @return {Promise<{}>} A promise for supplement.
  */
 const getUserSupplements = (id) => {
   const query = `
-    SELECT supplements.* 
+    SELECT supplements.name, supplement_usage.time_to_be_taken AS time, user_supplements.number_of_pills_taken AS intakeQuantity, supplement_usage.stocklevel AS stockQuantity, supplements.images AS image, supplements.type AS type 
     FROM supplements 
-    JOIN user_supplements 
-    ON supplements.id = user_supplements.supplementId 
+    JOIN user_supplements ON supplements.id = user_supplements.supplementId
+    JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id 
     WHERE user_supplements.userId = $1;
   `;
 
@@ -20,6 +19,7 @@ const getUserSupplements = (id) => {
     .query(query, [id])
     .then(result => {
       const userSupplements = result.rows;
+      // console.log('userSupplements:', userSupplements);
       return userSupplements || []; // Return an empty array if no user supplements found
     })
     .catch(error => {

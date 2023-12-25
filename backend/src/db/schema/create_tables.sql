@@ -21,6 +21,7 @@ CREATE TABLE supplements (
     manufacturer VARCHAR(255) NOT NULL,
     cost NUMERIC(10, 2),
     quantity INTEGER,
+    type VARCHAR(255) NOT NULL,
     images JSONB,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
