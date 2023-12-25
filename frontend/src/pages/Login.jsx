@@ -6,13 +6,13 @@
 import { useState } from 'react';
 import loginImage from '../assets/image-01.png';
 
-export default function Login(props) {
+export default function Login({login, clickSignUp}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
   const onSubmit = e => {
     e.preventDefault();
-    email && props.login(email, password);
+    email && login(email, password);
   }
 
   return (
@@ -27,7 +27,7 @@ export default function Login(props) {
           </p>
           <h1>Login to your Account</h1>
           <span>
-            Doesn't have the account yet? <a href="/signup">Sign up</a>
+            Doesn't have the account yet? <a href="#" onClick={clickSignUp}>Sign up</a>
           </span>
           <form onSubmit={onSubmit}>
             <label htmlFor="email">Email</label>

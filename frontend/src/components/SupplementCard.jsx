@@ -20,6 +20,18 @@ export default function SupplementCard({
     setIsHovered(false);
   };
 
+  const handleTake = () => {
+
+  };
+
+  const handleSkip = () => {
+
+  };
+
+  const handleOrder = () => {
+
+  };
+
   // Importing images
   const imageUrl = image.src;
   const cardStyles = type === 'restock' ? 'restock-card' : 'intake-card';
@@ -32,7 +44,7 @@ export default function SupplementCard({
         onMouseLeave={handleMouseLeave}
       >
         <div className={`notification-card ${cardStyles}`}>
-          <div className="skip-btn">skip</div>
+          <div className="skip-btn" onClick={handleSkip}>skip</div>
 
           <img src={imageUrl} alt="pills" />
           <div className="details">
@@ -68,7 +80,7 @@ export default function SupplementCard({
               isHovered ? 'active' : ''
             }`}
           >
-            <span className="btn-cta">take</span>
+            <span className="btn-cta" onClick={handleTake}>take</span>
           </div>
         )}
         {type === 'restock' && (
@@ -77,7 +89,7 @@ export default function SupplementCard({
               isHovered ? 'active' : ''
             }`}
           >
-            <span className="btn-cta-restock">order</span>
+            <span className="btn-cta-restock" onClick={handleOrder}>order</span>
           </div>
         )}
       </div>

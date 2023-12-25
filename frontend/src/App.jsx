@@ -7,14 +7,15 @@ import useApplicationData from './hooks/useApplicationData';
 function App() {
   // Use the custom hook to manage application data
   const { state, actions } = useApplicationData();
-  const { addNewSupplimentClicked, user, userSupplements} = state;
-  const { login, logout, handleAddNew, goBackToDashboard} = actions;
+  const { addNewSupplimentClicked, user, userSupplements, userSignUpClicked} = state;
+  const { login, logout, handleAddNew, goBackToDashboard, clickSignUp, signUp} = actions;
 
   return (
     <>
-      {user && addNewSupplimentClicked && <AddNew logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} />}
-      {!user && !addNewSupplimentClicked && <Login login={login} />}
-      {user && !addNewSupplimentClicked && <Dashboard logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} />}
+      {user && addNewSupplimentClicked && !userSignUpClicked && <AddNew logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} />}
+      {!user && !addNewSupplimentClicked && !userSignUpClicked && <Login login={login} setSignUp={clickSignUp} />}
+      {/* {!user && !addNewSupplimentClicked && userSignUpClicked && <SignUp signUp={signUp} />} */}
+      {user && !addNewSupplimentClicked && !userSignUpClicked && <Dashboard logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} />}
     </>
   );
 }
