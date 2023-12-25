@@ -3,7 +3,9 @@ import Header from '../components/Header';
 import SupplementCard from '../components/SupplementCard';
 import mockReminder from '../data/mocks/mockReminder';
 
-export default function Dashboard({ logout, user, handleAddNew }) {
+export default function Dashboard({ logout, user, userSupplements, handleAddNew }) {
+
+  // console.log('userSupplements:', userSupplements);
 
   return (
     <>
