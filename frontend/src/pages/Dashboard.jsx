@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import SupplementCard from '../components/SupplementCard';
 import mockReminder from '../data/mocks/mockReminder';
 
-export default function Dashboard({logout, user, handleAddNew}) {
+export default function Dashboard({ logout, user, handleAddNew }) {
 
   return (
     <>
@@ -21,7 +21,7 @@ export default function Dashboard({logout, user, handleAddNew}) {
               Reminders <span>***</span>
             </h3>
             {mockReminder.map((reminder) => (
-              <SupplementCard key={reminder.id} {...reminder} />
+              <SupplementCard key={reminder.id} {...reminder}/>
             ))}
           </article>
           <article className="container-right">

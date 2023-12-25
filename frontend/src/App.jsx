@@ -2,8 +2,6 @@ import './styles/App.scss';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddNew from './pages/AddNew';
-// import axios from 'axios';
-// import { useState } from "react";
 import useApplicationData from './hooks/useApplicationData';
 
 function App() {
