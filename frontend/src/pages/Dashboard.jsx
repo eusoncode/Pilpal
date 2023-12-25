@@ -22,8 +22,11 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew 
             <h3>
               Reminders <span>***</span>
             </h3>
-            {mockReminder.map((reminder) => (
+            {/* {mockReminder.map((reminder) => (
               <SupplementCard key={reminder.id} {...reminder}/>
+            ))} */}
+            {userSupplements.map((userSupplement) => (
+              <SupplementCard key={userSupplement.id} {...userSupplement}/>
             ))}
           </article>
           <article className="container-right">
