@@ -35,7 +35,7 @@ const appReducer = (state, action) => {
     
     case ACTIONS.SET_USER_SIGNUP_CLICKED:
       // Handle setting the user supplement state
-      return { ...state, userSupplements: action.payload.isClicked };
+      return { ...state, userSignUpClicked: action.payload.isClicked };
       
     default:
       return state;
@@ -73,16 +73,18 @@ const useApplicationData = () => {
       });
   };
 
-  const signUp = (email, password, username) => {
-    // console.log("login():", email, password);
+  const signUp = ({email, password, username}) => {
     const body = {
       "username": username,
       "email": email,
       "password": password    
     }
+
     axios.post('http://localhost:8080/users/signup', body, { withCredentials: true })
-      .then(() => {
-        setNewSupplimentClicked(false);
+      .then((response) => {
+        // console.log("response:", response.data);
+        // setNewSupplimentClicked(false);
+        setUserSignUpClicked(false);
       })
       .catch((error) => {
         console.error('Error while making POST request:', error);
@@ -137,17 +139,7 @@ const useApplicationData = () => {
   const clickSignUp = () => {
     setUserSignUpClicked(true);
   }
-
-  // const take = (supplementId) => {
-  //   if (takeClicked) {
-      
-  //   } else {
-      
-  //   }
-  // }
-
-
-
+  
   return {
     state,
     actions: {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import signupImage from '../assets/image-01.png';
 
-export default function UserRegister() {
+export default function UserRegister({signUp}) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,6 +14,8 @@ export default function UserRegister() {
       alert('Passwords do not match');
       return;
     }
+
+    email && password && confirmPassword && signUp({username, email, password});
   };
 
   return (
