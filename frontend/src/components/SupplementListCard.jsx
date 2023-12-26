@@ -13,6 +13,7 @@ export default function SupplementListCard({
   price,
   purchasedFrom,
   additionalNotes,
+  setEditClicked
 }) {
   // Importing images
   const imageUrl = image.src;
@@ -21,7 +22,7 @@ export default function SupplementListCard({
     <>
       <div className="supplementListCard">
         <div className="card">
-          <div className="skip-btn">edit</div>
+          <div className="skip-btn" onClick={setEditClicked}>edit</div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />

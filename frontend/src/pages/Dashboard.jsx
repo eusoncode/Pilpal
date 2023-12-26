@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import SupplementCard from '../components/SupplementCard';
 // import mockReminder from '../data/mocks/mockReminder';
 
-export default function Dashboard({ logout, user, userSupplements, handleAddNew, takeSupplement }) {
+export default function Dashboard({ logout, user, userSupplements, handleAddNew, takeSupplement, handleShowSupplementList }) {
   const [takenSupplements, setTakenSupplements] = useState([]);
   const [skippedSupplements, setSkippedSupplements] = useState([]);
   
@@ -42,7 +42,7 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
 
   return (
     <>
-      <Header logout={logout} handleAddNew={handleAddNew} />
+      <Header logout={logout} handleAddNew={handleAddNew} handleShowSupplementList={handleShowSupplementList} />
       <main className="dashboard-container container">
         <section className="container-top">
           <h1 className="accent">

@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default function Header({logout, handleAddNew, goBackToDashboard}) {
+export default function Header({logout, handleAddNew, handleShowSupplementList, goBackToDashboard}) {
   return (
     <header>
       <nav>
         <ul className="nav-container--left">
           <li className="active" onClick={goBackToDashboard}>My Dashboard</li>
-          <li>Supplement List</li>
+          <li onClick={handleShowSupplementList}>Supplement List</li>
         </ul>
         <ul className="nav-container--right">
           <li onClick={handleAddNew}>+ Add New</li>

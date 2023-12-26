@@ -87,7 +87,7 @@ const addUser = function(user) {
     })
     .catch((err) => {
       console.error('Error adding user:', err.message);
-      throw err; // Rethrow the error to be handled elsewhere
+      // throw err; // Rethrow the error to be handled elsewhere
     });
 };
 

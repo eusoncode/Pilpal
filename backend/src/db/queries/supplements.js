@@ -12,7 +12,7 @@ const getSupplements = () => {
     .then(result => {
       let resolvedsuppliments = null;
       const suppliments = result.rows;
-      console.log(suppliments);
+      // console.log(suppliments);
       if (suppliments) {
         resolvedsuppliments = suppliments;
       }

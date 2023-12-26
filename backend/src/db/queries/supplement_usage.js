@@ -12,7 +12,7 @@ const getSupplementUsage = () => {
     .then(result => {
       let resolvedSupplimentUsage = null;
       const supplimentUsage = result.rows;
-      console.log(supplimentUsage);
+      // console.log(supplimentUsage);
       if (supplimentUsage) {
         resolvedSupplimentUsage = supplimentUsage;
       }

@@ -7,7 +7,9 @@ const initialState = {
   addNewSupplimentClicked: false,
   user: null,
   userSupplements: [],
-  userSignUpClicked: false
+  userSignUpClicked: false,
+  showSupplementListClicked: false,
+  editButtonClicked: false
 };
 
 // Define action types as constants
@@ -15,7 +17,9 @@ const ACTIONS = {
   SET_NEW_SUPPLIMENT_CLICKED: 'SET_NEW_SUPPLIMENT_CLICKED',
   SET_USER: 'SET_USER',
   GET_SUPPLEMENTS_FOR_USER: 'SET_SUPPLEMENTS_FOR_USER',
-  SET_USER_SIGNUP_CLICKED: 'SET_USER_SIGNUP_CLICKED'
+  SET_USER_SIGNUP_CLICKED: 'SET_USER_SIGNUP_CLICKED',
+  SET_SHOW_USER_SUPPLEMENT_LIST: 'SET_SHOW_USER_SUPPLEMENT_LIST',
+  SET_EDIT_BUTTON_CLICKED: 'SET_EDIT_BUTTON_CLICKED'
 };
 
 // Define the reducer function to handle state updates
@@ -36,6 +40,15 @@ const appReducer = (state, action) => {
     case ACTIONS.SET_USER_SIGNUP_CLICKED:
       // Handle setting the user supplement state
       return { ...state, userSignUpClicked: action.payload.isClicked };
+    
+    case ACTIONS.SET_SHOW_USER_SUPPLEMENT_LIST:
+      // Handle setting the user supplement list state
+      return { ...state, showSupplementListClicked: action.payload.isClicked };
+    
+    case ACTIONS.SET_EDIT_BUTTON_CLICKED:
+      // Handle setting the user supplement list state
+      return { ...state, editButtonClicked: action.payload.isClicked };
+      
       
     default:
       return state;
@@ -55,6 +68,14 @@ const useApplicationData = () => {
   const setUserSignUpClicked = (isClicked) => {
     dispatch({ type: ACTIONS.SET_USER_SIGNUP_CLICKED, payload: { isClicked } });
   };
+
+  const setShowSupplementList = (isClicked) => {    
+    dispatch({ type: ACTIONS.SET_SHOW_USER_SUPPLEMENT_LIST, payload: { isClicked } });
+  }
+
+  const setEditButtonClicked = (isClicked) => {    
+    dispatch({ type: ACTIONS.SET_EDIT_BUTTON_CLICKED, payload: { isClicked } });
+  }
 
   const login = (email, password) => {
     // console.log("login():", email, password);
@@ -125,21 +146,49 @@ const useApplicationData = () => {
 
   const logout = () => {
     dispatch({ type: ACTIONS.SET_USER, payload: { user: null } });
-    setNewSupplimentClicked(false);
+    // setNewSupplimentClicked(false);
+    goBackToDashboard();
   };
 
   const handleAddNew = () => {
     setNewSupplimentClicked(true);
+    setShowSupplementList(false);
+    setUserSignUpClicked(false);
+    setEditButtonClicked(false);
   }
 
   const goBackToDashboard = () => {    
     setNewSupplimentClicked(false);
+    setShowSupplementList(false);
+    setUserSignUpClicked(false);
+    setEditButtonClicked(false);
   }
 
   const clickSignUp = () => {
     setUserSignUpClicked(true);
+    setNewSupplimentClicked(false);
+    setShowSupplementList(false);
+    setEditButtonClicked(false);
   }
   
+  const handleShowSupplementList = () => {
+    setShowSupplementList(true);   
+    setNewSupplimentClicked(false);
+    setUserSignUpClicked(false);
+    setEditButtonClicked(false);
+  }
+
+  const goBackToLogin = () => {
+    goBackToDashboard();
+  }
+
+  const setEditClicked = () => {
+    setEditButtonClicked(true)    
+    setNewSupplimentClicked(false);
+    setShowSupplementList(false);
+    setUserSignUpClicked(false);
+  }
+
   return {
     state,
     actions: {
@@ -149,7 +198,10 @@ const useApplicationData = () => {
       goBackToDashboard,
       clickSignUp,
       signUp,
-      takeSupplement
+      takeSupplement,
+      handleShowSupplementList,
+      goBackToLogin,
+      setEditClicked
     },
   };
 };

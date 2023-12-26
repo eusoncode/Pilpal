@@ -2,11 +2,11 @@ import '../styles/addnew.scss';
 import Header from '../components/Header';
 import Image from '../assets/image-07.png';
 
-export default function AddNew({logout, handleAddNew, goBackToDashboard}) {
+export default function AddNew({logout, handleAddNew, handleShowSupplementList, goBackToDashboard}) {
   const handleSubmit = (e) => e.preventDefault();
   return (
     <>
-      <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} />
+      <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} />
       <main className="supplement-details-container container">
         <section className="container-top">
           <h1 className="accent">
