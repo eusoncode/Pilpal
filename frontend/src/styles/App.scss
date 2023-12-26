@@ -4,8 +4,8 @@
 // Global
 .container {
   max-width: 1200px;
-  height: calc(100vh - 192px);
   margin: 0 auto;
+  height: calc(100vh - 192px);
   padding: 192px 2% 2% 2%;
 }
 
@@ -111,5 +111,47 @@ form {
         font-size: $font-size-xxl;
       }
     }
+  }
+}
+
+// User Register Page
+.userRegister-container {
+  display: flex;
+  align-items: center;
+  min-height: 700px;
+  height: 100vh;
+  padding: 0;
+
+  h1 {
+    font-size: $font-size-h1;
+    margin-bottom: $spacing-sm;
+  }
+
+  .accent {
+    font-size: $font-size-large;
+    span {
+      font-size: $font-size-xxl;
+    }
+  }
+
+  a {
+    color: $orange-color;
+  }
+
+  .userRegister-container-left {
+    flex: 1;
+
+    img {
+      padding: $spacing-lg;
+    }
+  }
+
+  .userRegister-container-right {
+    flex: 1;
+    padding: $spacing-sm;
+  }
+
+  form {
+    margin-top: 1rem;
   }
 }
