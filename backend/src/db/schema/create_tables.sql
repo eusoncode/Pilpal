@@ -1,4 +1,4 @@
--- CREATE DATABASE pilpal_development;
+-- -- CREATE DATABASE pilpal_development;
 
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS supplements CASCADE;

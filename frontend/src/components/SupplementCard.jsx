@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
 export default function SupplementCard({
+  id,
   name,
   time,
   intakequantity,
   stockquantity,
   image,
   type,
+  hideCard,
+  skipCard
 }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [skipClicked, setSkipClicked] = useState(false);
-  const [takeClicked, setTakeClicked] = useState(false);
-  const [orderClicked, setOrderClicked] = useState(false);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -22,15 +22,11 @@ export default function SupplementCard({
   };
 
   const handleTake = () => {
-    setTakeClicked(true);
+    hideCard(id, stockquantity, intakequantity);
   };
 
   const handleSkip = () => {
-    setSkipClicked(true);
-  };
-
-  const handleOrder = () => {
-    setOrderClicked(true);
+    skipCard(id);
   };
 
   const imageUrl = image.src;
@@ -39,7 +35,7 @@ export default function SupplementCard({
   return (
     <div className="notification" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div className={`notification-card ${cardStyles}`}>
-        {type === 'intake' && !takeClicked && !skipClicked && (
+        {type === 'intake' && (
           <>
             <div className="skip-btn" onClick={handleSkip}>skip</div>
             <img src={imageUrl} alt="pills" />
@@ -63,14 +59,14 @@ export default function SupplementCard({
           </>
         )}
       </div>
-      {type === 'intake' && !takeClicked && !skipClicked && (
+      {type === 'intake' && (
         <div className={`notification-card-btn intake-card-btn ${isHovered ? 'active' : ''}`}>
           <span className="btn-cta" onClick={handleTake}>take</span>
         </div>
       )}
-      {type === 'restock' && !orderClicked && (
+      {type === 'restock' && (
         <div className={`notification-card-btn restock-card-btn ${isHovered ? 'active' : ''}`}>
-          <span className="btn-cta-restock" onClick={handleOrder}>order</span>
+          <span className="btn-cta-restock" >order</span>
         </div>
       )}
     </div>

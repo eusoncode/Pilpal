@@ -42,6 +42,7 @@ const PORT = process.env.PORT || 8080;
 // Routes for each resources
 const supplementRoutes = require("./src/routes/supplementRoutes");
 const userSupplementRoutes = require("./src/routes/user_supplementRoutes");
+const supplementUsageRoutes = require("./src/routes/supplement_usageRoutes");
 const userRoutes = require("./src/routes/userRoutes");
 
 // /supplement/endpoints
@@ -49,6 +50,9 @@ app.use("/supplements", supplementRoutes);
 
 // /user_supplement/endpoints
 app.use("/user_supplements", userSupplementRoutes);
+
+// /supplement_usage/endpoints
+app.use("/supplement_usage", supplementUsageRoutes);
 
 // /user/endpoints
 app.use("/users", userRoutes);

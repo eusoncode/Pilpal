@@ -65,9 +65,8 @@ router.post("/signup", (req, res) => {
       }
 
       userQueries.addUser(user)
-        .then((newUserAdded) => {
-          req.session.userId = newUserAdded.id;
-          res.json(newUserAdded);
+        .then(() => {
+          res.status(200).json({ message: "New user was successful added" });
         })
         .catch((e) => res.status(500).send("Error creating user"));
     })

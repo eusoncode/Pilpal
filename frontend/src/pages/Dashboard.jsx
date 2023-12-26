@@ -1,11 +1,44 @@
+import React, { useState } from 'react';
 import '../styles/dashboard.scss';
 import Header from '../components/Header';
 import SupplementCard from '../components/SupplementCard';
-import mockReminder from '../data/mocks/mockReminder';
+// import mockReminder from '../data/mocks/mockReminder';
 
-export default function Dashboard({ logout, user, userSupplements, handleAddNew }) {
+export default function Dashboard({ logout, user, userSupplements, handleAddNew, takeSupplement }) {
+  const [takenSupplements, setTakenSupplements] = useState([]);
+  const [skippedSupplements, setSkippedSupplements] = useState([]);
+  
+  // console.log('userSupplements:', userSupplements);  
 
-  // console.log('userSupplements:', userSupplements);
+  const hideCard = (supplementCardId, cardStockQuantity, CardIntakeQuantity) => {
+    setTakenSupplements([...takenSupplements, supplementCardId]); 
+
+    const stockLevelEstimate = (arg1, arg2) => {
+      let result = 0;
+      return result += arg1 - arg2;       
+    };
+
+    const newStockLevel = stockLevelEstimate(cardStockQuantity, CardIntakeQuantity);    
+
+    takeSupplement(supplementCardId, newStockLevel);
+  };
+
+  const skipCard = (supplementCardId) => {
+    setSkippedSupplements([...skippedSupplements, supplementCardId]); 
+  };
+ 
+  const clearTakenSupplements = () => {
+    setTakenSupplements([]);
+  }
+
+  const clearSkippedSupplements = () => {
+    setSkippedSupplements([]);
+ }
+
+  // console.log('takenSupplements:', takenSupplements);
+  //  console.log('skippedSupplements:', skippedSupplements);
+
+  const filteredSupplements = userSupplements.filter((supplement) => !takenSupplements.includes(supplement.id) && !skippedSupplements.includes(supplement.id));
 
   return (
     <>
@@ -25,13 +58,29 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew 
             {/* {mockReminder.map((reminder) => (
               <SupplementCard key={reminder.id} {...reminder}/>
             ))} */}
-            {userSupplements.map((userSupplement) => (
-              <SupplementCard key={userSupplement.id} {...userSupplement}/>
+            <button type="button" onClick={clearTakenSupplements}>Clear Hidden Cards</button>
+            <br />
+            <br />
+            <button type="button" onClick={clearSkippedSupplements}>Clear Skipped Cards</button>
+            <br />
+            <br />
+            {filteredSupplements && filteredSupplements.map((userSupplement) => (
+              <SupplementCard
+                key={userSupplement.id}
+                {...userSupplement}
+                hideCard={hideCard}
+                skipCard={skipCard}
+              />
             ))}
+            {filteredSupplements.length === 0 && <p>
+              <strong>
+                No supplements available for this user. Would you like to add new supplements?
+              </strong>
+            </p>}
           </article>
           <article className="container-right">
             <div className="container-right--box">
-              <h3>News</h3>
+              <h3>Calender</h3>
             </div>
           </article>
         </section>

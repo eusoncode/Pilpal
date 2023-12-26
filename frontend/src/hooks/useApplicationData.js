@@ -89,6 +89,21 @@ const useApplicationData = () => {
       });
   };
 
+  const takeSupplement = (supplementId, newValue) => {
+    const body = {
+      "supplementId": supplementId,
+      "newValue": newValue    
+    }
+
+    axios.post('http://localhost:8080/supplement_usage/updateStockLevel', body, { withCredentials: true })
+      .then((response) => {
+        console.log('Supplement successfully taken:', response);;
+      })
+      .catch((error) => {
+        console.error('Error while making POST request:', error);
+      });
+  };
+
 
   // Fetch user's supplements when the user logs in
   useEffect(() => {
@@ -123,6 +138,14 @@ const useApplicationData = () => {
     setUserSignUpClicked(true);
   }
 
+  // const take = (supplementId) => {
+  //   if (takeClicked) {
+      
+  //   } else {
+      
+  //   }
+  // }
+
 
 
   return {
@@ -133,7 +156,8 @@ const useApplicationData = () => {
       handleAddNew,
       goBackToDashboard,
       clickSignUp,
-      signUp
+      signUp,
+      takeSupplement
     },
   };
 };
