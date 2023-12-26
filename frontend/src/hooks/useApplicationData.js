@@ -97,7 +97,7 @@ const useApplicationData = () => {
 
     axios.post('http://localhost:8080/supplement_usage/updateStockLevel', body, { withCredentials: true })
       .then((response) => {
-        console.log('Supplement successfully taken:', response);;
+        // console.log('Supplement successfully taken:', response);
       })
       .catch((error) => {
         console.error('Error while making POST request:', error);
@@ -111,7 +111,7 @@ const useApplicationData = () => {
       axios.get('http://localhost:8080/user_supplements', { withCredentials: true })
         .then((response) => {
           const userSupplements = response.data.userSupplements;
-            console.log('userSupplements - ', userSupplements);
+            // console.log('userSupplements - ', userSupplements);
           dispatch({ type: ACTIONS.GET_SUPPLEMENTS_FOR_USER, payload: { userSupplements } });
         })
         .catch((error) => {
