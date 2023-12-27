@@ -142,6 +142,49 @@ const useApplicationData = () => {
         });
     }
   }, [state.user]);
+
+  const handleRefillAlert = (supplementId) => {
+    const confirmRefill = () => {
+      const response = prompt("Are you sure you want to refill? (Yes/No)");
+      
+      if (response === null || response.trim() === "") {
+        console.log("Refill canceled");
+        goBackToDashboard();
+        return; // Exit the function or handle accordingly
+      }
+    
+      const cleanedResponse = response.trim().toLowerCase();
+    
+      if (cleanedResponse === "yes") {
+        // Handle refill logic when the user confirms "Yes"
+        const body = {
+          "userId": state.user.id
+        }
+        axios.post(`http://localhost:8080/supplement_usage/${supplementId}`, body, { withCredentials: true })
+          .then((response) => {
+            if (response.data.length > 0) {
+              console.log("Refill confirmed");
+            } else {
+              console.log("No data returned, check response data:", response.data);
+            }
+          })
+          .catch((error) => {
+            console.error('Error while making POST request to supplement_usage:', error);
+          });
+
+      } else if (cleanedResponse === "no") {
+        // Handle when the user responds with "No"
+        console.log("Refill canceled");
+        goBackToDashboard();
+      } else {
+        // If the response is neither "Yes" nor "No", prompt again for valid input
+        console.log("Please enter a valid response (Yes/No)");
+        confirmRefill(); // Recursive call until valid response
+      }
+    };
+    confirmRefill();
+  };
+  
   
 
   const logout = () => {
@@ -201,7 +244,8 @@ const useApplicationData = () => {
       takeSupplement,
       handleShowSupplementList,
       goBackToLogin,
-      setEditClicked
+      setEditClicked,
+      handleRefillAlert
     },
   };
 };

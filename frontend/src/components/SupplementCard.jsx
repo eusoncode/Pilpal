@@ -9,7 +9,8 @@ export default function SupplementCard({
   image,
   type,
   hideCard,
-  skipCard
+  skipCard,
+  handleRefillAlert
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -28,6 +29,10 @@ export default function SupplementCard({
   const handleSkip = () => {
     skipCard(id);
   };
+
+  const handleRefillButton = () => {
+    handleRefillAlert(id);
+  }
 
   const imageUrl = image.src;
   const cardStyles = type === 'restock' ? 'restock-card' : 'intake-card';
@@ -66,7 +71,7 @@ export default function SupplementCard({
       )}
       {type === 'restock' && (
         <div className={`notification-card-btn restock-card-btn ${isHovered ? 'active' : ''}`}>
-          <span className="btn-cta-restock" >order</span>
+          <span className="btn-cta-restock" onClick={handleRefillButton}>refill</span>
         </div>
       )}
     </div>

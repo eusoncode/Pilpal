@@ -19,6 +19,9 @@ export default function SupplementList({ logout, user, handleAddNew, userSupplem
             {mockReminder.map((supplement) => (
               <SupplementListCard key={supplement.id} {...supplement} setEditClicked={setEditClicked} />
             ))}
+            {/* {userSupplements.map((supplement) => (
+              <SupplementListCard key={supplement.id} {...supplement} setEditClicked={setEditClicked} />
+            ))} */}
           </article>
         </section>
       </main>
