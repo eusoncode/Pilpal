@@ -134,7 +134,7 @@ export default function AddNew({logout, handleAddNew, goBackToDashboard}) {
 
                   <div className="form-group">
                     <label htmlFor="pricePaid">Price Paid:</label>
-                    <span class="prefix">$</span>
+                    <span className="prefix">$</span>
                     <input type="text" id="pricePaid" name="pricePaid" />
                   </div>
 

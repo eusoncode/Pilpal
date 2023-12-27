@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 function App() {
   // Use the custom hook to manage application data
   const { state, actions } = useApplicationData();
-  const { addNewSupplimentClicked, user} = state;
+  const { addNewSupplimentClicked, user, userSupplements} = state;
   const { login, logout, handleAddNew, goBackToDashboard} = actions;
 
   return (
@@ -16,7 +16,7 @@ function App() {
     
       {user && addNewSupplimentClicked && <AddNew logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} />}
       {!user && !addNewSupplimentClicked && <Login login={login} />}
-      {user && !addNewSupplimentClicked && <Dashboard logout={logout} user={user} handleAddNew={handleAddNew} />}
+      {user && !addNewSupplimentClicked && <Dashboard logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} />}
     </>
  
   );
