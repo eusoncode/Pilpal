@@ -162,10 +162,11 @@ const useApplicationData = () => {
         }
         axios.post(`http://localhost:8080/supplement_usage/${supplementId}`, body, { withCredentials: true })
           .then((response) => {
-            if (response.data.length > 0) {
+            // console.log(response.data.message);
+            if (response.data.message.length > 0) {
               console.log("Refill confirmed");
             } else {
-              console.log("No data returned, check response data:", response.data);
+              console.log("No data returned, check response data:", response.data.message);
             }
           })
           .catch((error) => {
