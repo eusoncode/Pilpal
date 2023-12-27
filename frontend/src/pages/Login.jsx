@@ -10,7 +10,7 @@ export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     email && props.login(email, password);
   }

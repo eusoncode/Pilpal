@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 //Define the port
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8002;
 
 // Routes for each resources
 const supplementRoutes = require("./src/routes/supplementRoutes");

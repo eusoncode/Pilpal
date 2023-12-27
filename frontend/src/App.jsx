@@ -3,7 +3,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddNew from './pages/AddNew';
 import useApplicationData from './hooks/useApplicationData';
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 function App() {
   // Use the custom hook to manage application data
   const { state, actions } = useApplicationData();
@@ -11,11 +11,14 @@ function App() {
   const { login, logout, handleAddNew, goBackToDashboard} = actions;
 
   return (
+   
     <>
+    
       {user && addNewSupplimentClicked && <AddNew logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} />}
       {!user && !addNewSupplimentClicked && <Login login={login} />}
       {user && !addNewSupplimentClicked && <Dashboard logout={logout} user={user} handleAddNew={handleAddNew} />}
     </>
+ 
   );
 }
 

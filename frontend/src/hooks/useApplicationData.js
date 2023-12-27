@@ -40,12 +40,14 @@ const useApplicationData = () => {
   };
 
   const login = (email, password) => {
-    // console.log("login():", email, password);
+    //console.log("login():", email, password);
+    
+
     const body = {
       "email": email,
       "password": password    
     }
-    axios.post('http://localhost:8080/users/login', body)
+    axios.post('http://localhost:8002/users/login', body)
       .then((response) => {
         const loggedUser = response.data.userFound;
         // console.log(response.data.userFound);

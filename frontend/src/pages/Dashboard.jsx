@@ -24,11 +24,6 @@ export default function Dashboard({ logout, user, handleAddNew }) {
               <SupplementCard key={reminder.id} {...reminder}/>
             ))}
           </article>
-          <article className="container-right">
-            <div className="container-right--box">
-              <h3>News</h3>
-            </div>
-          </article>
         </section>
       </main>
     </>
