@@ -5,6 +5,8 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  height: calc(100vh - 192px);
+  padding: 192px 2% 2% 2%;
 }
 
 .accent {
@@ -82,8 +84,6 @@ form {
 .login-container {
   display: flex;
   align-items: center;
-  height: calc(100vh - 192px);
-  padding: 192px 2% 2% 2%;
 
   a {
     color: $orange-color;
@@ -120,6 +120,8 @@ form {
   align-items: center;
   min-height: 700px;
   height: 100vh;
+  padding: 0;
+
   h1 {
     font-size: $font-size-h1;
     margin-bottom: $spacing-sm;
