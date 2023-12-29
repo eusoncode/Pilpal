@@ -86,12 +86,14 @@ router.post("/login", (req, res) => {
   userQueries
     .getUserByEmail(emailInput)
     .then((userFound) => {
-      const hashedPassword = userFound.password; // Hash user password
+      
       
       if (!userFound) {
         return res.status(403).send("😒😒😒😒User account does not exist. Please register a new user account");
       }
     
+      const hashedPassword = userFound.password; // Hash user password
+
       if (userFound && !bcrypt.compareSync(passwordInput, hashedPassword)) {
         return res.status(403).send("😒😒😒😒Email or Password is incorrect!.... Please enter a valid email and password");
       }

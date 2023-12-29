@@ -6,14 +6,16 @@ import axios from 'axios';
 const initialState = {
   addNewSupplimentClicked: false,
   user: null,
-  userSupplements: []
+  userSupplements: [],
+  userSignUpClicked: false
 };
 
 // Define action types as constants
 const ACTIONS = {
   SET_NEW_SUPPLIMENT_CLICKED: 'SET_NEW_SUPPLIMENT_CLICKED',
   SET_USER: 'SET_USER',
-  GET_SUPPLEMENTS_FOR_USER: 'SET_SUPPLEMENTS_FOR_USER'
+  GET_SUPPLEMENTS_FOR_USER: 'SET_SUPPLEMENTS_FOR_USER',
+  SET_USER_SIGNUP_CLICKED: 'SET_USER_SIGNUP_CLICKED'
 };
 
 // Define the reducer function to handle state updates
@@ -30,6 +32,10 @@ const appReducer = (state, action) => {
     case ACTIONS.GET_SUPPLEMENTS_FOR_USER:
       // Handle setting the user supplement state
       return { ...state, userSupplements: action.payload.userSupplements };
+    
+    case ACTIONS.SET_USER_SIGNUP_CLICKED:
+      // Handle setting the user supplement state
+      return { ...state, userSupplements: action.payload.isClicked };
       
     default:
       return state;
@@ -46,15 +52,17 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_NEW_SUPPLIMENT_CLICKED, payload: { isClicked } });
   };
 
-  const login = (email, password) => {
-    //console.log("login():", email, password);
-    
+  const setUserSignUpClicked = (isClicked) => {
+    dispatch({ type: ACTIONS.SET_USER_SIGNUP_CLICKED, payload: { isClicked } });
+  };
 
+  const login = (email, password) => {
+    // console.log("login():", email, password);
     const body = {
       "email": email,
       "password": password    
     }
-    axios.post('http://localhost:8002/users/login', body)
+    axios.post('http://localhost:8000/users/login', body, { withCredentials: true })
       .then((response) => {
         const loggedUser = response.data.userFound;
         // console.log(response.data.userFound);
@@ -65,13 +73,45 @@ const useApplicationData = () => {
       });
   };
 
+  const signUp = (email, password, username) => {
+    // console.log("login():", email, password);
+    const body = {
+      "username": username,
+      "email": email,
+      "password": password    
+    }
+    axios.post('http://localhost:8000/users/signup', body, { withCredentials: true })
+      .then(() => {
+        setNewSupplimentClicked(false);
+      })
+      .catch((error) => {
+        console.error('Error while making POST request:', error);
+      });
+  };
+
+  const takeSupplement = (supplementId, newValue) => {
+    const body = {
+      "supplementId": supplementId,
+      "newValue": newValue    
+    }
+
+    axios.post('http://localhost:8000/supplement_usage/updateStockLevel', body, { withCredentials: true })
+      .then((response) => {
+        // console.log('Supplement successfully taken:', response);
+      })
+      .catch((error) => {
+        console.error('Error while making POST request:', error);
+      });
+  };
+
+
   // Fetch user's supplements when the user logs in
   useEffect(() => {
     if (state.user) {
-      axios.get('http://localhost:8080/user_supplements')
+      axios.get('http://localhost:8000/user_supplements', { withCredentials: true })
         .then((response) => {
           const userSupplements = response.data.userSupplements;
-            console.log('userSupplements - ', userSupplements);
+            // console.log('userSupplements - ', userSupplements);
           dispatch({ type: ACTIONS.GET_SUPPLEMENTS_FOR_USER, payload: { userSupplements } });
         })
         .catch((error) => {
@@ -94,13 +134,30 @@ const useApplicationData = () => {
     setNewSupplimentClicked(false);
   }
 
+  const clickSignUp = () => {
+    setUserSignUpClicked(true);
+  }
+
+  // const take = (supplementId) => {
+  //   if (takeClicked) {
+      
+  //   } else {
+      
+  //   }
+  // }
+
+
+
   return {
     state,
     actions: {
       login,
       logout,
       handleAddNew,
-      goBackToDashboard
+      goBackToDashboard,
+      clickSignUp,
+      signUp,
+      takeSupplement
     },
   };
 };

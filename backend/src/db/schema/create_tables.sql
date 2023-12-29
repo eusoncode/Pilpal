@@ -46,3 +46,12 @@ CREATE TABLE supplement_usage (
   updated_at TIMESTAMPTZ,
   FOREIGN KEY (userSupplementId) REFERENCES user_supplements(id)
 );
+
+-- CREATE TABLE supplement_refill (
+--   id serial PRIMARY KEY,
+--   userSupplementId INT NOT NULL,
+--   time_to_be_taken TIMESTAMPTZ,
+--   stocklevel INTEGER,
+--   updated_at TIMESTAMPTZ,
+--   FOREIGN KEY (userSupplementId) REFERENCES user_supplements(id)
+-- );
