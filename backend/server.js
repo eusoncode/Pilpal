@@ -26,19 +26,31 @@ app.use(
 );
 
 //Middleware
-app.use(cors());
+//app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // Replace with the actual origin of your frontend
+    credentials: true,
+  })
+);
+
+// Handle preflight OPTIONS requests
+app.options('*', cors());
+
 app.use(express.json());
 app.use(morgan('dev'));
 
 //Define the port
-const PORT = process.env.PORT || 8002;
+const PORT = process.env.PORT || 8005;
 
 // Routes for each resources
 const supplementRoutes = require("./src/routes/supplementRoutes");
 const userRoutes = require("./src/routes/userRoutes");
+const user_supplementRoutes = require("./src/routes/user_supplementRoutes");
 
 // // /supplement/endpoints
 app.use("/supplements", supplementRoutes);
+app.use("/user_supplements", user_supplementRoutes);
 
 // /user/endpoints
 app.use("/users", userRoutes);

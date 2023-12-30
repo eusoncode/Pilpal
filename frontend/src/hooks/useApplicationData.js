@@ -62,14 +62,16 @@ const useApplicationData = () => {
       "email": email,
       "password": password    
     }
-    axios.post('http://localhost:8000/users/login', body, { withCredentials: true })
+    console.log(body);
+    axios.post('http://localhost:8005/users/login', body, { withCredentials: true })
+
       .then((response) => {
         const loggedUser = response.data.userFound;
-        // console.log(response.data.userFound);
+         console.log(response.data.userFound);
         dispatch({ type: ACTIONS.SET_USER, payload: { user: loggedUser } });
       })
       .catch((error) => {
-        console.error('Error while making POST request:', error);
+        console.error('Error while making login  POST request:', error);
       });
   };
 
@@ -80,7 +82,7 @@ const useApplicationData = () => {
       "email": email,
       "password": password    
     }
-    axios.post('http://localhost:8000/users/signup', body, { withCredentials: true })
+    axios.post('http://localhost:8005/signup', body, { withCredentials: true })
       .then(() => {
         setNewSupplimentClicked(false);
       })
@@ -95,7 +97,7 @@ const useApplicationData = () => {
       "newValue": newValue    
     }
 
-    axios.post('http://localhost:8000/supplement_usage/updateStockLevel', body, { withCredentials: true })
+    axios.post('http://localhost:8005/supplement_usage/updateStockLevel', body, { withCredentials: true })
       .then((response) => {
         // console.log('Supplement successfully taken:', response);
       })
@@ -108,7 +110,7 @@ const useApplicationData = () => {
   // Fetch user's supplements when the user logs in
   useEffect(() => {
     if (state.user) {
-      axios.get('http://localhost:8000/user_supplements', { withCredentials: true })
+      axios.get('http://localhost:8005/supplements/addSupplements', { withCredentials: true })
         .then((response) => {
           const userSupplements = response.data.userSupplements;
             // console.log('userSupplements - ', userSupplements);

@@ -76,6 +76,7 @@ router.post("/signup", (req, res) => {
 
 // Login a user as a buyer
 router.post("/login", (req, res) => {
+  console.log(req.body);
   const emailInput = req.body.email;
   const passwordInput = req.body.password;
 
