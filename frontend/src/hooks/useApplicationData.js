@@ -9,7 +9,8 @@ const initialState = {
   userSupplements: [],
   userSignUpClicked: false,
   showSupplementListClicked: false,
-  editButtonClicked: false
+  editButtonClicked: false,
+  refreshDashboard: false
 };
 
 // Define action types as constants
@@ -19,7 +20,8 @@ const ACTIONS = {
   GET_SUPPLEMENTS_FOR_USER: 'SET_SUPPLEMENTS_FOR_USER',
   SET_USER_SIGNUP_CLICKED: 'SET_USER_SIGNUP_CLICKED',
   SET_SHOW_USER_SUPPLEMENT_LIST: 'SET_SHOW_USER_SUPPLEMENT_LIST',
-  SET_EDIT_BUTTON_CLICKED: 'SET_EDIT_BUTTON_CLICKED'
+  SET_EDIT_BUTTON_CLICKED: 'SET_EDIT_BUTTON_CLICKED',
+  SET_REFRESHDASHBOARD: 'SET_REFRESHDASHBOARD'
 };
 
 // Define the reducer function to handle state updates
@@ -49,6 +51,9 @@ const appReducer = (state, action) => {
       // Handle setting the user supplement list state
       return { ...state, editButtonClicked: action.payload.isClicked };
       
+    case ACTIONS.SET_REFRESHDASHBOARD:
+      // Handle setting the user supplement list state
+      return { ...state, refreshDashboard: !state.refreshDashboard };
       
     default:
       return state;
@@ -76,6 +81,12 @@ const useApplicationData = () => {
   const setEditButtonClicked = (isClicked) => {    
     dispatch({ type: ACTIONS.SET_EDIT_BUTTON_CLICKED, payload: { isClicked } });
   }
+
+  const setRefreshDashboard = () => {    
+    dispatch({ type: ACTIONS.SET_REFRESHDASHBOARD });
+  }
+
+  
 
   const login = (email, password) => {
     // console.log("login():", email, password);
@@ -118,9 +129,12 @@ const useApplicationData = () => {
       "newValue": newValue    
     }
 
+    // console.log(body);
+
     axios.post('http://localhost:8080/supplement_usage/updateStockLevel', body, { withCredentials: true })
       .then((response) => {
         // console.log('Supplement successfully taken:', response);
+        setRefreshDashboard();
       })
       .catch((error) => {
         console.error('Error while making POST request:', error);
@@ -130,18 +144,50 @@ const useApplicationData = () => {
 
   // Fetch user's supplements when the user logs in
   useEffect(() => {
-    if (state.user) {
+    if (state.user || state.refreshDashboard) {
       axios.get('http://localhost:8080/user_supplements', { withCredentials: true })
         .then((response) => {
           const userSupplements = response.data.userSupplements;
             console.log('userSupplements - ', userSupplements);
           dispatch({ type: ACTIONS.GET_SUPPLEMENTS_FOR_USER, payload: { userSupplements } });
+          // setRefreshDashboard();
         })
         .catch((error) => {
           console.error('Error fetching user supplements:', error);
         });
     }
-  }, [state.user]);
+  }, [state.user, state.refreshDashboard]);
+
+  // Fetch user's supplements when the user is signed in
+  // useEffect(() => {
+  //   // let intervalId;
+
+  //   const fetchData = () => {
+  //     axios.get('http://localhost:8080/user_supplements', { withCredentials: true })
+  //       .then((response) => {
+  //         const userSupplements = response.data.userSupplements;
+  //         console.log('userSupplements - ', userSupplements);
+  //         dispatch({ type: ACTIONS.GET_SUPPLEMENTS_FOR_USER, payload: { userSupplements } });
+  //         // setRefreshDashboard();
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error fetching user supplements:', error);
+  //       });
+  //   };
+
+  //   if (state.user || state.refreshDashboard) {
+  //     fetchData(); // Fetch initial data when user is signed in
+
+  //     // intervalId = setInterval(() => {
+  //     //   fetchData(); // Fetch data at regular intervals
+  //     // }, 5000); // Fetch data every 5 seconds (adjust as needed)
+  //   }
+
+  //   // Cleanup function to clear the interval when the user signs out
+  //   // return () => {
+  //   //   clearInterval(intervalId);
+  //   // };
+  // }, [state.user, state.refreshDashboard]); // Run effect when user state changes
 
   const handleRefillAlert = (supplementId) => {
     const confirmRefill = () => {
@@ -164,6 +210,7 @@ const useApplicationData = () => {
           .then((response) => {
             // console.log(response.data.message);
             if (response.data.message.length > 0) {
+              setRefreshDashboard();
               console.log("Refill confirmed");
             } else {
               console.log("No data returned, check response data:", response.data.message);
@@ -186,7 +233,6 @@ const useApplicationData = () => {
     confirmRefill();
   };
   
-  
 
   const logout = () => {
     dispatch({ type: ACTIONS.SET_USER, payload: { user: null } });
@@ -199,6 +245,7 @@ const useApplicationData = () => {
     setShowSupplementList(false);
     setUserSignUpClicked(false);
     setEditButtonClicked(false);
+    setRefreshDashboard();
   }
 
   const goBackToDashboard = () => {    
@@ -206,6 +253,7 @@ const useApplicationData = () => {
     setShowSupplementList(false);
     setUserSignUpClicked(false);
     setEditButtonClicked(false);
+    setRefreshDashboard();
   }
 
   const clickSignUp = () => {
@@ -220,6 +268,7 @@ const useApplicationData = () => {
     setNewSupplimentClicked(false);
     setUserSignUpClicked(false);
     setEditButtonClicked(false);
+    setRefreshDashboard();
   }
 
   const goBackToLogin = () => {

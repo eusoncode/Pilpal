@@ -32,12 +32,16 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
  * @return {Promise<{}>} A promise to the user.
  */
 const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
+  // console.log('newValue:', newValue, 'userId:', userId, 'supplementId:', supplementId);
+
   const query = `
-    UPDATE supplement_usage
+    UPDATE supplement_usage AS su
     SET stocklevel = $1
-    FROM user_supplements
-    WHERE user_supplements.userid = $2 AND user_supplements.supplementid = $3
-    RETURNING supplement_usage.*
+    FROM user_supplements AS us
+    WHERE su.usersupplementid = us.id
+      AND us.userid = $2
+      AND us.supplementid = $3
+    RETURNING *
   `;
   
   const queryParam = [newValue, userId, supplementId];
@@ -46,7 +50,7 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
     .query(query, queryParam)
     .then(result => {
       const editedSupplementUsage = result.rows[0];
-      // console.log(editedSupplementUsage);
+      console.log(editedSupplementUsage);
       return Promise.resolve(editedSupplementUsage);
     })
     .catch((err) => {
@@ -55,18 +59,52 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
     });
 };
 
-const refillStockLevel = (userId, supplementId) => {
+// const refillStockLevel = (userId, supplementId) => {
   
+//   const query = `
+//     UPDATE supplement_usage
+//     SET stocklevel = (UPDATE supplement SET type = $3 RETURNING supplements.quantity)
+//     FROM user_supplements
+//     JOIN supplements ON user_supplements.supplementid = supplements.id
+//     WHERE user_supplements.userid = $1 AND user_supplements.supplementid = $2 AND supplement_usage.usersupplementid = user_supplements.id
+//     RETURNING supplement_usage.*
+//   `;
+  
+//   const queryParam = [userId, supplementId, 'intake'];
+
+//   return db
+//     .query(query, queryParam)
+//     .then(result => {
+//       const editedSupplementUsage = result.rows[0];
+//       // console.log(editedSupplementUsage);
+//       return Promise.resolve(editedSupplementUsage);
+//     })
+//     .catch((err) => {
+//       console.error('Error updating supplement usage stocklevel:', err.message);
+//       throw err; // Rethrow the error to be handled elsewhere
+//     });
+// };
+
+const refillStockLevel = (userId, supplementId) => {
+  // console.log('userId:', userId);
   const query = `
+    WITH updated_supplement AS (
+      UPDATE supplements
+      SET type = $3
+      WHERE id = $2
+      RETURNING *
+    )
     UPDATE supplement_usage
-    SET stocklevel = supplements.quantity
-    FROM user_supplements
-    JOIN supplements ON user_supplements.supplementid = supplements.id
-    WHERE user_supplements.userid = $1 AND user_supplements.supplementid = $2 AND supplement_usage.usersupplementid = user_supplements.id
-    RETURNING supplement_usage.*
+    SET stocklevel = updated_supplement.quantity
+    FROM updated_supplement
+    JOIN user_supplements ON user_supplements.supplementid = updated_supplement.id
+    WHERE user_supplements.userid = $1
+    AND user_supplements.supplementid = $2
+    AND supplement_usage.usersupplementid = user_supplements.id
+    RETURNING supplement_usage.*;
   `;
   
-  const queryParam = [userId, supplementId];
+  const queryParam = [userId, supplementId, 'intake'];
 
   return db
     .query(query, queryParam)
@@ -77,9 +115,10 @@ const refillStockLevel = (userId, supplementId) => {
     })
     .catch((err) => {
       console.error('Error updating supplement usage stocklevel:', err.message);
-      throw err; // Rethrow the error to be handled elsewhere
+      throw err;
     });
 };
+
 
 module.exports = {
   getSupplementUsage,

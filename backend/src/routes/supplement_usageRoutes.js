@@ -16,7 +16,7 @@ const supplementUsageQueries = require('../db/queries/supplement_usage');
 router.post("/updateStockLevel", (req, res) => {
   const idFromCookie = req.session.userId;
   const stockLevelUpdate = req.body;
-  // console.log(stockLevelUpdate);
+  // console.log('stockLevelUpdate:',stockLevelUpdate);
   const {supplementId, newValue} = stockLevelUpdate;
 
   if (!idFromCookie) {
