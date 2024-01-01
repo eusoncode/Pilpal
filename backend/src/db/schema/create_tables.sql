@@ -62,7 +62,6 @@ CREATE TABLE supplements (
 --     FOREIGN KEY (supplementId) REFERENCES supplements(id)    
 -- );
 
-
 CREATE TABLE user_supplements (
   id serial PRIMARY KEY,
   userId INT NOT NULL,
