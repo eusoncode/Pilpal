@@ -50,7 +50,7 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
     .query(query, queryParam)
     .then(result => {
       const editedSupplementUsage = result.rows[0];
-      console.log(editedSupplementUsage);
+      // console.log(editedSupplementUsage);
       return Promise.resolve(editedSupplementUsage);
     })
     .catch((err) => {
