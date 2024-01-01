@@ -47,10 +47,8 @@ CREATE TABLE supplements (
 CREATE TABLE supplement_lineItem (
     id serial PRIMARY KEY,
     supplementId INT NOT NULL,
-    cost NUMERIC(10, 2),
     quantity INTEGER,
     type VARCHAR(255) NOT NULL,
-    images JSONB,
     dosageType VARCHAR(255),
     startDate TIMESTAMPTZ,
     endDate TIMESTAMPTZ,
@@ -67,7 +65,7 @@ CREATE TABLE user_supplements (
   id serial PRIMARY KEY,
   userId INT NOT NULL,
   supplementId INT NOT NULL,
-  number_of_pills_taken INTEGER,
+  dosage_per_intake INTEGER,
   time_taken TIMESTAMPTZ,
   effectiveness VARCHAR(255),
   additionalNotes TEXT,
@@ -81,6 +79,6 @@ CREATE TABLE supplement_usage (
   time_to_be_taken TIMESTAMPTZ,
   stocklevel INTEGER,
   updated_at TIMESTAMPTZ,
-  reorderLevel INTEGER,
+  refillLevel INTEGER,
   FOREIGN KEY (userSupplementId) REFERENCES user_supplements(id)
 );

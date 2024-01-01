@@ -12,20 +12,21 @@ export default function AddNew({
   addNewSupplement
 }) {
   const [formData, setFormData] = useState({
-    supplementName: '',
-    brandName: '',
+    name: '',
+    manufacturer: '',
     startingDate: '',
     endingDate: '',
     reminderTime: '',
     intakeFrequency: '',
     dosagePerIntake: '',
-    type: '',
-    currentQuantity: '',
-    notifyToReorderAt: '',
+    dosageType: '',
+    quantity: '',
+    refillLevel: '',
     purchasedFrom: '',
-    pricePaid: '',
+    price: '',
     productUrl: '',
     effectiveness: '',
+    description:'',
     additionalNotes: ''
   });
 
@@ -39,13 +40,30 @@ export default function AddNew({
     addNewSupplement(user.id, formData);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
 
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value
+  //   });
+  // };
+  
+  const handleInputChange = (e) => {
+    const { name, value, files } = e.target;
+
+    if (name === 'image') {
+      // Handle image file change
+      setFormData({
+        ...formData,
+        image: files[0] // Store the image file in state
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
   };
 
   return (
@@ -63,8 +81,8 @@ export default function AddNew({
             <form onSubmit={handleSubmit} className="supplement-form">
               <div className="form-group image-upload">
                 <label htmlFor="image">Image:</label>
-                <img src={Image} alt="User Uploaded" />
-                <input type="file" id="image" name="image" accept="image/*" />
+                <img src={/**formData.image ? URL.createObjectURL(formData.image) : **/Image} alt="User Uploaded"/>
+                <input type="file" id="image" name="image" accept="image/*" onChange={handleInputChange}/>
               </div>
               <div className="flex-container">
                 <div className="container-left">
@@ -74,14 +92,16 @@ export default function AddNew({
                       type="text"
                       id="supplementName"
                       name="supplementName"
-                      value={formData.supplementName}
+                      value={formData.name}
                       onChange={handleInputChange}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="brandName">Brand Name:</label>
-                    <input type="text" id="brandName" name="brandName" />
+                    <label htmlFor="brandName">Manufacturer:</label>
+                    <input type="text" id="brandName" name="brandName" 
+                      value={formData.manufacturer}
+                      onChange={handleInputChange} />
                   </div>
 
                   <div className="flex-container--row">
@@ -91,19 +111,27 @@ export default function AddNew({
                         type="date"
                         id="startingDate"
                         name="startingDate"
+                        value={formData.startingDate}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="form-group">
                       <label htmlFor="endingDate">Ending Date:</label>
-                      <input type="date" id="endingDate" name="endingDate" />
+                      <input type="date" id="endingDate" name="endingDate" 
+                      value={formData.endingDate}
+                      onChange={handleInputChange}/>
                     </div>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="reminderTime">Reminder Time:</label>
-                    <input type="time" id="reminderTime" name="reminderTime" />
+                    <input type="time" id="reminderTime" name="reminderTime" 
+                      value={formData.reminderTime}
+                      onChange={handleInputChange}/>
                     <label htmlFor="intakeFrequency">Intake Frequency:</label>
-                    <select id="intakeFrequency" name="intakeFrequency" value="">
+                    <select id="intakeFrequency" name="intakeFrequency" 
+                      value={formData.intakeFrequency}
+                      onChange={handleInputChange}>
                       <option value="Everyday">Everyday</option>
                       <option value="Everyday">Specific days of the week</option>
                     </select>
@@ -117,11 +145,15 @@ export default function AddNew({
                         type="number"
                         id="dosagePerIntake"
                         name="dosagePerIntake"
+                        value={formData.dosagePerIntake}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="type">Type:</label>
-                      <select id="type" name="type">
+                      <label htmlFor="type">Dosage Type:</label>
+                      <select id="type" name="type"
+                        value={formData.dosageType}
+                        onChange={handleInputChange}>
                         <option value="Capsule">Capsule</option>
                         <option value="Tablet">Tablet</option>
                         <option value="Spray">Spray</option>
@@ -136,23 +168,27 @@ export default function AddNew({
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="currentQuantity">Current Quantity:</label>
+                    <label htmlFor="currentQuantity">Quantity:</label>
                     <input
                       type="number"
                       id="currentQuantity"
                       name="currentQuantity"
+                      value={formData.quantity}
+                      onChange={handleInputChange}
                     />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="notifyToReorderAt">
-                      Notify to Reorder At:
+                      Refill Level:
                     </label>
                     <input
                       type="number"
                       id="notifyToReorderAt"
                       name="notifyToReorderAt"
-                      defaultValue={10}
+                      defaultValue={2 || 3}
+                      value={formData.refillLevel}
+                      onChange={handleInputChange}
                     />
                   </div>
                 </div>
@@ -164,23 +200,31 @@ export default function AddNew({
                       type="text"
                       id="purchasedFrom"
                       name="purchasedFrom"
+                      value={formData.purchasedFrom}
+                      onChange={handleInputChange}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="pricePaid">Price Paid:</label>
+                    <label htmlFor="pricePaid">Price:</label>
                     <span className="prefix">$</span>
-                    <input type="text" id="pricePaid" name="pricePaid" />
+                    <input type="text" id="pricePaid" name="pricePaid" 
+                      value={formData.price}
+                      onChange={handleInputChange}/>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="productUrl">Product URL (Optional):</label>
-                    <input type="url" id="productUrl" name="productUrl" />
+                    <input type="url" id="productUrl" name="productUrl"
+                      value={formData.productUrl}
+                      onChange={handleInputChange} />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="effectiveness">Effectiveness:</label>
-                    <select id="effectiveness" name="effectiveness">
+                    <select id="effectiveness" name="effectiveness"
+                      value={formData.effectiveness}
+                      onChange={handleInputChange}> 
                       <option value="Needs More Time To Evaluate">
                         Needs More Time To Evaluate
                       </option>
@@ -196,11 +240,21 @@ export default function AddNew({
                   </div>
 
                   <div className="form-group">
+                    <label htmlFor="description">Description:</label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows="4"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                    ></textarea>                    
                     <label htmlFor="additionalNotes">Additional Notes:</label>
                     <textarea
                       id="additionalNotes"
                       name="additionalNotes"
                       rows="4"
+                      value={formData.additionalNotes}
+                      onChange={handleInputChange}
                     ></textarea>
                   </div>
                 </div>

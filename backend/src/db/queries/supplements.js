@@ -27,10 +27,42 @@ const getSupplements = () => {
 // Post request query
 
 // ----------------------- addSupplement
-const addNewSupplement = function(supplement) {
+const addNewSupplement = (newSupplement) => {
+  console.log(newSupplement);
+  
+  const {
+    name,
+    manufacturer,
+    // startingDate,
+    // endingDate,
+    // reminderTime,
+    // intakeFrequency,
+    // dosagePerIntake,
+    // supplementType,
+    quantity,
+    // refillLevel,
+    // purchasedFrom,
+    price,
+    // productUrl,
+    // effectiveness,
+    description,
+    // additionalNotes
+  } = newSupplement;
+  
+  const query = `
+    INSERT INTO supplements (name, description, manufacturer, price, quantity, images) 
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING *
+  `;
+
   return db
-    .query(`INSERT INTO supplements (name, description, manufacturer, cost, quantity, images) 
-    VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [supplement.name, supplement.description, supplement.manufacturer, supplement.cost, supplement.quantity, null])
+    .query(query, [
+      name,
+      description,
+      manufacturer,
+      price,
+      quantity,
+      null])
     .then((result) => {
       const newsupplementAdded = result.rows[0];
       // console.log(newsupplementAdded);

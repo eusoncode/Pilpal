@@ -49,7 +49,13 @@ router.post("/addSupplement", (req, res) => {
         id: user.id,
       };
 
-      if (!newSupplement.name || !newSupplement.description || !newSupplement.manufacturer || !newSupplement.cost || !newSupplement.quantity) { // if email or password is empty, request for them
+      if (
+        !newSupplement.name ||
+        !newSupplement.description ||
+        !newSupplement.manufacturer ||
+        !newSupplement.price ||
+        !newSupplement.quantity
+      ) { // if email or password is empty, request for them
         return res.status(400).send("Please complete the form with the required info");
       }
 
