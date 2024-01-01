@@ -7,6 +7,8 @@ import SupplementCard from '../components/SupplementCard';
 export default function Dashboard({ logout, user, userSupplements, handleAddNew, takeSupplement, handleShowSupplementList, handleRefillAlert }) {
   const [takenSupplements, setTakenSupplements] = useState([]);
   const [skippedSupplements, setSkippedSupplements] = useState([]);
+
+  // console.log('takenSupplements:', takenSupplements);
   
   // console.log('userSupplements:', userSupplements);
 

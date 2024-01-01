@@ -10,7 +10,7 @@ function App() {
   // Use the custom hook to manage application data
   const { state, actions } = useApplicationData();
   const { addNewSupplimentClicked, showSupplementListClicked, user, userSupplements, userSignUpClicked, editButtonClicked} = state;
-  const { login, logout, handleAddNew, goBackToDashboard, clickSignUp, signUp, takeSupplement, handleShowSupplementList, goBackToLogin, setEditClicked, handleRefillAlert } = actions;
+  const { login, logout, addNewSupplement, handleAddNew, goBackToDashboard, clickSignUp, signUp, takeSupplement, handleShowSupplementList, goBackToLogin, setEditClicked, handleRefillAlert } = actions;
   // console.log(
   //   `showSupplementListClicked: ${showSupplementListClicked},
   //    userSignUpClicked: ${userSignUpClicked},
@@ -21,7 +21,7 @@ function App() {
 
   return (
     <>
-      {user && !showSupplementListClicked && addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <AddNew logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} />}
+      {user && !showSupplementListClicked && addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <AddNew logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} user={user} handleShowSupplementList={handleShowSupplementList} addNewSupplement={addNewSupplement} />}
       {!user && !showSupplementListClicked && !addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <Login login={login} clickSignUp={clickSignUp} />}
       {user && showSupplementListClicked && !addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <SupplementList logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} setEditClicked={setEditClicked} />}
       {user && !showSupplementListClicked && !addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <Dashboard logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} takeSupplement={takeSupplement} handleShowSupplementList={handleShowSupplementList} handleRefillAlert={handleRefillAlert} />}

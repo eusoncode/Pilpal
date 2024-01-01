@@ -14,39 +14,11 @@ CREATE TABLE users (
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE supplements (
-    id serial PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description VARCHAR(512) NOT NULL,
-    manufacturer VARCHAR(255) NOT NULL,
-    cost NUMERIC(10, 2),
-    quantity INTEGER,
-    type VARCHAR(255) NOT NULL,
-    images JSONB,
-    dosageType VARCHAR(255),
-    startDate TIMESTAMPTZ,
-    endDate TIMESTAMPTZ,
-    purchasedFrom VARCHAR(255),
-    price NUMERIC(10, 2);
-    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
-);
-
 -- CREATE TABLE supplements (
 --     id serial PRIMARY KEY,
 --     name VARCHAR(255) NOT NULL,
 --     description VARCHAR(512) NOT NULL,
 --     manufacturer VARCHAR(255) NOT NULL,
---     images JSONB,
---     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
---     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
---     deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
--- );
-
--- CREATE TABLE supplement_lineItem (
---     id serial PRIMARY KEY,
---     supplementId INT NOT NULL,
 --     cost NUMERIC(10, 2),
 --     quantity INTEGER,
 --     type VARCHAR(255) NOT NULL,
@@ -55,12 +27,40 @@ CREATE TABLE supplements (
 --     startDate TIMESTAMPTZ,
 --     endDate TIMESTAMPTZ,
 --     purchasedFrom VARCHAR(255),
---     price NUMERIC(10, 2),
+--     price NUMERIC(10, 2);
 --     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
 --     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
---     deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (supplementId) REFERENCES supplements(id)    
+--     deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 -- );
+
+CREATE TABLE supplements (
+    id serial PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(512) NOT NULL,
+    manufacturer VARCHAR(255) NOT NULL,
+    images JSONB,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE supplement_lineItem (
+    id serial PRIMARY KEY,
+    supplementId INT NOT NULL,
+    cost NUMERIC(10, 2),
+    quantity INTEGER,
+    type VARCHAR(255) NOT NULL,
+    images JSONB,
+    dosageType VARCHAR(255),
+    startDate TIMESTAMPTZ,
+    endDate TIMESTAMPTZ,
+    purchasedFrom VARCHAR(255),
+    price NUMERIC(10, 2),
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (supplementId) REFERENCES supplements(id)    
+);
 
 
 CREATE TABLE user_supplements (

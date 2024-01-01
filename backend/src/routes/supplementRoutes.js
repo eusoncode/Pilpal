@@ -28,7 +28,7 @@ router.get("/", (req, res) => {
 //Add a supplement by User
 router.post("/addSupplement", (req, res) => {
   const idFromCookie = req.session.userId;
-  const newSupplement = req.body;
+  const newSupplement = req.formData;
 
   if (!idFromCookie) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the BuyBuddy....");
@@ -50,7 +50,7 @@ router.post("/addSupplement", (req, res) => {
       };
 
       if (!newSupplement.name || !newSupplement.description || !newSupplement.manufacturer || !newSupplement.cost || !newSupplement.quantity) { // if email or password is empty, request for them
-        return res.status(400).send("Please enter complete the form with the required info");
+        return res.status(400).send("Please complete the form with the required info");
       }
 
       return supplementQueries.addNewSupplement(newSupplement);
@@ -67,7 +67,7 @@ router.post("/addSupplement", (req, res) => {
         return res.status(404).send("Could not add new supplement to user supplements");
       }
       // Now you have both userData and products data
-      const data = { user: userData, userSupplementsAdd: userSupplementsAdd };
+      // const data = { user: userData, userSupplementsAdd: userSupplementsAdd };
       res.status(200).json({ message: "New supplement was successful added" });
     })
     .catch((error) => {

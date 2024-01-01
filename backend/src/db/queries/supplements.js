@@ -41,6 +41,7 @@ const addNewSupplement = function(supplement) {
       throw err; // Rethrow the error to be handled elsewhere
     });
 };
+
 // ----------------------- removeSupplement
 const removeSupplement = function(supplementId) {
   return db

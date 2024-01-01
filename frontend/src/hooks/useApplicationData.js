@@ -141,6 +141,18 @@ const useApplicationData = () => {
       });
   };
 
+  const addNewSupplement = (formData) => {
+    axios.post('http://localhost:8080/supplements', formData, { withCredentials: true })
+      .then((response) => {
+        const loggedUser = response.data.userFound;
+        // console.log(response.data.userFound);
+        dispatch({ type: ACTIONS.SET_USER, payload: { user: loggedUser } });
+      })
+      .catch((error) => {
+        console.error('Error while making POST request:', error);
+      });
+  };
+
 
   // Fetch user's supplements when the user logs in
   useEffect(() => {
@@ -287,6 +299,7 @@ const useApplicationData = () => {
     actions: {
       login,
       logout,
+      addNewSupplement,
       handleAddNew,
       goBackToDashboard,
       clickSignUp,

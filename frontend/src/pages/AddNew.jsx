@@ -1,9 +1,53 @@
 import '../styles/addnew.scss';
 import Header from '../components/Header';
 import Image from '../assets/image-07.png';
+import React, { useState } from 'react';
 
-export default function AddNew({logout, handleAddNew, handleShowSupplementList, goBackToDashboard}) {
-  const handleSubmit = (e) => e.preventDefault();
+export default function AddNew({
+  logout,
+  handleAddNew,
+  user,
+  handleShowSupplementList,
+  goBackToDashboard,
+  addNewSupplement
+}) {
+  const [formData, setFormData] = useState({
+    supplementName: '',
+    brandName: '',
+    startingDate: '',
+    endingDate: '',
+    reminderTime: '',
+    intakeFrequency: '',
+    dosagePerIntake: '',
+    type: '',
+    currentQuantity: '',
+    notifyToReorderAt: '',
+    purchasedFrom: '',
+    pricePaid: '',
+    productUrl: '',
+    effectiveness: '',
+    additionalNotes: ''
+  });
+
+  // const handleSubmit = (e) => e.preventDefault();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Access form data
+    console.log('Form Data:', formData);
+    // Perform form submission or any other necessary actions
+    addNewSupplement(user.id, formData);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
   return (
     <>
       <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} />
@@ -30,6 +74,8 @@ export default function AddNew({logout, handleAddNew, handleShowSupplementList, 
                       type="text"
                       id="supplementName"
                       name="supplementName"
+                      value={formData.supplementName}
+                      onChange={handleInputChange}
                     />
                   </div>
 
@@ -57,11 +103,9 @@ export default function AddNew({logout, handleAddNew, handleShowSupplementList, 
                     <label htmlFor="reminderTime">Reminder Time:</label>
                     <input type="time" id="reminderTime" name="reminderTime" />
                     <label htmlFor="intakeFrequency">Intake Frequency:</label>
-                    <select id="intakeFrequency" name="intakeFrequency">
+                    <select id="intakeFrequency" name="intakeFrequency" value="">
                       <option value="Everyday">Everyday</option>
-                      <option value="Everyday">
-                        Specific days of the week
-                      </option>
+                      <option value="Everyday">Specific days of the week</option>
                     </select>
                   </div>
                   <div className="flex-container--row">
@@ -109,15 +153,6 @@ export default function AddNew({logout, handleAddNew, handleShowSupplementList, 
                       id="notifyToReorderAt"
                       name="notifyToReorderAt"
                       defaultValue={10}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="autoConsume">Auto Consume:</label>
-                    <input
-                      type="checkbox"
-                      id="autoConsume"
-                      name="autoConsume"
                     />
                   </div>
                 </div>
