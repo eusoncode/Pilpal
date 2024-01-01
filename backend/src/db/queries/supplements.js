@@ -33,22 +33,16 @@ const addNewSupplement = (newSupplement) => {
   const {
     name,
     manufacturer,
-    // startingDate,
-    // endingDate,
-    // reminderTime,
-    // intakeFrequency,
-    // dosagePerIntake,
-    // supplementType,
     quantity,
-    // refillLevel,
-    // purchasedFrom,
     price,
-    // productUrl,
-    // effectiveness,
-    description,
-    // additionalNotes
+    productUrl,
+    description
   } = newSupplement;
-  
+
+  const images = { src: productUrl };
+  const imagesString = JSON.stringify(images); // Convert object to JSON string
+  console.log(imagesString);
+
   const query = `
     INSERT INTO supplements (name, description, manufacturer, price, quantity, images) 
     VALUES ($1, $2, $3, $4, $5, $6)
@@ -62,7 +56,7 @@ const addNewSupplement = (newSupplement) => {
       manufacturer,
       price,
       quantity,
-      null])
+      imagesString])
     .then((result) => {
       const newsupplementAdded = result.rows[0];
       // console.log(newsupplementAdded);

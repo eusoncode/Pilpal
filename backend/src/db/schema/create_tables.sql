@@ -49,7 +49,7 @@ CREATE TABLE supplement_lineItem (
     supplementId INT NOT NULL,
     quantity INTEGER,
     type VARCHAR(255) NOT NULL,
-    dosageType VARCHAR(255),
+    supplementType VARCHAR(255),
     startDate TIMESTAMPTZ,
     endDate TIMESTAMPTZ,
     purchasedFrom VARCHAR(255),
@@ -80,5 +80,6 @@ CREATE TABLE supplement_usage (
   stocklevel INTEGER,
   updated_at TIMESTAMPTZ,
   refillLevel INTEGER,
+  intakeFrequency VARCHAR(255),
   FOREIGN KEY (userSupplementId) REFERENCES user_supplements(id)
 );

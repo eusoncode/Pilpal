@@ -119,10 +119,44 @@ const refillStockLevel = (userId, supplementId) => {
     });
 };
 
+const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
+  // console.log('userId:', userId);
+  // Note: quantity should be a sum of exist stocklevel and new quantity of the supplement
+  
+  const {
+    reminderTime,
+    intakeFrequency,
+    refillLevel
+  } = newSupplement;
+
+  
+  const query = `
+    INSERT INTO supplement_usage (userSupplementId, time_to_be_taken, stocklevel, intakeFrequency, refillLevel)
+    VALUES ($1, $2, $3, $4, $5) RETURNING *
+  `;
+
+  const queryParam = [supplementId, reminderTime, quantitySum, intakeFrequency, refillLevel];
+
+
+  return db
+    .query(query, queryParam)
+    .then(result => {
+      const updatedSupplementUsage = result.rows[0];
+      // console.log(updatedSupplementUsage);
+      return Promise.resolve(updatedSupplementUsage);
+    })
+    .catch((err) => {
+      console.error('Error adding new supplement to supplement usage:', err.message);
+      throw err;
+    });
+};
+
+
 
 module.exports = {
   getSupplementUsage,
   updateUserSupplementStockLevel,
-  refillStockLevel
+  refillStockLevel,
+  addToSupplementUsage
   // getSupplementUsageById
 };

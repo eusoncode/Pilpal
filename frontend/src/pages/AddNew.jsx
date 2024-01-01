@@ -35,36 +35,36 @@ export default function AddNew({
   const handleSubmit = (e) => {
     e.preventDefault();
     // Access form data
-    console.log('Form Data:', formData);
+    // console.log('Form Data:', formData);
     // Perform form submission or any other necessary actions
-    addNewSupplement(user.id, formData);
+    addNewSupplement(formData);
   };
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value
-  //   });
-  // };
-  
   const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
 
-    if (name === 'image') {
-      // Handle image file change
-      setFormData({
-        ...formData,
-        image: files[0] // Store the image file in state
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value
-      });
-    }
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
+  
+  // const handleInputChange = (e) => {
+  //   const { name, value, files } = e.target;
+
+  //   if (name === 'image') {
+  //     // Handle image file change
+  //     setFormData({
+  //       ...formData,
+  //       image: files[0] // Store the image file in state
+  //     });
+  //   } else {
+  //     setFormData({
+  //       ...formData,
+  //       [name]: value
+  //     });
+  //   }
+  // };
 
   return (
     <>
@@ -87,11 +87,11 @@ export default function AddNew({
               <div className="flex-container">
                 <div className="container-left">
                   <div className="form-group">
-                    <label htmlFor="supplementName">Supplement Name:</label>
+                    <label htmlFor="name">Supplement Name:</label>
                     <input
                       type="text"
-                      id="supplementName"
-                      name="supplementName"
+                      id="name"
+                      name="name"
                       value={formData.name}
                       onChange={handleInputChange}
                     />
@@ -99,7 +99,10 @@ export default function AddNew({
 
                   <div className="form-group">
                     <label htmlFor="brandName">Manufacturer:</label>
-                    <input type="text" id="brandName" name="brandName" 
+                    <input
+                      type="text"
+                      id="manufacturer"
+                      name="manufacturer" 
                       value={formData.manufacturer}
                       onChange={handleInputChange} />
                   </div>
@@ -117,19 +120,27 @@ export default function AddNew({
                     </div>
                     <div className="form-group">
                       <label htmlFor="endingDate">Ending Date:</label>
-                      <input type="date" id="endingDate" name="endingDate" 
-                      value={formData.endingDate}
-                      onChange={handleInputChange}/>
+                      <input
+                        type="date"
+                        id="endingDate"
+                        name="endingDate" 
+                        value={formData.endingDate}
+                        onChange={handleInputChange}/>
                     </div>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="reminderTime">Reminder Time:</label>
-                    <input type="time" id="reminderTime" name="reminderTime" 
+                    <input
+                      type="time"
+                      id="reminderTime"
+                      name="reminderTime" 
                       value={formData.reminderTime}
                       onChange={handleInputChange}/>
                     <label htmlFor="intakeFrequency">Intake Frequency:</label>
-                    <select id="intakeFrequency" name="intakeFrequency" 
+                    <select
+                      id="intakeFrequency"
+                      name="intakeFrequency" 
                       value={formData.intakeFrequency}
                       onChange={handleInputChange}>
                       <option value="Everyday">Everyday</option>
@@ -138,9 +149,7 @@ export default function AddNew({
                   </div>
                   <div className="flex-container--row">
                     <div className="form-group">
-                      <label htmlFor="dosagePerIntake">
-                        Dosage per Intake:
-                      </label>
+                      <label htmlFor="dosagePerIntake">Dosage per Intake:</label>
                       <input
                         type="number"
                         id="dosagePerIntake"
@@ -151,7 +160,9 @@ export default function AddNew({
                     </div>
                     <div className="form-group">
                       <label htmlFor="type">Dosage Type:</label>
-                      <select id="type" name="type"
+                      <select
+                        id="type"
+                        name="type"
                         value={formData.dosageType}
                         onChange={handleInputChange}>
                         <option value="Capsule">Capsule</option>
@@ -171,22 +182,19 @@ export default function AddNew({
                     <label htmlFor="currentQuantity">Quantity:</label>
                     <input
                       type="number"
-                      id="currentQuantity"
-                      name="currentQuantity"
+                      id="quantity"
+                      name="quantity"
                       value={formData.quantity}
                       onChange={handleInputChange}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="notifyToReorderAt">
-                      Refill Level:
-                    </label>
+                    <label htmlFor="refillLevel">Refill Level:</label>
                     <input
                       type="number"
-                      id="notifyToReorderAt"
-                      name="notifyToReorderAt"
-                      defaultValue={2 || 3}
+                      id="refillLevel"
+                      name="refillLevel"
                       value={formData.refillLevel}
                       onChange={handleInputChange}
                     />
@@ -206,35 +214,38 @@ export default function AddNew({
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="pricePaid">Price:</label>
+                    <label htmlFor="price">Price:</label>
                     <span className="prefix">$</span>
-                    <input type="text" id="pricePaid" name="pricePaid" 
+                    <input
+                      type="text"
+                      id="price"
+                      name="price" 
                       value={formData.price}
                       onChange={handleInputChange}/>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="productUrl">Product URL (Optional):</label>
-                    <input type="url" id="productUrl" name="productUrl"
+                    <input
+                      type="url"
+                      id="productUrl"
+                      name="productUrl"
                       value={formData.productUrl}
                       onChange={handleInputChange} />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="effectiveness">Effectiveness:</label>
-                    <select id="effectiveness" name="effectiveness"
+                    <select
+                      id="effectiveness"
+                      name="effectiveness"
                       value={formData.effectiveness}
                       onChange={handleInputChange}> 
-                      <option value="Needs More Time To Evaluate">
-                        Needs More Time To Evaluate
+                      <option value="Needs More Time To Evaluate">Needs More Time To Evaluate
                       </option>
                       <option value="Not Effective">Not Effective</option>
-                      <option value="Slightly Effective">
-                        Slightly Effective
-                      </option>
-                      <option value="Moderately Effective">
-                        Moderately Effective
-                      </option>
+                      <option value="Slightly Effective">Slightly Effective</option>
+                      <option value="Moderately Effective">Moderately Effective</option>
                       <option value="Highly Effective">Highly Effective</option>
                     </select>
                   </div>

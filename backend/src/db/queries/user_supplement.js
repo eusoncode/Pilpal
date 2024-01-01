@@ -82,13 +82,19 @@ const getUserSupplements = (id) => {
  * @param {{userId: Integer, supplementId: Integer}}
  * @return {Promise<{}>} A promise to the user.
  */
-const addToUserSupplement = (userId, supplementId) => {
+const addToUserSupplement = (userId, supplementId, newSupplement) => {
+  
+  const {
+    dosagePerIntake,
+    effectiveness
+  } = newSupplement;
+  
   const query = `
     INSERT INTO user_supplements (userId, supplementId, number_of_pills_taken, time_taken, effectiveness)
-    VALUES ($1, $2, $3, $4, $5) RETURNING *
+    VALUES ($1, $2, $3, NOW(), $4) RETURNING *
   `;
 
-  const queryParam = [userId, supplementId, null, null, null];
+  const queryParam = [userId, supplementId, dosagePerIntake, effectiveness];
 
   return db
     .query(query, queryParam)

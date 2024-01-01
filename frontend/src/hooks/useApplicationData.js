@@ -142,7 +142,10 @@ const useApplicationData = () => {
   };
 
   const addNewSupplement = (formData) => {
-    axios.post('http://localhost:8080/supplements', formData, { withCredentials: true })
+    const body = {
+      'formData': formData
+    }
+    axios.post('http://localhost:8080/supplements/addSupplement', body, { withCredentials: true })
       .then((response) => {
         const loggedUser = response.data.userFound;
         // console.log(response.data.userFound);
