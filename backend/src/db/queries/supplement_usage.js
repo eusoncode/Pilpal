@@ -112,7 +112,7 @@ const refillStockLevel = (userId, supplementId) => {
       RETURNING *
     )
     UPDATE supplement_usage
-    SET stocklevel = updated_supplement.quantity
+    SET stocklevel = updated_supplementLineItem.quantity
     FROM updated_supplementLineItem
     JOIN user_supplements ON user_supplements.supplementid = updated_supplementLineItem.id
     WHERE user_supplements.userid = $1
