@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import React, { useState } from 'react';
 import '../styles/dashboard.scss';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import Header from '../components/Header';
 import SupplementCard from '../components/SupplementCard';
-import mockReminder from '../data/mocks/mockReminder';
-import mockPillIntakes from '../data/mocks/mockPillIntakes';
 // import mockReminder from '../data/mocks/mockReminder';
+import mockPillIntakes from '../data/mocks/mockPillIntakes';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 export default function Dashboard({ logout, user, userSupplements, handleAddNew, takeSupplement, handleShowSupplementList, handleRefillAlert }) {
   const [takenSupplements, setTakenSupplements] = useState([]);
@@ -47,6 +45,8 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
   //  console.log('skippedSupplements:', skippedSupplements);
 
   const filteredSupplements = userSupplements.filter((supplement) => !takenSupplements.includes(supplement.id) && !skippedSupplements.includes(supplement.id));
+  
+  //  ---------------------------------------------------------------------------------------------------
 
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
@@ -78,7 +78,7 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
           </h1>
           <h2>Hi, {user.username}! Let’s make today a healthy one.</h2>
         </section>
-        <section className="container-bottom">
+        <section className="container-bottom">          
           <article className="container-left">
             <h3>
               Reminders <span>***</span>
@@ -105,7 +105,6 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
           <article className="container-right">
             <div className="container-right--box">
               <h3>Calender</h3>
-              <h3>Calendar</h3>
               <Calendar
                 onChange={setDate}
                 value={date}
@@ -133,6 +132,7 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
               )}
             </div>
           </article>
+
         </section>
       </main>
     </>
