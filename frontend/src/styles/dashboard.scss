@@ -190,3 +190,25 @@
     color: $white-color;
   }
 }
+
+// Calendar
+.react-calendar__tile {
+  position: relative;
+}
+
+.pill-taken-indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: $orange-color;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pill-details {
+  padding: $spacing-md;
+  li {
+    margin-top: $spacing-sm;
+  }
+}
