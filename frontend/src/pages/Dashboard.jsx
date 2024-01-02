@@ -7,8 +7,10 @@ import SupplementCard from '../components/SupplementCard';
 export default function Dashboard({ logout, user, userSupplements, handleAddNew, takeSupplement, handleShowSupplementList, handleRefillAlert }) {
   const [takenSupplements, setTakenSupplements] = useState([]);
   const [skippedSupplements, setSkippedSupplements] = useState([]);
+
+  // console.log('takenSupplements:', takenSupplements);
   
-  // console.log('userSupplements:', userSupplements);  
+  // console.log('userSupplements:', userSupplements);
 
   const hideCard = (supplementCardId, cardStockQuantity, CardIntakeQuantity) => {
     setTakenSupplements([...takenSupplements, supplementCardId]); 
@@ -18,7 +20,8 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
       return result += arg1 - arg2;       
     };
 
-    const newStockLevel = stockLevelEstimate(cardStockQuantity, CardIntakeQuantity);    
+    const newStockLevel = stockLevelEstimate(cardStockQuantity, CardIntakeQuantity);  
+    // console.log('newStockLevel:', newStockLevel);
 
     takeSupplement(supplementCardId, newStockLevel);
   };
@@ -55,15 +58,10 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
             <h3>
               Reminders <span>***</span>
             </h3>
-            {/* {mockReminder.map((reminder) => (
-              <SupplementCard key={reminder.id} {...reminder}/>
-            ))} */}
             <button type="button" onClick={clearTakenSupplements}>Clear Hidden Cards</button>
-            <br />
-            <br />
+            <br /><br />
             <button type="button" onClick={clearSkippedSupplements}>Clear Skipped Cards</button>
-            <br />
-            <br />
+            <br /><br />
             {filteredSupplements && filteredSupplements.map((userSupplement) => (
               <SupplementCard
                 key={userSupplement.id}

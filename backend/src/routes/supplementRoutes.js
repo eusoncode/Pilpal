@@ -3,6 +3,9 @@ const router  = express.Router();
 const supplementQueries = require('../db/queries/supplements');
 const userSupplementQueries = require('../db/queries/user_supplement');
 const userQueries = require('../db/queries/users');
+const supplementUsageQueries = require('../db/queries/supplement_usage');
+const supplementLineItemQueries = require('../db/queries/supplement_lineitem');
+const supplementSearchHelper = require('../supplementSearchHelper');
 
 // Get requests
 
@@ -28,13 +31,23 @@ router.get("/", (req, res) => {
 //Add a supplement by User
 router.post("/addSupplement", (req, res) => {
   const idFromCookie = req.session.userId;
-  const newSupplement = req.body;
+  const newSupplement = req.body.formData;
+  // console.log('newSupplement:', newSupplement, 'idFromCookie:', idFromCookie);
 
   if (!idFromCookie) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the BuyBuddy....");
   }
 
   let userData;
+  let supplementId;
+
+  const getSumOfSupplementQuantity = () => {
+    let result = 0;
+    const currentSupplementStocklevel = supplementSearchHelper.getSupplementCurrentStockLevel(userData.id, supplementId);
+    return result += newSupplement.quantity + currentSupplementStocklevel;
+  };
+
+  const quantitySum = getSumOfSupplementQuantity();
 
   userQueries.getUserById(idFromCookie)
     .then((user) => {
@@ -49,25 +62,45 @@ router.post("/addSupplement", (req, res) => {
         id: user.id,
       };
 
-      if (!newSupplement.name || !newSupplement.description || !newSupplement.manufacturer || !newSupplement.cost || !newSupplement.quantity) { // if email or password is empty, request for them
-        return res.status(400).send("Please enter complete the form with the required info");
+      if (
+        !newSupplement.name ||
+        !newSupplement.description ||
+        !newSupplement.manufacturer ||
+        !newSupplement.price ||
+        !newSupplement.quantity
+      ) { // if email or password is empty, request for them
+        return res.status(400).send("Please complete the form with the required info");
       }
 
       return supplementQueries.addNewSupplement(newSupplement);
     })
     .then((newSupplements) => {
       if (!newSupplements) {
-        return res.status(404).send("Could not add new supplement to the list of supplements");
+        return res.status(404).send("Could not add new supplement to the list of supplements table");
+      }
+      supplementId = newSupplements.id;
+
+      return userSupplementQueries.addToUserSupplement(userData.id, supplementId, newSupplement);
+    })
+    .then((userSupplementsAdded) => {
+      if (!userSupplementsAdded) {
+        return res.status(404).send("Could not add new supplement to user_upplements table");
       }
 
-      return userSupplementQueries.addToUserSupplement(userData.id, newSupplements.id);
+      return supplementUsageQueries.addToSupplementUsage(supplementId, newSupplement, quantitySum);
     })
-    .then((userSupplementsAdd) => {
-      if (!userSupplementsAdd) {
-        return res.status(404).send("Could not add new supplement to user supplements");
+    .then((supplementsUsageAdded) => {
+      if (!supplementsUsageAdded) {
+        return res.status(404).send("Could not add new supplement to supplement_usage table");
       }
-      // Now you have both userData and products data
-      const data = { user: userData, userSupplementsAdd: userSupplementsAdd };
+
+      return supplementLineItemQueries.addToSupplementLineItem(supplementId, newSupplement);
+    })
+    .then((supplementsLineItemAdded) => {
+      if (!supplementsLineItemAdded) {
+        return res.status(404).send("Could not add new supplement to supplement_lineitem table");
+      }
+
       res.status(200).json({ message: "New supplement was successful added" });
     })
     .catch((error) => {

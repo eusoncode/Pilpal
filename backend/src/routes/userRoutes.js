@@ -89,6 +89,7 @@ router.get("/:id", (req, res) => {
 //     });
 // });
 router.post("/signup", (req, res) => {
+  
   const user = req.body;
   // console.log(user);
   const { email, password, username } = user;

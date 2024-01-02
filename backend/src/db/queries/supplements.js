@@ -27,10 +27,32 @@ const getSupplements = () => {
 // Post request query
 
 // ----------------------- addSupplement
-const addNewSupplement = function(supplement) {
+const addNewSupplement = (newSupplement) => {
+  console.log(newSupplement);
+  
+  const {
+    name,
+    manufacturer,
+    productUrl,
+    description
+  } = newSupplement;
+
+  const images = { src: productUrl };
+  const imagesString = JSON.stringify(images); // Convert object to JSON string
+  console.log(imagesString);
+
+  const query = `
+    INSERT INTO supplements (name, description, manufacturer, images) 
+    VALUES ($1, $2, $3, $4)
+    RETURNING *
+  `;
+
   return db
-    .query(`INSERT INTO supplements (name, description, manufacturer, cost, quantity, images) 
-    VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [supplement.name, supplement.description, supplement.manufacturer, supplement.cost, supplement.quantity, null])
+    .query(query, [
+      name,
+      description,
+      manufacturer,
+      imagesString])
     .then((result) => {
       const newsupplementAdded = result.rows[0];
       // console.log(newsupplementAdded);
@@ -41,6 +63,7 @@ const addNewSupplement = function(supplement) {
       throw err; // Rethrow the error to be handled elsewhere
     });
 };
+
 // ----------------------- removeSupplement
 const removeSupplement = function(supplementId) {
   return db

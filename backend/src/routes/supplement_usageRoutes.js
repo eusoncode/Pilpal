@@ -16,7 +16,7 @@ const supplementUsageQueries = require('../db/queries/supplement_usage');
 router.post("/updateStockLevel", (req, res) => {
   const idFromCookie = req.session.userId;
   const stockLevelUpdate = req.body;
-  // console.log(stockLevelUpdate);
+  // console.log('stockLevelUpdate:',stockLevelUpdate);
   const {supplementId, newValue} = stockLevelUpdate;
 
   if (!idFromCookie) {
@@ -34,14 +34,34 @@ router.post("/updateStockLevel", (req, res) => {
     .then((response) => {
       // console.log(response.data);
       if (!response) {
-        return res.status(404).send("Could not update the supplement stocklevel");
+        return res.status(404).send("Failed to update the supplement stock level");
       }
 
-      res.status(200).json({ message: "Supplement stocklevel was successful updated" });
+      // console.log({
+      //   refilllevel: response.refilllevel,
+      //   stocklevel: response.stocklevel,
+      //   userid: response.userid
+      // });
+        
+      if (response.refilllevel === response.stocklevel) {
+        return supplementUsageQueries.updateSupplementType(response.userid, response.supplementid);
+      }
+      
+      return response;
+    })
+    .then((response) => {
+
+      console.log('response after updateSupplementType:', response);
+      
+      if (!response) {
+        return res.status(404).send("Failed to update the supplement line item (type)");
+      }
+
+      res.status(200).json({ message: response });
     })
     .catch((error) => {
       console.error(error);
-      res.status(500).send("Error fetching data");
+      res.status(500).send("Error fetching data or updating data");
     });
 });
 
