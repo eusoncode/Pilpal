@@ -133,7 +133,7 @@ const useApplicationData = () => {
 
     axios.post('http://localhost:8080/supplement_usage/updateStockLevel', body, { withCredentials: true })
       .then((response) => {
-        // console.log('Supplement successfully taken:', response);
+        console.log('Supplement successfully taken:', response.data);
         setRefreshDashboard();
       })
       .catch((error) => {
@@ -252,7 +252,7 @@ const useApplicationData = () => {
   const logout = () => {
     dispatch({ type: ACTIONS.SET_USER, payload: { user: null } });
     // setNewSupplimentClicked(false);
-    goBackToDashboard();
+    // goBackToDashboard();
   };
 
   const handleAddNew = () => {
