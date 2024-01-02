@@ -83,10 +83,6 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
             <h3>
               Reminders <span>***</span>
             </h3>
-            <button type="button" onClick={clearTakenSupplements}>Clear Hidden Cards</button>
-            <br /><br />
-            <button type="button" onClick={clearSkippedSupplements}>Clear Skipped Cards</button>
-            <br /><br />
             {filteredSupplements && filteredSupplements.map((userSupplement) => (
               <SupplementCard
                 key={userSupplement.id}
@@ -101,6 +97,10 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
                 No supplements available for this user. Would you like to add new supplements?
               </strong>
             </p>}
+            <button className='btn success' type="button" onClick={clearTakenSupplements}>Clear Hidden Cards</button>
+            <br /><br />
+            <button className='btn success' type="button" onClick={clearSkippedSupplements}>Clear Skipped Cards</button>
+            <br /><br />
           </article>
           <article className="container-right">
             <div className="container-right--box">

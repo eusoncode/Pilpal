@@ -28,7 +28,8 @@ const getSupplements = () => {
 
 // ----------------------- addSupplement
 const addNewSupplement = (newSupplement) => {
-  console.log(newSupplement);
+
+  console.log({newSupplement: newSupplement});
   
   const {
     name,
@@ -37,7 +38,7 @@ const addNewSupplement = (newSupplement) => {
     description
   } = newSupplement;
 
-  const images = { src: productUrl };
+  const images = { src: productUrl};
   const imagesString = JSON.stringify(images); // Convert object to JSON string
   console.log(imagesString);
 
@@ -47,12 +48,10 @@ const addNewSupplement = (newSupplement) => {
     RETURNING *
   `;
 
+  const queryParam = [name, description, manufacturer, imagesString];
+
   return db
-    .query(query, [
-      name,
-      description,
-      manufacturer,
-      imagesString])
+    .query(query, queryParam)
     .then((result) => {
       const newsupplementAdded = result.rows[0];
       // console.log(newsupplementAdded);

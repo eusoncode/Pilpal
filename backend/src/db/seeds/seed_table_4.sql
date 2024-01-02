@@ -11,7 +11,6 @@
 -- ('user9', 'user9@example.com', 'password9', NOW(), NOW()),
 -- ('user10', 'user10@example.com', 'password10', NOW(), NOW());
 
-
 -- Inserting values into the supplements table
 
 INSERT INTO supplements (name, description, manufacturer, images, created_at, updated_at, deleted_at) VALUES
@@ -68,3 +67,4 @@ VALUES
   (8, '2023-12-31 22:00:00', 'Specific days of the week', 2, 6, NOW()),
   (9, '2023-12-31 14:00:00', 'Everyday', 26, 3, NOW()),
   (10, '2023-12-31 08:00:00', 'Everyday', 19, 6, NOW());
+  

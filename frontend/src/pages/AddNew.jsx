@@ -26,9 +26,11 @@ export default function AddNew({
     price: '',
     productUrl: '',
     effectiveness: '',
-    description:'',
+    description: '',
     additionalNotes: ''
   });
+  
+  // const { saveImage, setSaveImage } = useState({image: ''});
 
   // const handleSubmit = (e) => e.preventDefault();
 
@@ -54,8 +56,8 @@ export default function AddNew({
 
   //   if (name === 'image') {
   //     // Handle image file change
-  //     setFormData({
-  //       ...formData,
+  //     setSaveImage({
+  //       ...saveImage,
   //       image: files[0] // Store the image file in state
   //     });
   //   } else {
@@ -81,7 +83,7 @@ export default function AddNew({
             <form onSubmit={handleSubmit} className="supplement-form">
               <div className="form-group image-upload">
                 <label htmlFor="image">Image:</label>
-                <img src={/**formData.image ? URL.createObjectURL(formData.image) : **/Image} alt="User Uploaded"/>
+                <img src={/**saveImage.image ? URL.createObjectURL(saveImage.image) : **/Image} alt="User Uploaded"/>
                 <input type="file" id="image" name="image" accept="image/*" onChange={handleInputChange}/>
               </div>
               <div className="flex-container">
@@ -159,10 +161,10 @@ export default function AddNew({
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="type">Dosage Type:</label>
+                      <label htmlFor="dosageType">Dosage Type:</label>
                       <select
-                        id="type"
-                        name="type"
+                        id="dosageType"
+                        name="dosageType"
                         value={formData.dosageType}
                         onChange={handleInputChange}>
                         <option value="Capsule">Capsule</option>
@@ -241,8 +243,7 @@ export default function AddNew({
                       name="effectiveness"
                       value={formData.effectiveness}
                       onChange={handleInputChange}> 
-                      <option value="Needs More Time To Evaluate">Needs More Time To Evaluate
-                      </option>
+                      <option value="Needs More Time To Evaluate">Needs More Time To Evaluate</option>
                       <option value="Not Effective">Not Effective</option>
                       <option value="Slightly Effective">Slightly Effective</option>
                       <option value="Moderately Effective">Moderately Effective</option>

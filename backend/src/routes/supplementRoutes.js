@@ -24,6 +24,7 @@ router.get("/", (req, res) => {
     });
 });
 
+
 // ----------------------- getSupplementByName
 
 //Post request
@@ -32,7 +33,11 @@ router.get("/", (req, res) => {
 router.post("/addSupplement", (req, res) => {
   const idFromCookie = req.session.userId;
   const newSupplement = req.body.formData;
-  // console.log('newSupplement:', newSupplement, 'idFromCookie:', idFromCookie);
+
+  // console.log({
+  //   newSupplement: newSupplement,
+  //   idFromCookie: idFromCookie
+  // });
 
   if (!idFromCookie) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the BuyBuddy....");
@@ -40,14 +45,6 @@ router.post("/addSupplement", (req, res) => {
 
   let userData;
   let supplementId;
-
-  const getSumOfSupplementQuantity = () => {
-    let result = 0;
-    const currentSupplementStocklevel = supplementSearchHelper.getSupplementCurrentStockLevel(userData.id, supplementId);
-    return result += newSupplement.quantity + currentSupplementStocklevel;
-  };
-
-  const quantitySum = getSumOfSupplementQuantity();
 
   userQueries.getUserById(idFromCookie)
     .then((user) => {
@@ -74,11 +71,11 @@ router.post("/addSupplement", (req, res) => {
 
       return supplementQueries.addNewSupplement(newSupplement);
     })
-    .then((newSupplements) => {
-      if (!newSupplements) {
+    .then((newSupplementsAdded) => {
+      if (!newSupplementsAdded) {
         return res.status(404).send("Could not add new supplement to the list of supplements table");
       }
-      supplementId = newSupplements.id;
+      supplementId = newSupplementsAdded.id;
 
       return userSupplementQueries.addToUserSupplement(userData.id, supplementId, newSupplement);
     })
@@ -86,6 +83,14 @@ router.post("/addSupplement", (req, res) => {
       if (!userSupplementsAdded) {
         return res.status(404).send("Could not add new supplement to user_upplements table");
       }
+      
+      const getSumOfSupplementQuantity = () => {
+        let result = 0;
+        const currentSupplementStocklevel = supplementSearchHelper.getSupplementCurrentStockLevel(userData.id, supplementId);
+        return result += newSupplement.quantity + currentSupplementStocklevel;
+      };
+
+      const quantitySum = getSumOfSupplementQuantity();
 
       return supplementUsageQueries.addToSupplementUsage(supplementId, newSupplement, quantitySum);
     })
