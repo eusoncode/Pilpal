@@ -1,0 +1,71 @@
+@import './App.scss';
+@import './variables';
+@import './header';
+
+
+.landing-page {
+  background-color: $light-gray-color; 
+  color: $black-color; 
+  font-family: $font-family-primary; 
+  overflow-x: hidden;
+}
+
+.landing-content {
+  padding: $spacing-xxl;
+  text-align: center;
+}
+
+.hero-section {
+  margin-bottom: $spacing-xxl;
+
+  h1 {
+    font-size: $font-size-xxxl;
+    margin-bottom: $spacing-lg;
+    span {
+      font-size: $font-size-xxl;
+    }
+  }
+
+  p {
+    font-size: $font-size-h2;
+    margin-bottom: $spacing-xl;
+  }
+
+  .cta-buttons {
+    a {
+      display: inline-block;
+      background-color: $orange-color;
+      color: $white-color;
+      text-decoration: none;
+      font-size: $font-size-h2;
+      font-weight: 700;
+      padding: $spacing-md $spacing-lg;
+      border-radius: 8px;
+      margin: 0 $spacing-md;
+
+      &:hover {
+        background-color: darken($orange-color, 10%);
+      }
+    }
+  }
+}
+
+.features-section {
+  margin-bottom: $spacing-xxl;
+
+  h2 {
+    font-size: $font-size-xxxl;
+    margin-bottom: $spacing-lg;
+  }
+
+  // Add styling for feature descriptions
+}
+
+.testimonial-section {
+  h2 {
+    font-size: $font-size-xxxl;
+    margin-bottom: $spacing-lg;
+  }
+
+  // Add styling for user testimonials
+}
