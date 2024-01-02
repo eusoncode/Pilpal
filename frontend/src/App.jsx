@@ -19,6 +19,8 @@ function App() {
   //    editButtonClicked: ${editButtonClicked}
   //   `);
 
+  // console.log({userSupplementState: userSupplements});
+
   return (
     <>
       {user && !showSupplementListClicked && addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <AddNew logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} user={user} handleShowSupplementList={handleShowSupplementList} addNewSupplement={addNewSupplement} />}

@@ -17,7 +17,7 @@ export default function SupplementCard({
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
-
+  
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
@@ -33,7 +33,7 @@ export default function SupplementCard({
   const handleRefillButton = () => {
     handleRefillAlert(id);
   }
-
+  
   const imageUrl = image.src;
   const cardStyles = type === 'restock' ? 'restock-card' : 'intake-card';
 

@@ -16,15 +16,16 @@ export default function SupplementList({ logout, user, handleAddNew, userSupplem
         </section>
         <section className="container-bottom">
           <article>
-            {mockReminder.map((supplement) => (
-              <SupplementListCard key={supplement.id} {...supplement} setEditClicked={setEditClicked} />
-            ))}
-            {/* {userSupplements.map((supplement) => (
+            {/* {mockReminder.map((supplement) => (
               <SupplementListCard key={supplement.id} {...supplement} setEditClicked={setEditClicked} />
             ))} */}
+            {userSupplements.map((supplement) => (
+              <SupplementListCard key={supplement.id} {...supplement} setEditClicked={setEditClicked} />
+            ))}
           </article>
         </section>
       </main>
     </>
   );
 }
+

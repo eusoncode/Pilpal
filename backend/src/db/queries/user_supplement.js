@@ -24,9 +24,18 @@ const getUserSupplements = (id) => {
   const query = `
     SELECT supplements.name,
       TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE 'UTC', 'YYYY-MM-DD HH12:MI AM') AS time,
+      supplement_usage.intakeFrequency,
       user_supplements.dosage_per_intake AS intakeQuantity,
       supplement_usage.stocklevel AS stockQuantity,
       supplements.images AS image,
+      user_supplements.effectiveness,
+      supplement_usage.refillLevel,
+      supplement_lineitem.supplementType AS dosageType,
+      supplement_lineitem.startDate,
+      supplement_lineitem.endDate,
+      supplement_lineitem.price,
+      supplement_lineitem.purchasedFrom,
+      user_supplements.additionalNotes,
       supplement_lineitem.type,
       supplements.id
     FROM supplements 
