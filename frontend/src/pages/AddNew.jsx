@@ -144,7 +144,7 @@ export default function AddNew({
                       value={formData.intakeFrequency}
                       onChange={handleInputChange}>
                       <option value="Everyday">Everyday</option>
-                      <option value="Everyday">Specific days of the week</option>
+                      <option value="Specific days of the week">Specific days of the week</option>
                     </select>
                   </div>
                   <div className="flex-container--row">

@@ -1,22 +1,24 @@
 const db = require('../connection');
 
-const addToSupplementLineItem = (userId, supplementId, newSupplement) => {
+const addToSupplementLineItem = (supplementId, newSupplement) => {
   // console.log('userId:', userId);
   
   const {
+    quantity,
+    supplementType,
     startingDate,
     endingDate,
-    supplementType,
+    purchasedFrom,
     price
   } = newSupplement;
 
   
   const query = `
-    INSERT INTO user_supplements (userId, supplementId, startingDate, endingDate, supplementType, price)
-    VALUES ($1, $2, $3, $4, $5, $6) RETURNING *
+    INSERT INTO supplement_lineitem (supplementId, quantity, type, supplementType, startDate, endDate, purchasedFrom, price)
+    VALUES ($1, $2, "intake", $3, $4, $5, $6) RETURNING *
   `;
 
-  const queryParam = [userId, supplementId, startingDate, endingDate, supplementType, price];
+  const queryParam = [supplementId, quantity, supplementType, startingDate, endingDate, purchasedFrom, price];
 
 
   return db

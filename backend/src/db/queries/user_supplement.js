@@ -8,17 +8,31 @@ const db = require('../connection');
  */
 
 const getUserSupplements = (id) => {
+  // const query = `
+  //   SELECT supplements.name,
+  //     TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE 'UTC', 'YYYY-MM-DD HH12:MI AM') AS time,
+  //     user_supplements.number_of_pills_taken AS intakeQuantity,
+  //     supplement_usage.stocklevel AS stockQuantity,
+  //     supplements.images AS image,
+  //     supplements.type,
+  //     supplements.id
+  //   FROM supplements
+  //   JOIN user_supplements ON supplements.id = user_supplements.supplementId
+  //   JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id
+  //   WHERE user_supplements.userId = $1;
+  // `;
   const query = `
     SELECT supplements.name,
       TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE 'UTC', 'YYYY-MM-DD HH12:MI AM') AS time,
-      user_supplements.number_of_pills_taken AS intakeQuantity,
+      user_supplements.dosage_per_intake AS intakeQuantity,
       supplement_usage.stocklevel AS stockQuantity,
       supplements.images AS image,
-      supplements.type,
+      supplement_lineitem.type,
       supplements.id
     FROM supplements 
     JOIN user_supplements ON supplements.id = user_supplements.supplementId
     JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id 
+    JOIN supplement_lineitem ON supplement_lineitem.supplementId = supplements.id
     WHERE user_supplements.userId = $1;
   `;
 
@@ -86,15 +100,16 @@ const addToUserSupplement = (userId, supplementId, newSupplement) => {
   
   const {
     dosagePerIntake,
-    effectiveness
+    effectiveness,
+    additionalNotes
   } = newSupplement;
   
   const query = `
-    INSERT INTO user_supplements (userId, supplementId, number_of_pills_taken, time_taken, effectiveness)
-    VALUES ($1, $2, $3, NOW(), $4) RETURNING *
+    INSERT INTO user_supplements (userId, supplementId, dosage_per_intake, time_taken, effectiveness, additionalNotes)
+    VALUES ($1, $2, $3, NOW(), $4, $5) RETURNING *
   `;
 
-  const queryParam = [userId, supplementId, dosagePerIntake, effectiveness];
+  const queryParam = [userId, supplementId, dosagePerIntake, effectiveness, additionalNotes];
 
   return db
     .query(query, queryParam)

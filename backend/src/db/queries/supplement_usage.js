@@ -87,17 +87,34 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
 
 const refillStockLevel = (userId, supplementId) => {
   // console.log('userId:', userId);
+  // const query = `
+  //   WITH updated_supplement AS (
+  //     UPDATE supplements
+  //     SET type = $3
+  //     WHERE id = $2
+  //     RETURNING *
+  //   )
+  //   UPDATE supplement_usage
+  //   SET stocklevel = updated_supplement.quantity
+  //   FROM updated_supplement
+  //   JOIN user_supplements ON user_supplements.supplementid = updated_supplement.id
+  //   WHERE user_supplements.userid = $1
+  //   AND user_supplements.supplementid = $2
+  //   AND supplement_usage.usersupplementid = user_supplements.id
+  //   RETURNING supplement_usage.*;
+  // `;
+
   const query = `
-    WITH updated_supplement AS (
-      UPDATE supplements
+    WITH updated_supplementLineItem AS (
+      UPDATE supplement_lineitem
       SET type = $3
-      WHERE id = $2
+      WHERE supplementId = $2
       RETURNING *
     )
     UPDATE supplement_usage
     SET stocklevel = updated_supplement.quantity
-    FROM updated_supplement
-    JOIN user_supplements ON user_supplements.supplementid = updated_supplement.id
+    FROM updated_supplementLineItem
+    JOIN user_supplements ON user_supplements.supplementid = updated_supplementLineItem.id
     WHERE user_supplements.userid = $1
     AND user_supplements.supplementid = $2
     AND supplement_usage.usersupplementid = user_supplements.id

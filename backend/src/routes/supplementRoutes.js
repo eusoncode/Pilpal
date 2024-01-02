@@ -94,7 +94,7 @@ router.post("/addSupplement", (req, res) => {
         return res.status(404).send("Could not add new supplement to supplement_usage table");
       }
 
-      return supplementLineItemQueries.addToSupplementLineItem(userData.id, supplementId, newSupplement);
+      return supplementLineItemQueries.addToSupplementLineItem(supplementId, newSupplement);
     })
     .then((supplementsLineItemAdded) => {
       if (!supplementsLineItemAdded) {

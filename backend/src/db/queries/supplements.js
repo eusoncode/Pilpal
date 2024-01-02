@@ -33,8 +33,6 @@ const addNewSupplement = (newSupplement) => {
   const {
     name,
     manufacturer,
-    quantity,
-    price,
     productUrl,
     description
   } = newSupplement;
@@ -44,8 +42,8 @@ const addNewSupplement = (newSupplement) => {
   console.log(imagesString);
 
   const query = `
-    INSERT INTO supplements (name, description, manufacturer, price, quantity, images) 
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO supplements (name, description, manufacturer, images) 
+    VALUES ($1, $2, $3, $4)
     RETURNING *
   `;
 
@@ -54,8 +52,6 @@ const addNewSupplement = (newSupplement) => {
       name,
       description,
       manufacturer,
-      price,
-      quantity,
       imagesString])
     .then((result) => {
       const newsupplementAdded = result.rows[0];
