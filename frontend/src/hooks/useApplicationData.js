@@ -154,7 +154,7 @@ const useApplicationData = () => {
         // console.log(response.data.userFound);
         dispatch({ type: ACTIONS.SET_USER, payload: { user: loggedUser } });
         console.log('Supplement successfully add:', response.data);
-        setRefreshDashboard();
+        goBackToDashboard();
       })
       .catch((error) => {
         console.error('Error while making POST request:', error);
