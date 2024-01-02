@@ -27,7 +27,6 @@ const getUsers = () => {
     .then(result => {
       const users = result.rows;
       const editedUsers = users.filter(user => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(user.id));
-
       return Promise.resolve(editedUsers);
     })
     .catch(error => {
