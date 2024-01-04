@@ -1,12 +1,10 @@
 import '../styles/addnew.scss';
-import Header from '../components/Header';
 import Image from '../assets/image-07.png';
 
 export default function AddNew() {
   const handleSubmit = (e) => e.preventDefault();
   return (
     <>
-      <Header />
       <main className="supplement-details-container container">
         <section className="container-top">
           <h1 className="accent">

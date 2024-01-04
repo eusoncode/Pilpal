@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '../styles/dashboard.scss';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Header from '../components/Header';
 import SupplementCard from '../components/SupplementCard';
 import mockReminder from '../data/mocks/mockReminder';
 import mockPillIntakes from '../data/mocks/mockPillIntakes';
@@ -30,7 +29,6 @@ export default function Dashboard() {
 
   return (
     <>
-      <Header />
       <main className="dashboard-container container">
         <section className="container-top">
           <h1 className="accent">

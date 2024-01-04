@@ -1,12 +1,10 @@
 import '../styles/supplementlist.scss';
-import Header from '../components/Header';
 import SupplementListCard from '../components/SupplementListCard';
 import mockReminder from '../data/mocks/mockReminder';
 
 export default function SupplementList() {
   return (
     <>
-      <Header />
       <main className="supplementlist-container container">
         <section className="container-top">
           <h1 className="accent">
