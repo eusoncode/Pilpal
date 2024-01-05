@@ -1,71 +1,98 @@
 @import './App.scss';
 @import './variables';
 @import './header';
+@import './footer';
+@import './dashboard';
 
 
-.landing-page {
-  background-color: $light-gray-color; 
-  color: $black-color; 
-  font-family: $font-family-primary; 
-  overflow-x: hidden;
+
+
+
+header {
+  width: 100%;
+  background-color: $black-color;
+  position: fixed;
+  z-index: 99;
+
+  nav {
+    padding-top: $spacing-lg;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: $white-color;
+    font-family: $font-family-primary;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
-.landing-content {
-  padding: $spacing-xxl;
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+  margin: 0;
+  background-image: url('../assets/image-01.png');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  color: #130404;
+}
+
+
+
+
+
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+.logo span {
+  color: #ffc107; 
+   font-size: 5rem;
+}
+
+
+
+
+.container-top {
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.hero-section {
-  margin-bottom: $spacing-xxl;
-
-  h1 {
-    font-size: $font-size-xxxl;
-    margin-bottom: $spacing-lg;
-    span {
-      font-size: $font-size-xxl;
-    }
-  }
-
-  p {
-    font-size: $font-size-h2;
-    margin-bottom: $spacing-xl;
-  }
-
-  .cta-buttons {
-    a {
-      display: inline-block;
-      background-color: $orange-color;
-      color: $white-color;
-      text-decoration: none;
-      font-size: $font-size-h2;
-      font-weight: 700;
-      padding: $spacing-md $spacing-lg;
-      border-radius: 8px;
-      margin: 0 $spacing-md;
-
-      &:hover {
-        background-color: darken($orange-color, 10%);
-      }
-    }
-  }
+.container-top h1 {
+  font-size: 5rem;
+  margin-bottom: 10px;
 }
 
-.features-section {
-  margin-bottom: $spacing-xxl;
-
-  h2 {
-    font-size: $font-size-xxxl;
-    margin-bottom: $spacing-lg;
-  }
-
-  // Add styling for feature descriptions
+.container-top h1 span {
+  color: #ffc107; 
 }
 
-.testimonial-section {
-  h2 {
-    font-size: $font-size-xxxl;
-    margin-bottom: $spacing-lg;
-  }
-
-  // Add styling for user testimonials
+.container-top h2 {
+  font-size: 2.5rem;
+  color: #3b21bf; 
 }
+
+.container-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-left {
+  width: 60%;
+  text-align: left;
+}
+
+.container-left h3 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.container-left p {
+  font-size: 1.5rem;
+  color: #9c91b8;
+}
+

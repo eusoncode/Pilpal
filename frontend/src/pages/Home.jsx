@@ -1,36 +1,39 @@
 
-
 import React from 'react';
-import { Link } from 'react-router-dom'; 
-import Header from '../components/Header';
-
+import Footer from '../components/Footer';
 import '../styles/home.scss';
 
-export default function LandingPage() {
+export default function Home({ login, signup }) {
   return (
-    <div className="landing-page">
-      <Header />
-      <main className="landing-content">
-        <section className="hero-section">
-          <h1>Your Health, Our Priority</h1>
-          <p>
-            Welcome to Pilpal, your personal supplement and health reminder app. Keep track of your supplements and stay healthy effortlessly.
-          </p>
-          <div className="cta-buttons">
-            
-            {/* <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link> */}
-          </div>
+    <div className="">
+      <header className='header'>
+        <nav className="nav">
+          <div className="logo">
+            <h1>Pilpal</h1> <span >✷</span>
+            </div>
+          <ul className="nav-container--left">
+            <li onClick={signup}>Signup</li>
+            <li onClick={login}>Login</li>
+          </ul>
+        </nav>
+      </header>
+
+      <main className="dashboard-container container">
+        <section className="container-top">
+          <h1 >
+            Welcome to Pilpal<span>✷</span>
+          </h1>
+          <h2>Your Health, Our Priority</h2>
         </section>
-        <section className="features-section">
-          <h2>Features</h2>
-          {/* Add feature descriptions here */}
-        </section>
-        <section className="testimonial-section">
-          <h2>What Our Users Say</h2>
-          {/* Add user testimonials here */}
+        <section className="container-bottom">
+          <article className="container-left">
+            <h3>Your personal supplement and health reminder app.</h3>
+            <p>Keep track of your supplements and stay healthy effortlessly.</p>
+          </article>
         </section>
       </main>
+
+      <Footer />
     </div>
   );
 }
