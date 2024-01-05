@@ -31,7 +31,7 @@ export default function SupplementCard({
   };
 
   const handleRefillButton = () => {
-    handleRefillAlert(id);
+    handleRefillAlert(id, stockquantity);
   }
   
   const imageUrl = image.src;

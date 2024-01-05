@@ -208,7 +208,7 @@ const useApplicationData = () => {
   //   // };
   // }, [state.user, state.refreshDashboard]); // Run effect when user state changes
 
-  const handleRefillAlert = (supplementId) => {
+  const handleRefillAlert = (supplementId, stockquantity) => {
     const confirmRefill = () => {
       const response = prompt("Are you sure you want to refill? (Yes/No)");
       
@@ -222,8 +222,16 @@ const useApplicationData = () => {
     
       if (cleanedResponse === "yes") {
         // Handle refill logic when the user confirms "Yes"
+        
+        console.log({
+           from_useApplicationData_stockquantity: stockquantity,
+          supplementId: supplementId,
+          userId: state.user.id
+        });
+
         const body = {
-          "userId": state.user.id
+          "userId": state.user.id,
+          "stockquantity": stockquantity
         }
         axios.post(`http://localhost:8080/supplement_usage/${supplementId}`, body, { withCredentials: true })
           .then((response) => {
