@@ -4,6 +4,7 @@ const router  = express.Router();
 // const userSupplementQueries = require('../db/queries/user_supplement');
 const userQueries = require('../db/queries/users');
 const supplementUsageQueries = require('../db/queries/supplement_usage');
+const supplementSearchHelper = require('../supplementSearchHelper');
 
 
 // Get requests
@@ -67,8 +68,13 @@ router.post("/updateStockLevel", (req, res) => {
 
 router.post("/:id", (req, res) => {
   const supplementId = req.params.id;
-  const userId = req.body.userId;
-  // console.log('supplementId:', supplementId, 'userId:', userId);
+  const { userId, stockquantity } = req.body;
+  
+  console.log({
+    fromSupplementUsageRouteSsupplementId: supplementId,
+    userId: userId,
+    stockquantity: stockquantity
+  });
 
   if (!userId) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the Pilpal....");
@@ -83,8 +89,16 @@ router.post("/:id", (req, res) => {
       if (!user) {
         return res.status(404).send("No user with that ID");
       }
+      
+      const getnewStockquantity = () => {
+        let result = 0;
+        const supplementInitialQuantity = supplementSearchHelper.getSupplementInitialQuantity(user.id, supplementId);
+        return result += supplementInitialQuantity + stockquantity;
+      };
 
-      return supplementUsageQueries.refillStockLevel(userId, supplementId);
+      const newStockquantity = getnewStockquantity();
+
+      return supplementUsageQueries.refillStockLevel(userId, supplementId, newStockquantity);
     })
     .then((response) => {
       // console.log(response.data);

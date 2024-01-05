@@ -32,6 +32,40 @@ const getSupplementCurrentStockLevel = (userId, supplementId) => {
     });
 };
 
+// Get the current stocklevel of the supplement
+const getSupplementInitialQuantity = (userId, supplementId) => {
+
+  // Use parameterized query to prevent SQL injection
+
+  const query = `
+    SELECT si.quantity
+    FROM supplement_lineitem AS si
+    JOIN supplements AS s ON s.id = si.supplementid
+    JOIN user_supplements AS us ON us.supplementid = s.id
+    WHERE us.userId = $1 AND us.supplementId = $2
+  `;
+
+  const queryParam = [userId, supplementId];
+
+  return db
+    .query(query, queryParam)
+    .then((result) => {
+      const supplementInitialQuantity = result.rows[0];
+      // Check if any rows were returned
+      if (supplementInitialQuantity === null) {
+        console.error('supplementInitialQuantity is:', supplementInitialQuantity);
+        return;
+      }
+      // console.log(resolvedUser);
+      return Promise.resolve(supplementInitialQuantity); // Resolve with the found user or null
+    })
+    .catch((err) => {
+      console.error('Error querying database:', err.message);
+      throw err; // Rethrow the error to be handled elsewhere
+    });
+};
+
 module.exports = {
-  getSupplementCurrentStockLevel
+  getSupplementCurrentStockLevel,
+  getSupplementInitialQuantity
 };

@@ -100,7 +100,7 @@ const updateSupplementType = (userId, supplementId) => {
     });
 };
 
-const refillStockLevel = (userId, supplementId) => {
+const refillStockLevel = (userId, supplementId, newStockquantity) => {
   // console.log('userId:', userId);
   // const query = `
   //   WITH updated_supplement AS (
@@ -119,6 +119,10 @@ const refillStockLevel = (userId, supplementId) => {
   //   RETURNING supplement_usage.*;
   // `;
 
+  // console.log({
+  //   newStockquantity: newStockquantity
+  // });
+
   const query = `
     WITH updated_supplementLineItem AS (
       UPDATE supplement_lineitem
@@ -127,7 +131,7 @@ const refillStockLevel = (userId, supplementId) => {
       RETURNING *
     )
     UPDATE supplement_usage
-    SET stocklevel = updated_supplementLineItem.quantity
+    SET stocklevel = $4
     FROM updated_supplementLineItem
     JOIN user_supplements ON user_supplements.supplementid = updated_supplementLineItem.id
     WHERE user_supplements.userid = $1
@@ -136,7 +140,7 @@ const refillStockLevel = (userId, supplementId) => {
     RETURNING supplement_usage.*;
   `;
   
-  const queryParam = [userId, supplementId, 'intake'];
+  const queryParam = [userId, supplementId, 'intake', newStockquantity];
 
   return db
     .query(query, queryParam)
