@@ -19,6 +19,7 @@
 
   article {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     padding-bottom: $spacing-xxl;
     align-items: stretch;
@@ -27,11 +28,9 @@
 
 .supplementListCard {
   position: relative;
-  margin-bottom: $spacing-lg;
-  min-width: 40%;
-  width: 48%;
-  margin: $spacing-sm;
-  font-size: $font-size-base;
+  width: 80%;
+  margin: 0 auto $spacing-lg;
+  font-size: $font-size-large;
 }
 
 .card {

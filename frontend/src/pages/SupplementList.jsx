@@ -1,7 +1,7 @@
 import '../styles/supplementlist.scss';
 import Header from '../components/Header';
 import SupplementListCard from '../components/SupplementListCard';
-import mockReminder from '../data/mocks/mockReminder';
+// import mockReminder from '../data/mocks/mockReminder';
 
 export default function SupplementList({ logout, user, handleAddNew, userSupplements, handleShowSupplementList, goBackToDashboard, setEditClicked }) {
   
