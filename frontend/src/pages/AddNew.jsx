@@ -1,5 +1,4 @@
 import '../styles/addnew.scss';
-import Header from '../components/Header';
 import Image from '../assets/image-07.png';
 import React, { useState } from 'react';
 

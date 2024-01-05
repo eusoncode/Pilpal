@@ -1,5 +1,4 @@
 import '../styles/supplementlist.scss';
-import Header from '../components/Header';
 import SupplementListCard from '../components/SupplementListCard';
 // import mockReminder from '../data/mocks/mockReminder';
 

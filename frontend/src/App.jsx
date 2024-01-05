@@ -1,4 +1,6 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './styles/App.scss';
+import LayoutWithHeader from './components/LayoutWithHeader';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddNew from './pages/AddNew';
@@ -30,6 +32,36 @@ function App() {
       {!user && !showSupplementListClicked && !addNewSupplimentClicked && userSignUpClicked && !editButtonClicked && <UserRegister signUp={signUp} goBackToLogin={goBackToLogin} />}
       {/* {user && !showSupplementListClicked && !addNewSupplimentClicked && userSignUpClicked && editButtonClicked && <EditUserSupplement logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} setEditClicked={setEditClicked} />} */}
     </>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <LayoutWithHeader>
+              <Dashboard />
+            </LayoutWithHeader>
+          }
+        />
+        <Route
+          path="/supplement-list"
+          element={
+            <LayoutWithHeader>
+              <SupplementList />
+            </LayoutWithHeader>
+          }
+        />
+        <Route
+          path="/add-new"
+          element={
+            <LayoutWithHeader>
+              <AddNew />
+            </LayoutWithHeader>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<UserRegister />} />
+      </Routes>
+    </Router>
   );
 }
 

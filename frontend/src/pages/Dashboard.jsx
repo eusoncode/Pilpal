@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/dashboard.scss';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import Header from '../components/Header';
 import SupplementCard from '../components/SupplementCard';
 // import mockReminder from '../data/mocks/mockReminder';
@@ -70,7 +72,7 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
 
   return (
     <>
-      <Header logout={logout} handleAddNew={handleAddNew} handleShowSupplementList={handleShowSupplementList} />
+      <Header />
       <main className="dashboard-container container">
         <section className="container-top">
           <h1 className="accent">
