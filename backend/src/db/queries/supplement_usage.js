@@ -63,7 +63,6 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
     });
 };
 
-
 const updateSupplementType = (userId, supplementId) => {
   
   // console.log(
@@ -101,25 +100,10 @@ const updateSupplementType = (userId, supplementId) => {
 };
 
 const refillStockLevel = (userId, supplementId, newStockquantity) => {
-  // console.log('userId:', userId);
-  // const query = `
-  //   WITH updated_supplement AS (
-  //     UPDATE supplements
-  //     SET type = $3
-  //     WHERE id = $2
-  //     RETURNING *
-  //   )
-  //   UPDATE supplement_usage
-  //   SET stocklevel = updated_supplement.quantity
-  //   FROM updated_supplement
-  //   JOIN user_supplements ON user_supplements.supplementid = updated_supplement.id
-  //   WHERE user_supplements.userid = $1
-  //   AND user_supplements.supplementid = $2
-  //   AND supplement_usage.usersupplementid = user_supplements.id
-  //   RETURNING supplement_usage.*;
-  // `;
 
   // console.log({
+  //   userId: userId
+  //   supplementId: supplementId
   //   newStockquantity: newStockquantity
   // });
 
@@ -154,41 +138,6 @@ const refillStockLevel = (userId, supplementId, newStockquantity) => {
       throw err;
     });
 };
-
-// const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
-//   // console.log('userId:', userId);
-//   // Note: quantity should be a sum of exist stocklevel and new quantity of the supplement
-  
-//   const {
-//     reminderTime,
-//     intakeFrequency,
-//     refillLevel
-//   } = newSupplement;
-
-//   // Convert reminderTime to a PostgreSQL compatible timestamp string
-//   const reminderTimestamp = convertReminderTimeHelper(reminderTime);
-//   console.log(reminderTimestamp);
-  
-//   const query = `
-//     INSERT INTO supplement_usage (userSupplementId, time_to_be_taken, stocklevel, intakeFrequency, refillLevel)
-//     VALUES ($1, $2, $3, $4, $5) RETURNING *
-//   `;
-
-//   const queryParam = [supplementId, reminderTimestamp, quantitySum, intakeFrequency, refillLevel];
-
-
-//   return db
-//     .query(query, queryParam)
-//     .then(result => {
-//       const updatedSupplementUsage = result.rows[0];
-//       // console.log(updatedSupplementUsage);
-//       return Promise.resolve(updatedSupplementUsage);
-//     })
-//     .catch((err) => {
-//       console.error('Error adding new supplement to supplement usage:', err.message);
-//       throw err;
-//     });
-// };
 
 const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
   const {

@@ -69,12 +69,13 @@ router.post("/updateStockLevel", (req, res) => {
 router.post("/:id", (req, res) => {
   const supplementId = req.params.id;
   const { userId, stockquantity } = req.body;
+  const parsedSupplementId = parseInt(supplementId, 10);
   
-  console.log({
-    fromSupplementUsageRouteSsupplementId: supplementId,
-    userId: userId,
-    stockquantity: stockquantity
-  });
+  // console.log({
+  //   fromSupplementUsageRouteSsupplementId: parsedSupplementId,
+  //   userId: userId,
+  //   stockquantity: stockquantity
+  // });
 
   if (!userId) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the Pilpal....");
@@ -89,14 +90,18 @@ router.post("/:id", (req, res) => {
       if (!user) {
         return res.status(404).send("No user with that ID");
       }
-      
-      const getnewStockquantity = () => {
-        let result = 0;
-        const supplementInitialQuantity = supplementSearchHelper.getSupplementInitialQuantity(user.id, supplementId);
-        return result += supplementInitialQuantity + stockquantity;
-      };
 
-      const newStockquantity = getnewStockquantity();
+      return supplementSearchHelper.getSupplementInitialQuantity(userId, parsedSupplementId);
+    })
+    .then((supplementInitialQuantity) => {
+      if (!supplementInitialQuantity) {
+        return res.status(404).send("No quantity found for the supplement");
+      }
+
+      const newStockquantity = supplementInitialQuantity + stockquantity;
+      // console.log({
+      //   newStockquantity: newStockquantity
+      // });
 
       return supplementUsageQueries.refillStockLevel(userId, supplementId, newStockquantity);
     })
@@ -106,7 +111,7 @@ router.post("/:id", (req, res) => {
         return res.status(404).send("Could not update the supplement stocklevel");
       }
 
-      res.status(200).json({ message: "Supplement stocklevel was successful refilled" });
+      res.status(200).json({ message: "Supplement stocklevel was successful refilled"});
     })
     .catch((error) => {
       console.error(error);
