@@ -57,25 +57,32 @@ export default function SupplementListCard(/**{
   //   additionalNotes: additionalNotes
   // })
 
-  const handleEditButton = () => {
-    props.setEditClicked();
-  };
+  // const handleEditButton = () => {
+  //   props.setEditClicked();
+  // };
 
+  // console.log ({
+  //   StartDate: props.startdate,
+  //   EndDate: props.enddate
+  // });
+  
+  // Format time to HH:MM AM OR PM and format start date and end date to 'YYYY-MM-DD' format
   const formatedTime = reconvertReminderTime(props.time);
-  const formattedStartDate = new Date(props.startDate).toISOString().split('T')[0];
-  const formattedEndDate = new Date(props.endDate).toISOString().split('T')[0];
+  const formattedStartDate = props.startdate ? props.startdate.split('T')[0] : '';
+  const formattedEndDate = props.enddate ? props.enddate.split('T')[0] : '';
+
 
   
-  console.log ({
-    formattedStartDate: formattedStartDate,
-    formattedEndDate: formattedEndDate
-  });
+  // console.log ({
+  //   formattedStartDate: formattedStartDate,
+  //   formattedEndDate: formattedEndDate
+  // });
 
   return (
     <>
       <div className="supplementListCard">
         <div className="card">
-          <div className="skip-btn" onClick={handleEditButton}>edit</div>
+          <div className="skip-btn" onClick={props.setEditClicked}>edit</div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />
