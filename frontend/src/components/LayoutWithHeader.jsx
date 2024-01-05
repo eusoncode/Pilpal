@@ -1,9 +1,15 @@
 import Header from './Header';
 
-const LayoutWithHeader = ({ children }) => {
+const LayoutWithHeader = ({
+  children,
+  logout,
+  handleAddNew,
+  handleShowSupplementList
+}) => {
+
   return (
     <>
-      <Header />
+      <Header  logout={logout} handleAddNew={handleAddNew} handleShowSupplementList={handleShowSupplementList}/>
       <main>{children}</main>
     </>
   );

@@ -6,7 +6,7 @@ export default function SupplementList({ logout, user, handleAddNew, userSupplem
   
   return (
     <>
-      <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList}/>
+      {/* <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList}/> */}
       <main className="supplementlist-container container">
         <section className="container-top">
           <h1 className="accent">

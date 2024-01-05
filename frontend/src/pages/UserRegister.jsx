@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import signupImage from '../assets/image-01.png';
 
 export default function UserRegister({signUp, goBackToLogin}) {

@@ -69,7 +69,7 @@ export default function AddNew({
 
   return (
     <>
-      <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} />
+      {/* <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} /> */}
       <main className="supplement-details-container container">
         <section className="container-top">
           <h1 className="accent">
