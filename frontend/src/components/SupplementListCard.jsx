@@ -62,8 +62,12 @@ export default function SupplementListCard(/**{
   // };
 
   // console.log ({
-  //   StartDate: props.startdate,
+    // StartDate: props.startdate,
   //   EndDate: props.enddate
+  // });
+
+  // console.log ({
+  //   StartDate: props
   // });
   
   // Format time to HH:MM AM OR PM and format start date and end date to 'YYYY-MM-DD' format
@@ -71,7 +75,10 @@ export default function SupplementListCard(/**{
   const formattedStartDate = props.startdate ? props.startdate.split('T')[0] : '';
   const formattedEndDate = props.enddate ? props.enddate.split('T')[0] : '';
 
-
+  let reason = false;  
+  if (props.status === 'Suspended') {
+    reason = true;
+  }
   
   // console.log ({
   //   formattedStartDate: formattedStartDate,
@@ -81,7 +88,7 @@ export default function SupplementListCard(/**{
   return (
     <>
       <div className="supplementListCard">
-        <div className="card">
+        <div className={reason ? 'suspend' : 'card'}>
           <div className="skip-btn" onClick={props.setEditClicked}>edit</div>
           <div className="details">
             <div className="details__supplement-name">
@@ -121,6 +128,14 @@ export default function SupplementListCard(/**{
                   <span className="title">Price: </span>
                   <span className="content">${props.price}</span> from {props.purchasedfrom}
                 </div>
+                <div className="status">
+                  <span className="title">Status: </span>
+                  <strong className="content">{props.status}</strong>
+                </div>
+                {reason && <div className="reason">
+                  <span className="title">Reason: </span>
+                  <strong className="content">{props.status_reason}</strong>
+                </div>}
               </div>
             </div>
             <div className="details__notes">
