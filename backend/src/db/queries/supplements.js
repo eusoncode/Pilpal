@@ -29,7 +29,7 @@ const getSupplements = () => {
 // ----------------------- addSupplement
 const addNewSupplement = (newSupplement) => {
 
-  console.log({newSupplement: newSupplement});
+  // console.log({newSupplement: newSupplement});
   
   const {
     name,
@@ -40,7 +40,7 @@ const addNewSupplement = (newSupplement) => {
 
   const images = { src: productUrl};
   const imagesString = JSON.stringify(images); // Convert object to JSON string
-  console.log(imagesString);
+  // console.log(imagesString);
 
   const query = `
     INSERT INTO supplements (name, description, manufacturer, images) 

@@ -36,8 +36,9 @@ router.post("/addSupplement", (req, res) => {
 
   // console.log({
   //   newSupplement: newSupplement,
-  //   idFromCookie: idFromCookie
+  // //   idFromCookie: idFromCookie
   // });
+
 
   if (!idFromCookie) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the BuyBuddy....");

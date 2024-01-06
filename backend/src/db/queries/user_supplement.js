@@ -23,7 +23,7 @@ const getUserSupplements = (id) => {
   // `;
   const query = `
     SELECT supplements.name,
-      TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE 'UTC', 'YYYY-MM-DD HH12:MI AM') AS time,
+      TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE current_setting('TIMEZONE'), 'YYYY-MM-DD HH12:MI AM') AS time,
       supplement_usage.intakeFrequency,
       user_supplements.dosage_per_intake AS intakeQuantity,
       supplement_usage.stocklevel AS stockQuantity,
@@ -35,6 +35,8 @@ const getUserSupplements = (id) => {
       supplement_lineitem.endDate,
       supplement_lineitem.price,
       supplement_lineitem.purchasedFrom,
+      supplement_lineitem.status,
+      supplement_lineitem.status_reason,
       user_supplements.additionalNotes,
       supplement_lineitem.type,
       supplements.id
