@@ -55,3 +55,19 @@ CREATE TABLE supplement_usage (
 --   updated_at TIMESTAMPTZ,
 --   FOREIGN KEY (userSupplementId) REFERENCES user_supplements(id)
 -- );
+
+
+    startingDate: '',
+    endingDate: '',
+   
+    intakeFrequency: '',
+    
+    type: '',
+    
+    
+    autoConsume: '',
+    purchasedFrom: '',
+    pricePaid: '',
+    productUrl: '',
+    
+    additionalNote: ''
