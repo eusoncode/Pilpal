@@ -19,23 +19,50 @@ CREATE TABLE supplements (
     name VARCHAR(255) NOT NULL,
     description VARCHAR(512) NOT NULL,
     manufacturer VARCHAR(255) NOT NULL,
-    cost NUMERIC(10, 2),
-    quantity INTEGER,
     images JSONB,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE supplement_lineItem (
+    id serial PRIMARY KEY,
+    supplementId INT NOT NULL,
+    quantity INTEGER,
+    type VARCHAR(255) NOT NULL,
+    supplementType VARCHAR(255),
+    startDate TIMESTAMPTZ,
+    endDate TIMESTAMPTZ,
+    purchasedFrom VARCHAR(255),
+    price NUMERIC(10, 2),
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (supplementId) REFERENCES supplements(id)    
+);
+
+
 CREATE TABLE user_supplements (
   id serial PRIMARY KEY,
   userId INT NOT NULL,
   supplementId INT NOT NULL,
-  number_of_pills_taken INTEGER,
+  dosage_per_intake INTEGER,
   time_taken TIMESTAMPTZ,
   effectiveness VARCHAR(255),
+  additionalNotes TEXT,
   FOREIGN KEY (userId) REFERENCES users(id),
   FOREIGN KEY (supplementId) REFERENCES supplements(id)
+);
+
+CREATE TABLE supplement_usage (
+  id serial PRIMARY KEY,
+  userSupplementId INT NOT NULL,
+  time_to_be_taken TIMESTAMPTZ,
+  stocklevel INTEGER,
+  updated_at TIMESTAMPTZ,
+  refillLevel INTEGER,
+  intakeFrequency VARCHAR(255),
+  FOREIGN KEY (userSupplementId) REFERENCES user_supplements(id)
 );
 
 CREATE TABLE supplement_usage (
@@ -47,27 +74,12 @@ CREATE TABLE supplement_usage (
   FOREIGN KEY (userSupplementId) REFERENCES user_supplements(id)
 );
 
--- CREATE TABLE supplement_refill (
---   id serial PRIMARY KEY,
---   userSupplementId INT NOT NULL,
---   time_to_be_taken TIMESTAMPTZ,
---   stocklevel INTEGER,
---   updated_at TIMESTAMPTZ,
---   FOREIGN KEY (userSupplementId) REFERENCES user_supplements(id)
--- );
+CREATE TABLE skips(
+  id serial PRIMARY KEY,
+  supplementUsageId INT NOT NULL,
+  date_skipped TIMESTAMPTZ,
+  FOREIGN KEY (supplementUsageId) REFERENCES supplement_usage(id)
+);
 
 
-    startingDate: '',
-    endingDate: '',
-   
-    intakeFrequency: '',
-    
-    type: '',
-    
-    
-    autoConsume: '',
-    purchasedFrom: '',
-    pricePaid: '',
-    productUrl: '',
-    
-    additionalNote: ''
+  
