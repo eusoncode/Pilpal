@@ -6,8 +6,14 @@ import Dashboard from './pages/Dashboard';
 import AddNew from './pages/AddNew';
 import SupplementList from './pages/SupplementList';
 import UserRegister from './pages/UserRegister';
+import EditSupplement from './pages/EditSupplement';
+import mockReminder from './data/mocks/mockReminder';
 
 function App() {
+  const getSupplementById = (id) => {
+    return mockReminder.find((supplement) => supplement.id === parseInt(id));
+  };
+
   return (
     <Router>
       <Routes>
@@ -37,6 +43,14 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<UserRegister />} />
+        <Route
+          path="/edit/:id"
+          element={
+            <LayoutWithHeader>
+              <EditSupplement getSupplementById={getSupplementById} />
+            </LayoutWithHeader>
+          }
+        />
       </Routes>
     </Router>
   );

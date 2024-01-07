@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function SupplementListCard({
+  id,
   name,
   time,
   intakeFrequency,
@@ -16,12 +19,19 @@ export default function SupplementListCard({
 }) {
   // Importing images
   const imageUrl = image.src;
+  const navigate = useNavigate();
+
+  const handleEditClick = () => {
+    navigate(`/edit/${id}`); // Navigate to the edit page for this supplement
+  };
 
   return (
     <>
       <div className="supplementListCard">
         <div className="card">
-          <div className="skip-btn">edit</div>
+          <div className="skip-btn" onClick={handleEditClick}>
+            edit
+          </div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />
