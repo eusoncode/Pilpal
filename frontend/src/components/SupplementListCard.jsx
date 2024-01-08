@@ -1,4 +1,5 @@
 import { reconvertReminderTime } from "../helper/reconvertReminderTime";
+import { useNavigate } from 'react-router-dom';
 
 export default function SupplementListCard(props) {
 
@@ -6,12 +7,19 @@ export default function SupplementListCard(props) {
 
   // Importing images
   const imageUrl = props.image.src;
+  const navigate = useNavigate();
   
   // Format time to HH:MM AM OR PM and format start date and end date to 'YYYY-MM-DD' format
   const formatedTime = reconvertReminderTime(props.time);
   const formattedStartDate = props.startdate ? props.startdate.split('T')[0] : '';
   const formattedEndDate = props.enddate ? props.enddate.split('T')[0] : '';
+
+  const handleEditClick = () => {
+    navigate(`/edit/${props.id}`); // Navigate to the edit page for this supplement
+  };
   
+  console.log({supplementid:props.id});
+
   // console.log ({
   //   formattedStartDate: formattedStartDate,
   //   formattedEndDate: formattedEndDate
@@ -21,7 +29,7 @@ export default function SupplementListCard(props) {
     <>
       <div className="supplementListCard">
         <div className="card">
-          <div className="skip-btn">edit</div>
+          <div className="skip-btn" onClick={handleEditClick}>edit</div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />

@@ -107,9 +107,6 @@ const useApplicationData = () => {
     
     axios.post('http://localhost:8080/supplements/addSupplement', body, { withCredentials: true })
       .then((response) => {
-        const loggedUser = response.data.userFound;
-        // console.log(response.data.userFound);
-        dispatch({ type: ACTIONS.SET_USER, payload: { user: loggedUser } });
         console.log('Supplement successfully add:', response.data);
       })
       .catch((error) => {
@@ -180,6 +177,22 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_USER, payload: { user: null } });
   };
 
+  const editSupplement = (formData) => {
+    const body = {
+      'formData': formData
+    }
+
+    console.log(body);
+    
+    axios.post('http://localhost:8080/supplements/editSupplement', body, { withCredentials: true })
+      .then((response) => {
+        console.log('Supplement successfully edited:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error while making POST request:', error);
+      });    
+  };
+
 
   return {
     state,
@@ -189,7 +202,8 @@ const useApplicationData = () => {
       addNewSupplement,
       signUp,
       takeSupplement,
-      handleRefillAlert
+      handleRefillAlert,
+      editSupplement
     },
   };
 };

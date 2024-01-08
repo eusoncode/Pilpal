@@ -29,7 +29,7 @@ const getSupplements = () => {
 // ----------------------- addSupplement
 const addNewSupplement = (newSupplement) => {
 
-  console.log({newSupplement: newSupplement});
+  // console.log({newSupplement: newSupplement});
   
   const {
     name,
