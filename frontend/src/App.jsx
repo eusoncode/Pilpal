@@ -16,7 +16,8 @@ function App() {
   const { login, logout, addNewSupplement, signUp, takeSupplement, handleRefillAlert, editSupplement } = actions;  
   const { supplementId } = useParams();
 
-  const supplementToBeEdited = userSupplements.filter((supplement) => supplement.includes(supplementId));
+  const supplementToBeEdited = userSupplements.find(supplement => supplement.id === parseInt(supplementId));
+
   
   console.log({supplementToBeEdited:supplementToBeEdited});
 
