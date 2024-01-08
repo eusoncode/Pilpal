@@ -8,9 +8,27 @@ import mockPillIntakes from '../data/mocks/mockPillIntakes';
 
 export default function Dashboard() {
   const [date, setDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const isFutureDate = selectedDate > new Date();
 
-  // Function to check if pills were taken on a given date
+  // Check if the selected date falls within the supplement's date range
+  const supplementsForSelectedDate = mockReminder.filter((supplement) => {
+    const supplementStartDate = new Date(supplement.startDate);
+    let supplementEndDate = supplement.endDate
+      ? new Date(supplement.endDate)
+      : new Date();
+
+    // If no end date is provided
+    if (!supplement.endDate) {
+      supplementEndDate = new Date('9999-12-31');
+    }
+
+    return (
+      selectedDate >= supplementStartDate && selectedDate <= supplementEndDate
+    );
+  });
+
+  // Check if pills were taken on a given date
   const pillTakenOnDate = (date) => {
     return mockPillIntakes.some(
       (intake) => intake.date.toDateString() === date.toDateString()
@@ -38,11 +56,13 @@ export default function Dashboard() {
         </section>
         <section className="container-bottom">
           <article className="container-left">
-            <h3>
-              Reminders <span>***</span>
-            </h3>
-            {mockReminder.map((reminder) => (
-              <SupplementCard key={reminder.id} {...reminder} />
+            <h3>Reminders for {selectedDate.toDateString()}</h3>
+            {supplementsForSelectedDate.map((reminder) => (
+              <SupplementCard
+                key={reminder.id}
+                {...reminder}
+                isFutureDate={isFutureDate}
+              />
             ))}
           </article>
           <article className="container-right">

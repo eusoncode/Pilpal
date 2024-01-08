@@ -105,6 +105,10 @@
     right: 5%;
   }
 
+  &.active.disabled {
+    right: 18%;
+  }
+
   span {
     color: $white-color;
     font-size: $font-size-xxl;
@@ -116,10 +120,17 @@
 
 .intake-card-btn {
   background-color: $orange-color;
+
+  &.disabled {
+    background-color: $light-gray-color;
+  }
 }
 
 .restock-card-btn {
   background-color: $pink-color;
+  &.disabled {
+    background-color: $light-gray-color;
+  }
 }
 
 .skip-btn {
@@ -165,4 +176,8 @@
   li {
     margin-top: $spacing-sm;
   }
+}
+
+.skip-btn.disabled {
+  display: none;
 }

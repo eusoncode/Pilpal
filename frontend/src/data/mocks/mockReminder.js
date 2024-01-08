@@ -18,7 +18,7 @@ const mockReminder = [
     reorderLevel: 14,
     dosageType: 'Softgel',
     startDate: '2023-12-28',
-    endDate: '2024-01-28',
+    endDate: '2024-01-02',
     price: 24,
     purchasedFrom: 'iHerb',
     additionalNotes: 'Compare prices for next purchase.',

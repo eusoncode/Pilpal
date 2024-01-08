@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 
 export default function SupplementCard({
   name,
+  manufacturer,
   time,
+  dosageType,
   intakeQuantity,
   stockQuantity,
   image,
   type,
+  isFutureDate,
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -24,6 +27,9 @@ export default function SupplementCard({
   const imageUrl = image.src;
   const cardStyles = type === 'restock' ? 'restock-card' : 'intake-card';
 
+  // Determine if the buttons should be disabled
+  const disabledClass = isFutureDate ? 'disabled' : '';
+
   return (
     <>
       <div
@@ -32,7 +38,7 @@ export default function SupplementCard({
         onMouseLeave={handleMouseLeave}
       >
         <div className={`notification-card ${cardStyles}`}>
-          <div className="skip-btn">skip</div>
+          <div className={`skip-btn ${disabledClass}`}>skip</div>
 
           <img src={imageUrl} alt="pills" />
           <div className="details">
@@ -41,11 +47,15 @@ export default function SupplementCard({
                 <div className="details--message">
                   Time to Take Your Pill 💊
                 </div>
-                <div className="details--supplement-name">{name}</div>
+                <div className="details--supplement-name">
+                  {name} ({manufacturer})
+                </div>
                 <div className="details--reminder">
                   <span className="time">{time}</span>
                   <span>, </span>
-                  <span className="quantity">{intakeQuantity} pills</span>
+                  <span className="quantity">
+                    {intakeQuantity} {dosageType}
+                  </span>
                 </div>
               </>
             )}
@@ -54,7 +64,9 @@ export default function SupplementCard({
                 <div className="details--message">
                   Running Low! Time to Restock 🛍
                 </div>
-                <div className="details--supplement-name">{name}</div>
+                <div className="details--supplement-name">
+                  {name} ({manufacturer})
+                </div>
                 <div className="details--quantity-left">
                   {stockQuantity} left
                 </div>
@@ -64,7 +76,7 @@ export default function SupplementCard({
         </div>
         {type === 'intake' && (
           <div
-            className={`notification-card-btn intake-card-btn ${
+            className={`notification-card-btn intake-card-btn ${disabledClass} ${
               isHovered ? 'active' : ''
             }`}
           >
@@ -73,7 +85,7 @@ export default function SupplementCard({
         )}
         {type === 'restock' && (
           <div
-            className={`notification-card-btn restock-card-btn ${
+            className={`notification-card-btn restock-card-btn ${disabledClass} ${
               isHovered ? 'active' : ''
             }`}
           >
