@@ -23,35 +23,17 @@ export default function SupplementCard({
   };
 
   const handleTake = () => {
-    // const timeTaken = new Date();
-    // Format the date to 'YYYY-MM-DD HH:mm:ss'
-    // const formattedTimeTaken = timeTaken.toISOString().replace(/T/, ' ').slice(0, 19);
-
-    // Convert timeTaken to Mountain Time zone
-    // const options = {
-    //   year: 'numeric',
-    //   month: '2-digit',
-    //   day: '2-digit',
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    //   second: '2-digit',
-    //   hour12: false,
-    //   timeZone: 'America/Edmonton', // Mountain Time
-    // };
-
-    // const formattedTimeTaken = timeTaken.toLocaleString('en-US', options);
-
     
-    const formattedTimeTaken = new Date().toLocaleString('en-US', {
-      timeZone: 'America/Edmonton',
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit'
-    }); 
+    // const formattedTimeTaken = new Date().toLocaleString('en-US', {
+    //   timeZone: 'America/Edmonton',
+    //   hour12: false,
+    //   hour: '2-digit',
+    //   minute: '2-digit'
+    // }); 
 
-    console.log({
-      timeTaken: formattedTimeTaken
-    });
+    // console.log({
+    //   timeTaken: formattedTimeTaken
+    // });
 
     hideCard(id, stockquantity, intakequantity);
   };

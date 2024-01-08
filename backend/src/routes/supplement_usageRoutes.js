@@ -19,8 +19,6 @@ router.post("/updateStockLevel", (req, res) => {
   const stockLevelUpdate = req.body;
   // console.log('stockLevelUpdate:',stockLevelUpdate);
   const { supplementId, newValue } = stockLevelUpdate;
-  
-  const nextIntakeTime = () => { };
 
   if (!idFromCookie) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the Pilpal....");
