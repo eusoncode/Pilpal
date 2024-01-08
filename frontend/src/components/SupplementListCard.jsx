@@ -1,77 +1,16 @@
 import { reconvertReminderTime } from "../helper/reconvertReminderTime";
 
-export default function SupplementListCard(/**{
-  name,
-  time,
-  intakeFrequency,
-  intakeQuantity,
-  stockQuantity,
-  image,
-  effectiveness,
-  refilLevel,
-  dosageType,
-  startDate,
-  endDate,
-  price,
-  purchasedFrom,
-  additionalNotes,
-  setEditClicked
-}**/props) {
+export default function SupplementListCard(props) {
 
-  // const {
-  //   name,
-  //   time,
-  //   intakeFrequency,
-  //   intakeQuantity,
-  //   stockQuantity,
-  //   image,
-  //   effectiveness,
-  //   refillLevel,
-  //   dosageType,
-  //   startDate,
-  //   endDate,
-  //   price,
-  //   purchasedFrom,
-  //   additionalNotes,
-  //   setEditClicked
-  // } = props;
+  // console.log ({props:props})
 
-  // console.log (props)
   // Importing images
   const imageUrl = props.image.src;
-
-  // console.log({
-  //   name: name,
-  //   time: time,
-  //   intakeFrequency: intakeFrequency,
-  //   intakeQuantity: intakeQuantity,
-  //   stockQuantity: stockQuantity,
-  //   image: image,
-  //   effectiveness: effectiveness,
-  //   refilLevel: refilLevel,
-  //   dosageType: dosageType,
-  //   startDate: startDate,
-  //   endDate: endDate,
-  //   price: price,
-  //   purchasedFrom: purchasedFrom,
-  //   additionalNotes: additionalNotes
-  // })
-
-  // const handleEditButton = () => {
-  //   props.setEditClicked();
-  // };
-
-  // console.log ({
-  //   StartDate: props.startdate,
-  //   EndDate: props.enddate
-  // });
   
   // Format time to HH:MM AM OR PM and format start date and end date to 'YYYY-MM-DD' format
   const formatedTime = reconvertReminderTime(props.time);
   const formattedStartDate = props.startdate ? props.startdate.split('T')[0] : '';
   const formattedEndDate = props.enddate ? props.enddate.split('T')[0] : '';
-
-
   
   // console.log ({
   //   formattedStartDate: formattedStartDate,
@@ -82,7 +21,7 @@ export default function SupplementListCard(/**{
     <>
       <div className="supplementListCard">
         <div className="card">
-          <div className="skip-btn" onClick={props.setEditClicked}>edit</div>
+          <div className="skip-btn">edit</div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />

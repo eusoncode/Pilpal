@@ -1,12 +1,10 @@
 import '../styles/supplementlist.scss';
 import SupplementListCard from '../components/SupplementListCard';
-// import mockReminder from '../data/mocks/mockReminder';
 
-export default function SupplementList({ logout, user, handleAddNew, userSupplements, handleShowSupplementList, goBackToDashboard, setEditClicked }) {
+export default function SupplementList({userSupplements}) {
   
   return (
     <>
-      {/* <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList}/> */}
       <main className="supplementlist-container container">
         <section className="container-top">
           <h1 className="accent">
@@ -15,11 +13,8 @@ export default function SupplementList({ logout, user, handleAddNew, userSupplem
         </section>
         <section className="container-bottom">
           <article>
-            {/* {mockReminder.map((supplement) => (
-              <SupplementListCard key={supplement.id} {...supplement} setEditClicked={setEditClicked} />
-            ))} */}
             {userSupplements.map((supplement) => (
-              <SupplementListCard key={supplement.id} {...supplement} setEditClicked={setEditClicked} />
+              <SupplementListCard key={supplement.id} {...supplement} />
             ))}
           </article>
         </section>
