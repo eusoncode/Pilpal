@@ -3,16 +3,36 @@ const db = require('../connection');
 // Get request query
 
 /**
- * 
  * @param {{userId: Integer}} user id
  * @return {Promise<{}>} A promise for supplement.
  */
+
 const getUserSupplements = (id) => {
+  // const query = `
+  //   SELECT supplements.name,
+  //     TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE 'UTC', 'YYYY-MM-DD HH12:MI AM') AS time,
+  //     user_supplements.number_of_pills_taken AS intakeQuantity,
+  //     supplement_usage.stocklevel AS stockQuantity,
+  //     supplements.images AS image,
+  //     supplements.type,
+  //     supplements.id
+  //   FROM supplements
+  //   JOIN user_supplements ON supplements.id = user_supplements.supplementId
+  //   JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id
+  //   WHERE user_supplements.userId = $1;
+  // `;
   const query = `
-    SELECT supplements.* 
+    SELECT supplements.name,
+      TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE 'UTC', 'YYYY-MM-DD HH12:MI AM') AS time,
+      user_supplements.dosage_per_intake AS intakeQuantity,
+      supplement_usage.stocklevel AS stockQuantity,
+      supplements.images AS image,
+      supplement_lineitem.type,
+      supplements.id
     FROM supplements 
-    JOIN user_supplements 
-    ON supplements.id = user_supplements.supplementId 
+    JOIN user_supplements ON supplements.id = user_supplements.supplementId
+    JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id 
+    JOIN supplement_lineitem ON supplement_lineitem.supplementId = supplements.id
     WHERE user_supplements.userId = $1;
   `;
 
@@ -20,6 +40,7 @@ const getUserSupplements = (id) => {
     .query(query, [id])
     .then(result => {
       const userSupplements = result.rows;
+      // console.log('userSupplements:', userSupplements);
       return userSupplements || []; // Return an empty array if no user supplements found
     })
     .catch(error => {
@@ -27,6 +48,43 @@ const getUserSupplements = (id) => {
       throw new Error("Error fetching user supplements");
     });
 };
+
+// upgrade
+// const getUserSupplements = (id) => {
+//   const query = `
+//     SELECT
+//       supplements.name,
+//       TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE 'UTC', 'YYYY-MM-DD HH12:MI AM') AS time,
+//       user_supplements.effectiveness AS effectiveness,
+//       supplement_usage.reorderLevel AS reorderLevel,
+//       supplements.dosageType AS dosageType,
+//       supplement_usage.startDate AS startDate,
+//       supplement_usage.endDate AS endDate,
+//       supplements.cost AS price,
+//       supplements.images AS image,
+//       supplements.manufacturer AS purchasedFrom,
+//       supplements.description AS additionalNotes,
+//       user_supplements.number_of_pills_taken AS intakeQuantity,
+//       supplement_usage.stocklevel AS stockQuantity,
+//       supplements.id
+//     FROM supplements
+//     JOIN user_supplements ON supplements.id = user_supplements.supplementId
+//     JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id
+//     WHERE user_supplements.userId = $1;
+//   `;
+
+//   return db
+//     .query(query, [id])
+//     .then(result => {
+//       const userSupplements = result.rows;
+//       // console.log('userSupplements:', userSupplements);
+//       return userSupplements || [];
+//     })
+//     .catch(error => {
+//       console.error(error);
+//       throw new Error("Error fetching user supplements");
+//     });
+// };
 
 
 // ----------------------- getUserByUserId
@@ -38,13 +96,20 @@ const getUserSupplements = (id) => {
  * @param {{userId: Integer, supplementId: Integer}}
  * @return {Promise<{}>} A promise to the user.
  */
-const addToUserSupplement = (userId, supplementId) => {
+const addToUserSupplement = (userId, supplementId, newSupplement) => {
+  
+  const {
+    dosagePerIntake,
+    effectiveness,
+    additionalNotes
+  } = newSupplement;
+  
   const query = `
-    INSERT INTO user_supplements (userId, supplementId, number_of_pills_taken, time_taken, effectiveness)
-    VALUES ($1, $2, $3, $4, $5) RETURNING *
+    INSERT INTO user_supplements (userId, supplementId, dosage_per_intake, time_taken, effectiveness, additionalNotes)
+    VALUES ($1, $2, $3, NOW(), $4, $5) RETURNING *
   `;
 
-  const queryParam = [userId, supplementId, null, null, null];
+  const queryParam = [userId, supplementId, dosagePerIntake, effectiveness, additionalNotes];
 
   return db
     .query(query, queryParam)

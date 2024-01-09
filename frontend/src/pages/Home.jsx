@@ -2,8 +2,11 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import '../styles/home.scss';
+import AboutUs from './AboutUs';
+import useApplicationData from '../hooks/useApplicationData';
+export default function Home({ login, clickSignUp }) {
 
-export default function Home({ login, signup }) {
+
   return (
     <div className="">
       <header className='header'>
@@ -12,8 +15,9 @@ export default function Home({ login, signup }) {
             <h1>Pilpal</h1> <span >✷</span>
             </div>
           <ul className="nav-container--left">
-            <li onClick={signup}>Signup</li>
-            <li onClick={login}>Login</li>
+          <li onClick={login}>Login</li>
+          <li  onClick={clickSignUp}>Signup</li>
+          
           </ul>
         </nav>
       </header>

@@ -25,32 +25,34 @@ app.use(
   })
 );
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true, // Indicates whether or not cross-site Access-Control requests should be made using credentials
+};
+
+
 //Middleware
-//app.use(cors());
-app.use(
-  cors({
-    origin: 'http://localhost:3000', // Replace with the actual origin of your frontend
-    credentials: true,
-  })
-);
-
-// Handle preflight OPTIONS requests
-app.options('*', cors());
-
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan('dev'));
 
 //Define the port
-const PORT = process.env.PORT || 8005;
+const PORT = process.env.PORT || 8080;
 
 // Routes for each resources
 const supplementRoutes = require("./src/routes/supplementRoutes");
+const userSupplementRoutes = require("./src/routes/user_supplementRoutes");
+const supplementUsageRoutes = require("./src/routes/supplement_usageRoutes");
 const userRoutes = require("./src/routes/userRoutes");
-const user_supplementRoutes = require("./src/routes/user_supplementRoutes");
 
-// // /supplement/endpoints
+// /supplement/endpoints
 app.use("/supplements", supplementRoutes);
-app.use("/user_supplements", user_supplementRoutes);
+
+// /user_supplement/endpoints
+app.use("/user_supplements", userSupplementRoutes);
+
+// /supplement_usage/endpoints
+app.use("/supplement_usage", supplementUsageRoutes);
 
 // /user/endpoints
 app.use("/users", userRoutes);

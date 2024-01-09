@@ -47,36 +47,102 @@ router.get("/:id", (req, res) => {
 // Post requests for user
 
 // Register a new buyer user
-router.post("/signup", (req, res) => {
-  const user = req.body;
-  const emailInput = user.email;
-  const passwordInput = user.password;
-  user.password = bcrypt.hashSync(passwordInput, 12);
+// router.post("/signup", (req, res) => {
+//   const user = req.body;
+//   console.log(user);
+//   // const {emailInput, passwordInput, usernameInput } = user;
+//   const emailInput = user.email;
+//   const passwordInput = user.password;
+//   const usernameInput = user.username;
 
-  if (!emailInput || !passwordInput) { // if email or password is empty, request for them
+//   if (!emailInput || !passwordInput) { // if email or password is empty, request for them
+//     return res.status(400).send("Please enter an email and password");
+//   }
+
+//   user.password = bcrypt.hashSync(passwordInput, 12);
+
+//   // Check if the user with the same email already exists
+//   userSearchHelper.getUserWithEmail(emailInput)
+//     .then((userFound) => {
+//       if (userFound) {
+//         return res.status(400).send("User already exists");
+//       }
+
+//       return userSearchHelper.getUserWithUsername(usernameInput);
+//     })
+//     .then((userFound) => {
+//       if (userFound) {
+//         return res.status(400).send("User already exists");
+//       }
+
+//       return userQueries.addUser(user);
+//     })
+//     .then((response) => {
+//       res.status(200).json({
+//         message: "New user was successful added",
+//         user: response
+//       });
+//     })
+//     .catch((e) => {
+//       console.error("Error during user signup:", e);
+//       return res.status(500).send("Error creating user");
+//     });
+// });
+router.post("/signup", (req, res) => {
+  
+  const user = req.body;
+  // console.log(user);
+  const { email, password, username } = user;
+
+  if (!email || !password) {
+    // console.error("Error: Please enter an email and password");
+    // return;
     return res.status(400).send("Please enter an email and password");
   }
 
-  // Check if the user with the same email already exists
-  userSearchHelper.getUserWithEmail(emailInput)
-    .then((userFound) => {
-      if (userFound) {
-        return res.status(400).send("User already exists");
+  user.password = bcrypt.hashSync(password, 12);
+
+  userSearchHelper.getUserWithEmail(email)
+    .then((userFoundWithEmail) => {
+      if (userFoundWithEmail) {
+        // console.log("Error: User with this email already exists");
+        // return;
+        return res.status(400).send("User with this email already exists");
       }
 
-      userQueries.addUser(user)
-        .then((newUserAdded) => {
-          req.session.userId = newUserAdded.id;
-          res.json(newUserAdded);
-        })
-        .catch((e) => res.status(500).send("Error creating user"));
+      return userSearchHelper.getUserWithUsername(username);
     })
-    .catch((e) => res.status(500).send("Error checking user existence"));
+    .then((userFoundWithUsername) => {
+      // console.log(userFoundWithUsername);
+      if (userFoundWithUsername) {
+        // console.error("Error: User with this username already exists");
+        // return;
+        return res.status(400).send("User with this username already exists");
+      }
+
+      return userQueries.addUser(user);
+    })
+    .then((newUser) => {
+      // console.log("newUser:", newUser);
+      res.status(200).json({
+        message: "New user was successfully added",
+        newUser: newUser
+      });
+    })
+    .catch((e) => {
+      // return console.error("Error creating user");
+      // console.error("Error creating user:", e);
+      // return res.status(500).send("Error creating user:", e);
+      
+      console.error(e);
+      res.status(500).send("Error fetching data");
+    });
 });
+
 
 // Login a user as a buyer
 router.post("/login", (req, res) => {
-  console.log(req.body);
+  
   const emailInput = req.body.email;
   const passwordInput = req.body.password;
 
@@ -87,19 +153,19 @@ router.post("/login", (req, res) => {
   userQueries
     .getUserByEmail(emailInput)
     .then((userFound) => {
-      
+      const hashedPassword = userFound.password; // Hash user password
       
       if (!userFound) {
         return res.status(403).send("😒😒😒😒User account does not exist. Please register a new user account");
       }
     
-      const hashedPassword = userFound.password; // Hash user password
-
       if (userFound && !bcrypt.compareSync(passwordInput, hashedPassword)) {
         return res.status(403).send("😒😒😒😒Email or Password is incorrect!.... Please enter a valid email and password");
       }
 
+      // Store user ID in localStorage
       req.session.userId = userFound.id;
+      // console.log(req.session);
       res.status(200).json({
         userFound
       });

@@ -3,23 +3,33 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddNew from './pages/AddNew';
 import useApplicationData from './hooks/useApplicationData';
-import Home from './pages/Home'
+import SupplementList from './pages/SupplementList';
+import UserRegister from './pages/UserRegister';
+import Home from './pages/Home';
+
 function App() {
   // Use the custom hook to manage application data
   const { state, actions } = useApplicationData();
-  const { addNewSupplimentClicked, user, userSupplements} = state;
-  // const { login, logout, handleAddNew, goBackToDashboard} = actions;
+  const { addNewSupplimentClicked, showSupplementListClicked, user, userSupplements, userSignUpClicked, editButtonClicked, userLoginClicked} = state;
+  const { login, logout, addNewSupplement, handleAddNew, goBackToDashboard, clickSignUp, signUp, takeSupplement, handleShowSupplementList, goBackToLogin, setEditClicked, handleRefillAlert } = actions;
+  // console.log(
+  //   `showSupplementListClicked: ${showSupplementListClicked},
+  //    userSignUpClicked: ${userSignUpClicked},
+  //    addNewSupplimentClicked: ${addNewSupplimentClicked},
+  //    user: ${user},
+  //    editButtonClicked: ${editButtonClicked}
+  //   `);
 
   return (
-   
     <>
-    {/* //<Home logout={logout} login={login}/> */}
-    <Home />
-      {/* {user && addNewSupplimentClicked && <AddNew logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} />}
-      {!user && !addNewSupplimentClicked && <Login login={login} />}
-      {user && !addNewSupplimentClicked && <Dashboard logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} />} */}
+    {!user && !showSupplementListClicked && !addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <Home login={login} clickSignUp={clickSignUp} />}
+      {user && !showSupplementListClicked && addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <AddNew logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} user={user} handleShowSupplementList={handleShowSupplementList} addNewSupplement={addNewSupplement} />}
+      {!user && !showSupplementListClicked && !addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && userLoginClicked &&<Login login={login} clickSignUp={clickSignUp} />}
+      {user && showSupplementListClicked && !addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <SupplementList logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} setEditClicked={setEditClicked} />}
+      {user && !showSupplementListClicked && !addNewSupplimentClicked && !userSignUpClicked && !editButtonClicked && <Dashboard logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} takeSupplement={takeSupplement} handleShowSupplementList={handleShowSupplementList} handleRefillAlert={handleRefillAlert} />}
+      {!user && !showSupplementListClicked && !addNewSupplimentClicked && userSignUpClicked && !editButtonClicked && <UserRegister signUp={signUp} goBackToLogin={goBackToLogin} />}
+      {/* {user && !showSupplementListClicked && !addNewSupplimentClicked && userSignUpClicked && editButtonClicked && <EditUserSupplement logout={logout} user={user} handleAddNew={handleAddNew} userSupplements={userSupplements} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} setEditClicked={setEditClicked} />} */}
     </>
- 
   );
 }
 

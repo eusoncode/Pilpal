@@ -1,7 +1,14 @@
-import React from 'react';
-
+import React, {useState} from 'react';
+import AboutUs from '../pages/AboutUs';
 
 export default function Header({ logout, handleAddNew, goBackToDashboard }) {
+
+  const [showAboutUs, setShowAboutUs] = useState(false);
+
+  const toggleAboutUs = () => {
+    setShowAboutUs(!showAboutUs);
+  };
+
   return (
     <footer>
       <div id="container">
@@ -17,12 +24,13 @@ export default function Header({ logout, handleAddNew, goBackToDashboard }) {
         <div className="footer-section">
           <h3>About Us</h3>
           <ul>
-            <li className='logout-btn'>Our Team</li>
+          
+            <li className='logout-btn' onClick={toggleAboutUs}>Our Team</li>
             <li className='logout-btn'>What Our Users Say</li>
             
           </ul>
         </div>
-
+        {showAboutUs && <AboutUs />}
         <div className="footer-section">
           <h3>Quick Links</h3>
           <ul>
