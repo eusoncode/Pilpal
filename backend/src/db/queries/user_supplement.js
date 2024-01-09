@@ -21,6 +21,7 @@ const getUserSupplements = (id) => {
   //   JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id
   //   WHERE user_supplements.userId = $1;
   // `;
+
   const query = `
     SELECT supplements.name,
       TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE 'UTC', 'YYYY-MM-DD HH12:MI AM') AS time,
@@ -35,9 +36,12 @@ const getUserSupplements = (id) => {
       supplement_lineitem.endDate,
       supplement_lineitem.price,
       supplement_lineitem.purchasedFrom,
+      supplement_lineitem.quantity,
       user_supplements.additionalNotes,
       supplement_lineitem.type,
-      supplements.id
+      supplements.id,
+      supplements.description,
+      supplements.manufacturer
     FROM supplements 
     JOIN user_supplements ON supplements.id = user_supplements.supplementId
     JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id 
@@ -137,15 +141,26 @@ const addToUserSupplement = (userId, supplementId, newSupplement) => {
  * @param {{userId: Integer, supplementId: Integer}}
  * @return {Promise<{}>} A promise to the user.
  */
-const editUserSupplement = (userId, supplementId, numberOfPillsTaken, timeTaken, effectiveness) => {
+const editUserSupplement = (userId, supplementId, editedSupplementToBeUpdated) => {
+  
+  const {
+    dosagePerIntake,
+    effectiveness,
+    additionalNotes,
+    id
+  } = editedSupplementToBeUpdated;
+
   const query = `
     UPDATE user_supplements 
-    SET number_of_pills_taken = $3, time_taken = $4, effectiveness = $5 
-    WHERE userId = $1 AND supplementId = $2 
+    SET 
+      dosagePerIntake = $1,
+      effectiveness = $2,
+      additionalNotes = $3,
+    WHERE userid = $4 AND supplementid = $5
     RETURNING *
   `;
-  
-  const queryParam = [userId, supplementId, numberOfPillsTaken, timeTaken, effectiveness];
+
+  const queryParam = [dosagePerIntake, effectiveness, additionalNotes, userId, id];
 
   return db
     .query(query, queryParam)
@@ -158,6 +173,7 @@ const editUserSupplement = (userId, supplementId, numberOfPillsTaken, timeTaken,
       throw err; // Rethrow the error to be handled elsewhere
     });
 };
+
 
 /**
  * Add a new user to the database.

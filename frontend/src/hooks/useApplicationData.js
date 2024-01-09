@@ -193,6 +193,11 @@ const useApplicationData = () => {
       });    
   };
 
+  const getSupplementById  = (supplementId) => {
+    return state.userSupplements.find(supplement => supplement.id === parseInt(supplementId));
+  };
+
+
 
   return {
     state,
@@ -203,7 +208,8 @@ const useApplicationData = () => {
       signUp,
       takeSupplement,
       handleRefillAlert,
-      editSupplement
+      editSupplement,
+      getSupplementById
     },
   };
 };

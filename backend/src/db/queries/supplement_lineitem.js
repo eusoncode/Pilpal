@@ -69,27 +69,36 @@ const addToSupplementLineItem = (supplementId, newSupplement) => {
     });
 };
 
-const editInSupplementLineItem = (supplementId, newSupplement) => {
+const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
   const {
     quantity,
     supplementType,
     startingDate,
     endingDate,
     purchasedFrom,
-    price
-  } = newSupplement;
+    price,
+    id
+  } = editedSupplementToBeUpdated;
 
   // Parse supplementId, quantity, and price to integers
-  const parsedSupplementId = parseInt(supplementId, 10);
   const parsedQuantity = parseInt(quantity, 10);
   const parsedPrice = parseInt(price, 10);
 
   const query = `
-    INSERT INTO supplement_lineitem (supplementId, quantity, type, supplementType, startDate, endDate, purchasedFrom, price)
-    VALUES ($1, $2, 'intake', $3, $4, $5, $6, $7) RETURNING *
+    UPDATE supplement_lineitem 
+    SET 
+      quantity = $1,
+      supplementType = $2,
+      startDate = $3,
+      endDate = $4,
+      purchasedFrom = $5,
+      price = $6,
+      updated_at = CURRENT_TIMESTAMP
+    WHERE supplementid = $7
+    RETURNING *
   `;
 
-  const queryParam = [parsedSupplementId, parsedQuantity, supplementType, startingDate, endingDate, purchasedFrom, parsedPrice];
+  const queryParam = [parsedQuantity, supplementType, startingDate, endingDate, purchasedFrom, parsedPrice, id];
 
   return db
     .query(query, queryParam)

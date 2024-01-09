@@ -80,23 +80,38 @@ const removeSupplement = function(supplementId) {
 // ----------------------- markSupplementAsOutofStock
 
 // ----------------------- editSupplement
-const editSupplement = function(updatedSupplement) {
-  const { id, name, description, manufacturer, cost, quantity, images } = updatedSupplement;
+const editSupplement = function(editedSupplementToBeUpdated) {
+  // const { id, name, description, manufacturer, cost, quantity, images } = editedSupplementToBeUpdated;
+
+  const {
+    name,
+    manufacturer,
+    productUrl,
+    description,
+    id
+  } = editedSupplementToBeUpdated;
+
+  
+  const images = { src: productUrl};
+  const imagesString = JSON.stringify(images); // Convert object to JSON string
+  console.log(imagesString);
+
+  const query = `
+    UPDATE supplements 
+    SET 
+      name = $1,
+      manufacturer = $2,
+      images = $3,
+      description = $4,
+      updated_at = CURRENT_TIMESTAMP
+    WHERE id = $5
+    RETURNING *
+  `;
+
+  const queryParam = [name, manufacturer, imagesString, description, id];
   
   return db
-    .query(`
-      UPDATE supplements 
-      SET 
-        name = $1,
-        description = $2,
-        manufacturer = $3,
-        cost = $4,
-        quantity = $5,
-        images = $6,
-        updated_at = CURRENT_TIMESTAMP
-      WHERE id = $7
-      RETURNING *
-    `, [name, description, manufacturer, cost, quantity, images, id])
+    .query(query, queryParam)
     .then((result) => {
       const editedSupplement = result.rows[0];
       return Promise.resolve(editedSupplement);

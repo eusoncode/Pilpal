@@ -1,4 +1,4 @@
-import { useParams, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './styles/App.scss';
 import LayoutWithHeader from './components/LayoutWithHeader';
 import Login from './pages/Login';
@@ -13,13 +13,7 @@ function App() {
   // Use the custom hook to manage application data
   const { state, actions } = useApplicationData();
   const { user, userSupplements} = state;
-  const { login, logout, addNewSupplement, signUp, takeSupplement, handleRefillAlert, editSupplement } = actions;  
-  const { supplementId } = useParams();
-
-  const supplementToBeEdited = userSupplements.find(supplement => supplement.id === parseInt(supplementId));
-
-  
-  console.log({supplementToBeEdited:supplementToBeEdited});
+  const { login, logout, addNewSupplement, signUp, takeSupplement, handleRefillAlert, editSupplement, getSupplementById } = actions; 
 
   return (
     <Router>
@@ -63,7 +57,8 @@ function App() {
             <LayoutWithHeader logout={logout}>
               <EditSupplement
                 editSupplement={editSupplement}
-                supplementToBeEdited={supplementToBeEdited} />
+                getSupplementById={getSupplementById}
+                userSupplements={userSupplements} />
             </LayoutWithHeader>
           }
         />

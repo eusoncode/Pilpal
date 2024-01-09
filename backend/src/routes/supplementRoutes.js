@@ -118,10 +118,10 @@ router.post("/addSupplement", (req, res) => {
 //Edit a supplement by user
 router.post("/editSupplement", (req, res) => {
   const idFromCookie = req.session.userId;
-  const supplementToBeEdited = req.body.formData;
+  const {editedSupplementToBeUpdated} = req.body.formData;
 
   // console.log({
-  //   supplementToBeEdited: supplementToBeEdited,
+  //   editedSupplementToBeUpdated: editedSupplementToBeUpdated,
   //   idFromCookie: idFromCookie
   // });
 
@@ -130,7 +130,7 @@ router.post("/editSupplement", (req, res) => {
   }
 
   let userData;
-  let supplementId;
+  // let supplementId;
 
   userQueries.getUserById(idFromCookie)
     .then((user) => {
@@ -146,53 +146,58 @@ router.post("/editSupplement", (req, res) => {
       };
 
       if (
-        !supplementToBeEdited.name ||
-        !supplementToBeEdited.description ||
-        !supplementToBeEdited.manufacturer ||
-        !supplementToBeEdited.price ||
-        !supplementToBeEdited.quantity
+        !editedSupplementToBeUpdated.name ||
+        !editedSupplementToBeUpdated.description ||
+        !editedSupplementToBeUpdated.manufacturer ||
+        !editedSupplementToBeUpdated.price ||
+        !editedSupplementToBeUpdated.quantity
       ) { // if email or password is empty, request for them
         return res.status(400).send("Please complete the form with the required info");
       }
 
-      return supplementQueries.editSupplement(supplementToBeEdited);
+      return supplementQueries.editSupplement(editedSupplementToBeUpdated);
     })
     .then((supplementsEdited) => {
       if (!supplementsEdited) {
         return res.status(404).send("Could not edit supplement in the list of supplements table");
       }
-      supplementId = supplementsEdited.id;
+      // supplementId = editedSupplementToBeUpdated.id;
 
-      return userSupplementQueries.editInUserSupplement(userData.id, supplementId, supplementToBeEdited);
+      console.log("Supplement edited in the supplements table");
+
+      return userSupplementQueries.editInUserSupplement(userData.id, editedSupplementToBeUpdated);
     })
     .then((userSupplementsEdited) => {
       if (!userSupplementsEdited) {
         return res.status(404).send("Could not edit supplement in user_upplements table");
       }
 
-      return supplementUsageQueries.editSupplementUsage(supplementId, supplementToBeEdited);
+      console.log("Supplement edited in the user_supplements table");
+
+      return supplementUsageQueries.editSupplementUsage(editedSupplementToBeUpdated);
     })
     .then((supplementsUsageEdited) => {
       if (!supplementsUsageEdited) {
         return res.status(404).send("Could not edit supplement in supplement_usage table");
       }
 
-      return supplementLineItemQueries.editInSupplementLineItem(supplementId, supplementToBeEdited);
+      console.log("Supplement edited in the supplement_usage table");
+
+      return supplementLineItemQueries.editInSupplementLineItem(editedSupplementToBeUpdated);
     })
     .then((supplementsLineItemEdited) => {
       if (!supplementsLineItemEdited) {
         return res.status(404).send("Could not edit supplement in supplement_lineitem table");
       }
+      
+      console.log("Supplement edited in the supplement_lineitem table");
 
-      res.status(200).json({ message: "New supplement was successful Edited" });
+      res.status(200).json({ message: "Supplement was successful Edited" });
     })
     .catch((error) => {
       console.error(error);
       res.status(500).send("Error fetching data");
     });
 });
-
-// ----------------------- removeSupplement
-// ----------------------- markSupplementAsOutofStock
 
 module.exports = router;

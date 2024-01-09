@@ -15,10 +15,11 @@ export default function SupplementListCard(props) {
   const formattedEndDate = props.enddate ? props.enddate.split('T')[0] : '';
 
   const handleEditClick = () => {
+    // props.supplementToBeEdited(props.id);
     navigate(`/edit/${props.id}`); // Navigate to the edit page for this supplement
   };
   
-  console.log({supplementid:props.id});
+  // console.log({supplementid:props.id});
 
   // console.log ({
   //   formattedStartDate: formattedStartDate,
@@ -81,4 +82,3 @@ export default function SupplementListCard(props) {
     </>
   );
 }
-
