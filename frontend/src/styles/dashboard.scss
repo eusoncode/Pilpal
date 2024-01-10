@@ -39,7 +39,6 @@
         background-color: $light-gray-color;
         padding: $spacing-md;
         border-radius: 8px;
-        min-height: 500px;
       }
     }
   }
@@ -48,6 +47,7 @@
 .notification {
   position: relative;
   margin-bottom: $spacing-lg;
+  display: flex;
 }
 
 .notification-card {
@@ -62,6 +62,7 @@
   max-width: 650px;
   width: 80%;
   transition: $transition;
+  font-size: $font-size-base;
 
   img {
     width: 120px;
@@ -73,6 +74,7 @@
     color: $orange-color;
     font-weight: 700;
     font-size: $font-size-xxl;
+    line-height: 1.2;
   }
 
   &.restock-card {
@@ -87,11 +89,7 @@
 }
 
 .notification-card-btn {
-  position: absolute;
   width: 125px;
-  top: 0;
-  right: 18%;
-  height: 100%;
   border-radius: 0 15px 15px 0;
   display: flex;
   align-items: center;
@@ -100,13 +98,14 @@
   transition: $transition;
   z-index: 1;
   cursor: pointer;
+  transform: translateX(-110px);
 
   &.active {
-    right: 5%;
+    transform: translateX(-12px);
   }
 
   &.active.disabled {
-    right: 18%;
+    transform: translateX(-110px);
   }
 
   span {
@@ -180,4 +179,44 @@
 
 .skip-btn.disabled {
   display: none;
+}
+
+@media only screen and (max-width: 950px) {
+  .dashboard-container {
+    .container-bottom {
+      flex-direction: column;
+      .container-left {
+        padding-top: $spacing-lg;
+
+        order: 2;
+      }
+      .container-right {
+        order: 1;
+
+        .container-right--box {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  .notification-card {
+    img {
+      width: 80px;
+    }
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .dashboard-container {
+    .container-right--box {
+      flex-direction: column;
+    }
+  }
+
+  .notification-card {
+    img {
+      width: 80px;
+    }
+  }
 }

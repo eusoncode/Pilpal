@@ -52,7 +52,9 @@ export default function Dashboard() {
           <h1 className="accent">
             Pilpal Dashboard<span>✷</span>
           </h1>
-          <h2>Hi, Luwam! Let’s make today a healthy one.</h2>
+          <h2>
+            Hi, Luwam! <br></br>Let’s make today a healthy one.
+          </h2>
         </section>
         <section className="container-bottom">
           <article className="container-left">
@@ -67,7 +69,6 @@ export default function Dashboard() {
           </article>
           <article className="container-right">
             <div className="container-right--box">
-              <h3>Calendar</h3>
               <Calendar
                 onChange={setDate}
                 value={date}

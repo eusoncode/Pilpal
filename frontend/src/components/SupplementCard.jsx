@@ -89,7 +89,7 @@ export default function SupplementCard({
               isHovered ? 'active' : ''
             }`}
           >
-            <span className="btn-cta-restock">order</span>
+            <span className="btn-cta-restock">refill</span>
           </div>
         )}
       </div>
