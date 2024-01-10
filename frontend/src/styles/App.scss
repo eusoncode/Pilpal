@@ -1,5 +1,10 @@
+// Base
 @import 'base/variables';
 @import 'base/base';
+
+// Components
+
+@import 'components/buttons';
 
 // Layouts
 @import 'layouts/header';
@@ -75,19 +80,5 @@ form {
   label {
     font-size: $font-size-small;
     color: $navy-color;
-  }
-
-  input[type='submit'],
-  button[type='submit'] {
-    margin-top: $spacing-xl;
-    border-radius: 32px;
-    padding: $spacing-md;
-    min-width: 140px;
-    font-family: $font-family-primary;
-    color: $white-color;
-    background-color: $orange-color;
-    border-style: initial;
-    font-weight: 600;
-    cursor: pointer;
   }
 }

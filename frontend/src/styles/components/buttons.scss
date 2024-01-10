@@ -1,0 +1,18 @@
+input[type='submit'],
+button[type='submit'],
+.btn-main {
+  margin-top: $spacing-xl;
+  border-radius: 32px;
+  padding: $spacing-md;
+  min-width: 140px;
+  font-family: $font-family-primary;
+  color: $white-color;
+  background-color: $orange-color;
+  border-style: initial;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $navy-color;
+  }
+}

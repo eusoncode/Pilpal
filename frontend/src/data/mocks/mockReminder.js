@@ -37,7 +37,7 @@ const mockReminder = [
     reorderLevel: 24,
     dosageType: 'Tablet',
     startDate: '2023-12-28',
-    endDate: '',
+    endDate: '2024-01-17',
     price: 11,
     purchasedFrom: 'Amazon',
     additionalNotes:
@@ -58,7 +58,7 @@ const mockReminder = [
     reorderLevel: 10,
     dosageType: 'Softgel',
     startDate: '2023-12-28',
-    endDate: '',
+    endDate: '2024-01-17',
     price: 16,
     purchasedFrom: 'iHerb',
 
@@ -79,7 +79,7 @@ const mockReminder = [
     reorderLevel: 14,
     dosageType: 'Capsule',
     startDate: '2023-12-28',
-    endDate: '',
+    endDate: '2024-01-17',
     price: 25,
     purchasedFrom: 'Alive Health Centre',
     additionalNotes:

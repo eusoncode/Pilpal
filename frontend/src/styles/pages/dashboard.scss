@@ -179,6 +179,23 @@
   display: none;
 }
 
+.no-reminders {
+  height: 324px;
+  width: 80%;
+  border-radius: 8px;
+  background-color: $light-gray-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  p {
+    text-align: center;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-xl;
+    font-weight: 500;
+  }
+}
+
 @media only screen and (max-width: 950px) {
   .dashboard-container {
     .container-bottom {
@@ -202,6 +219,10 @@
     img {
       width: 80px;
     }
+  }
+
+  .no-reminders {
+    width: 100%;
   }
 }
 

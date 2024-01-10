@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import SupplementCard from '../components/SupplementCard';
@@ -6,6 +7,7 @@ import mockReminder from '../data/mocks/mockReminder';
 import mockPillIntakes from '../data/mocks/mockPillIntakes';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const isFutureDate = selectedDate > new Date();
@@ -58,13 +60,28 @@ export default function Dashboard() {
         <section className="container-bottom">
           <article className="container-left">
             <h3>Reminders for {selectedDate.toDateString()}</h3>
-            {supplementsForSelectedDate.map((reminder) => (
-              <SupplementCard
-                key={reminder.id}
-                {...reminder}
-                isFutureDate={isFutureDate}
-              />
-            ))}
+            {/* Check if there are supplements for the selected date */}
+            {supplementsForSelectedDate.length > 0 ? (
+              supplementsForSelectedDate.map((reminder) => (
+                <SupplementCard
+                  key={reminder.id}
+                  {...reminder}
+                  isFutureDate={isFutureDate}
+                />
+              ))
+            ) : (
+              <div className="no-reminders">
+                <p>
+                  No reminders yet?<br></br> Let's get healthier together! 💪
+                </p>
+                <button
+                  className="btn-main"
+                  onClick={() => navigate('/add-new')}
+                >
+                  Start Tracking Your Supplements
+                </button>
+              </div>
+            )}
           </article>
           <article className="container-right">
             <div className="container-right--box">
