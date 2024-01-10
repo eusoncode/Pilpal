@@ -94,18 +94,18 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
     });
   };
   
-  const imageUrl = formData.image;
+  // const imageUrl = formData.image;
   // const producturl = imageUrl.src;
-  const producturl = formData.image;
+  // const producturl = formData.image;
 
-  console.log({
-    imageUrl: imageUrl,
-    producturl:producturl
-  });
+  // console.log({
+  //   imageUrl: imageUrl,
+  //   producturl:producturl
+  // });
 
-  console.log({
-    formData: formData
-  });
+  // console.log({
+  //   formData: formData
+  // });
 
 
   // console.log({

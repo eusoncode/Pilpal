@@ -118,11 +118,12 @@ router.post("/addSupplement", (req, res) => {
 //Edit a supplement by user
 router.post("/editSupplement", (req, res) => {
   const idFromCookie = req.session.userId;
-  const {editedSupplementToBeUpdated} = req.body.formData;
+  const editedSupplementToBeUpdated = req.body.formData;
 
   // console.log({
   //   editedSupplementToBeUpdated: editedSupplementToBeUpdated,
-  //   idFromCookie: idFromCookie
+  //   editedSupplementToBeUpdatedId: editedSupplementToBeUpdated.id
+  //   // idFromCookie: idFromCookie
   // });
 
   if (!idFromCookie) {
@@ -147,6 +148,7 @@ router.post("/editSupplement", (req, res) => {
 
       if (
         !editedSupplementToBeUpdated.id ||
+        !editedSupplementToBeUpdated.name ||
         !editedSupplementToBeUpdated.description ||
         !editedSupplementToBeUpdated.manufacturer ||
         !editedSupplementToBeUpdated.price ||
