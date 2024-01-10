@@ -1,6 +1,7 @@
 import Image from '../assets/image-07.png';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { reconvertReminderTimeWithOutAmPm } from "../helper/reconvertReminderTime";
 
 export default function EditSupplement({ editSupplement, getSupplementById }) { 
   
@@ -13,20 +14,22 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
   const [formData, setFormData] = useState({
     name: '',
     manufacturer: '',
-    startingDate: '',
-    endingDate: '',
-    reminderTime: '',
+    startdate: '',
+    enddate: '',
+    time: '',
     intakeFrequency: '',
-    dosagePerIntake: '',
-    dosageType: '',
+    intakequantity: '',
+    dosagetype: '',
     quantity: '',
     refillLevel: '',
-    purchasedFrom: '',
+    purchasedfrom: '',
     price: '',
-    // productUrl: '',
+    producturl: '',
     effectiveness: '',
+    status: '',
+    status_reason: '',
     description: '',
-    additionalNotes: ''
+    additionalnotes: ''
   });
 
   // const {    
@@ -62,6 +65,12 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
     if (supplementToBeEdited) {
       setFormData({
         ...supplementToBeEdited,
+        producturl: supplementToBeEdited.image.src,
+        // convert incoming date
+        startdate: new Date(supplementToBeEdited.startdate).toISOString().split('T')[0],
+        enddate: new Date(supplementToBeEdited.enddate).toISOString().split('T')[0],
+        // convert incoming time
+        time: reconvertReminderTimeWithOutAmPm(supplementToBeEdited.time)
       });
     }
   }, [id, getSupplementById])
@@ -85,17 +94,22 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
     });
   };
   
-  
-  // const productUrl = formData.image.src;
+  const imageUrl = formData.image;
+  // const producturl = imageUrl.src;
+  const producturl = formData.image;
 
   console.log({
-    // productUrl: productUrl,
+    imageUrl: imageUrl,
+    producturl:producturl
+  });
+
+  console.log({
     formData: formData
   });
 
 
   // console.log({
-  //   productUrl: productUrl
+    // producturl: producturl.src,
   // });
 
   return (
@@ -123,7 +137,7 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                       type="text"
                       id="name"
                       name="name"
-                      value={formData.name}
+                      value={formData.name ?? ""}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -134,45 +148,45 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                       type="text"
                       id="manufacturer"
                       name="manufacturer" 
-                      value={formData.manufacturer}
+                      value={formData.manufacturer ?? ""}
                       onChange={handleInputChange} />
                   </div>
 
                   <div className="flex-container--row">
                     <div className="form-group">
-                      <label htmlFor="startingDate">Starting Date:</label>
+                      <label htmlFor="startdate">Starting Date:</label>
                       <input
                         type="date"
-                        id="startingDate"
-                        name="startingDate"
-                        value={formData.startingDate}
+                        id="startdate"
+                        name="startdate"
+                        value={formData.startdate ?? ""}
                         onChange={handleInputChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="endingDate">Ending Date:</label>
+                      <label htmlFor="enddate">Ending Date:</label>
                       <input
                         type="date"
-                        id="endingDate"
-                        name="endingDate" 
-                        value={formData.endingDate}
+                        id="enddate"
+                        name="enddate" 
+                        value={formData.enddate ?? ""}
                         onChange={handleInputChange}/>
                     </div>
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="reminderTime">Reminder Time:</label>
+                    <label htmlFor="time">Reminder Time:</label>
                     <input
                       type="time"
-                      id="reminderTime"
-                      name="reminderTime" 
-                      value={formData.reminderTime}
+                      id="time"
+                      name="time" 
+                      value={formData.time ?? ""}
                       onChange={handleInputChange}/>
-                    <label htmlFor="intakeFrequency">Intake Frequency:</label>
+                    <label htmlFor="intakefrequency">Intake Frequency:</label>
                     <select
-                      id="intakeFrequency"
-                      name="intakeFrequency" 
-                      value={formData.intakefrequency}
+                      id="intakefrequency"
+                      name="intakefrequency" 
+                      value={formData.intakefrequency ?? ""}
                       onChange={handleInputChange}>
                       <option value="Everyday">Everyday</option>
                       <option value="Specific days of the week">Specific days of the week</option>
@@ -180,42 +194,39 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                   </div>
                   <div className="flex-container--row">
                     <div className="form-group">
-                      <label htmlFor="dosagePerIntake">Dosage per Intake:</label>
+                      <label htmlFor="intakequantity">Dosage per Intake:</label>
                       <input
                         type="number"
-                        id="dosagePerIntake"
-                        name="dosagePerIntake"
-                        value={formData.intakequantity}
+                        id="intakequantity"
+                        name="intakequantity"
+                        value={formData.intakequantity ?? ""}
                         onChange={handleInputChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="dosageType">Dosage Type:</label>
+                      <label htmlFor="dosagetype">Dosage Type:</label>
                       <select
-                        id="dosageType"
-                        name="dosageType"
-                        value={formData.dosagetype}
+                        id="dosagetype"
+                        name="dosagetype"
+                        value={formData.dosagetype ?? ""}
                         onChange={handleInputChange}>
-                        <option value="Capsule">Capsule</option>
-                        <option value="Tablet">Tablet</option>
-                        <option value="Spray">Spray</option>
-                        <option value="Drop">Drop</option>
-                        <option value="Softgel">Softgel</option>
-                        <option value="mg">mg</option>
-                        <option value="g">g</option>
-                        <option value="ml">ml</option>
-                        <option value="L">L</option>
+                        <option value=""></option>
+                        <option value="capsule">Capsule</option>
+                        <option value="tablet">Tablet</option>
+                        <option value="spray">Spray</option>
+                        <option value="drop">Drop</option>
+                        <option value="softgel">Softgel</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="currentQuantity">Quantity:</label>
+                    <label htmlFor="quantity">Quantity:</label>
                     <input
                       type="number"
                       id="quantity"
                       name="quantity"
-                      value={formData.quantity}
+                      value={formData.quantity ?? ""}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -226,7 +237,7 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                       type="number"
                       id="refillLevel"
                       name="refillLevel"
-                      value={formData.refilllevel}
+                      value={formData.refilllevel ?? ""}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -234,12 +245,12 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
 
                 <div className="container-right">
                   <div className="form-group">
-                    <label htmlFor="purchasedFrom">Purchased From:</label>
+                    <label htmlFor="purchasedfrom">Purchased From:</label>
                     <input
                       type="text"
-                      id="purchasedFrom"
-                      name="purchasedFrom"
-                      value={formData.purchasedfrom}
+                      id="purchasedfrom"
+                      name="purchasedfrom"
+                      value={formData.purchasedfrom ?? ""}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -251,33 +262,50 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                       type="text"
                       id="price"
                       name="price" 
-                      value={formData.price}
+                      value={formData.price ?? ""}
                       onChange={handleInputChange}/>
                   </div>
 
-                  {/* <div className="form-group">
-                    <label htmlFor="productUrl">Product URL (Optional):</label>
+                  <div className="form-group">
+                    <label htmlFor="producturl">Product URL (Optional):</label>
                     <input
                       type="url"
-                      id="productUrl"
-                      name="productUrl"
-                      value={productUrl}
+                      id="producturl"
+                      name="producturl"
+                      value={formData.producturl ?? ""}
                       onChange={handleInputChange} />
-                  </div> */}
+                  </div>
 
                   <div className="form-group">
                     <label htmlFor="effectiveness">Effectiveness:</label>
                     <select
                       id="effectiveness"
                       name="effectiveness"
-                      value={formData.effectiveness}
+                      value={formData.effectiveness ?? ""}
                       onChange={handleInputChange}> 
                       <option value="Needs More Time To Evaluate">Needs More Time To Evaluate</option>
                       <option value="Not Effective">Not Effective</option>
-                      <option value="Slightly Effective">Slightly Effective</option>
+                      <option value="Effective">Effective</option>
                       <option value="Moderately Effective">Moderately Effective</option>
                       <option value="Highly Effective">Highly Effective</option>
                     </select>
+                  </div>
+
+                  <div className="form-group">
+                      <label htmlFor="status">Status :</label>
+                      <input
+                        type="text"
+                        id="status"
+                        name="status"
+                        value={formData.status ?? ""}
+                        onChange={handleInputChange} />
+                      <label htmlFor="status_reason">Reason :</label>
+                      <input
+                        type="text"
+                        id="status_reason"
+                        name="status_reason"
+                        value={formData.status_reason ?? ""}
+                        onChange={handleInputChange} />
                   </div>
 
                   <div className="form-group">
@@ -286,15 +314,15 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                       id="description"
                       name="description"
                       rows="4"
-                      value={formData.description}
+                      value={formData.description ?? ""}
                       onChange={handleInputChange}
                     ></textarea>                    
-                    <label htmlFor="additionalNotes">Additional Notes:</label>
+                    <label htmlFor="additionalnotes">Additional Notes:</label>
                     <textarea
-                      id="additionalNotes"
-                      name="additionalNotes"
+                      id="additionalnotes"
+                      name="additionalnotes"
                       rows="4"
-                      value={formData.additionalnotes}
+                      value={formData.additionalnotes ?? ""}
                       onChange={handleInputChange}
                     ></textarea>
                   </div>
@@ -468,11 +496,11 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="productUrl">Product URL (Optional):</label>
+                    <label htmlFor="producturl">Product URL (Optional):</label>
                     <input
                       type="url"
-                      id="productUrl"
-                      name="productUrl"
+                      id="producturl"
+                      name="producturl"
                       value={formData.image.src}
                       onChange={handleInputChange}
                     />

@@ -146,7 +146,7 @@ router.post("/editSupplement", (req, res) => {
       };
 
       if (
-        !editedSupplementToBeUpdated.name ||
+        !editedSupplementToBeUpdated.id ||
         !editedSupplementToBeUpdated.description ||
         !editedSupplementToBeUpdated.manufacturer ||
         !editedSupplementToBeUpdated.price ||

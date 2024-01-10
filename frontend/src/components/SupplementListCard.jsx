@@ -21,7 +21,14 @@ export default function SupplementListCard(props) {
   
   // console.log({supplementid:props.id});
 
+  // console.log({
+  //   inputTime: props.time,
+  //   inputStartDate: props.startdate,
+  //   inputEndDate: props.enddate
+  // });
+
   // console.log ({
+  //   formatedTime: formatedTime,
   //   formattedStartDate: formattedStartDate,
   //   formattedEndDate: formattedEndDate
   // });

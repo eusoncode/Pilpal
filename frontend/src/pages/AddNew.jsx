@@ -32,6 +32,10 @@ export default function AddNew({addNewSupplement}) {
     navigate('/dashboard'); 
   };
 
+  console.log({
+    formData:formData
+  });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 

@@ -39,6 +39,8 @@ const getUserSupplements = (id) => {
       supplement_lineitem.quantity,
       user_supplements.additionalNotes,
       supplement_lineitem.type,
+      supplement_lineitem.status,
+      supplement_lineitem.status_reason,
       supplements.id,
       supplements.description,
       supplements.manufacturer

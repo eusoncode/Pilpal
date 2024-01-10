@@ -108,6 +108,7 @@ const useApplicationData = () => {
     axios.post('http://localhost:8080/supplements/addSupplement', body, { withCredentials: true })
       .then((response) => {
         console.log('Supplement successfully add:', response.data);
+        setRefreshDashboard();
       })
       .catch((error) => {
         console.error('Error while making POST request:', error);

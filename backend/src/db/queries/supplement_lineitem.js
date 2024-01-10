@@ -77,8 +77,11 @@ const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
     endingDate,
     purchasedFrom,
     price,
+    status,
     id
   } = editedSupplementToBeUpdated;
+
+  const statusReason = editedSupplementToBeUpdated.status_reason;
 
   // Parse supplementId, quantity, and price to integers
   const parsedQuantity = parseInt(quantity, 10);
@@ -93,12 +96,14 @@ const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
       endDate = $4,
       purchasedFrom = $5,
       price = $6,
+      status = $7,
+      status_reason = $8,
       updated_at = CURRENT_TIMESTAMP
-    WHERE supplementid = $7
+    WHERE supplementid = $9
     RETURNING *
   `;
 
-  const queryParam = [parsedQuantity, supplementType, startingDate, endingDate, purchasedFrom, parsedPrice, id];
+  const queryParam = [parsedQuantity, supplementType, startingDate, endingDate, purchasedFrom, parsedPrice, status, statusReason, id];
 
   return db
     .query(query, queryParam)
