@@ -61,6 +61,11 @@ export default function Dashboard() {
       )
     : [];
 
+  // Filter only active supplements for the selected date
+  const activeSupplementsForSelectedDate = supplementsForSelectedDate.filter(
+    (supplement) => supplement.isActive
+  );
+
   return (
     <>
       <main className="dashboard-container container">
@@ -94,8 +99,8 @@ export default function Dashboard() {
               )}
             </p>
             {/* Check if there are supplements for the selected date */}
-            {supplementsForSelectedDate.length > 0 ? (
-              supplementsForSelectedDate.map((reminder) => (
+            {activeSupplementsForSelectedDate.length > 0 ? (
+              activeSupplementsForSelectedDate.map((reminder) => (
                 <SupplementCard
                   key={reminder.id}
                   {...reminder}

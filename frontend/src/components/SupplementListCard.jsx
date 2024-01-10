@@ -18,6 +18,8 @@ export default function SupplementListCard({
   purchasedFrom,
   additionalNotes,
   number, // For numbering each supplement
+  isActive,
+  onToggleActive,
 }) {
   // Importing images
   const imageUrl = image.src;
@@ -27,10 +29,14 @@ export default function SupplementListCard({
     navigate(`/edit/${id}`); // Navigate to the edit page for this supplement
   };
 
+  // Conditional class names
+  const cardClassName = `${isActive ? '' : 'deactivated'}`;
+  const buttonClassName = `${isActive ? 'active' : ''}`;
+
   return (
     <>
       <div className="supplementListCard">
-        <div className="card">
+        <div className={`card ${cardClassName}`}>
           <div className="number">{number}.</div>
           <div className="skip-btn" onClick={handleEditClick}>
             edit
@@ -78,11 +84,18 @@ export default function SupplementListCard({
               </div>
             </div>
             <div className="details__notes">
-              {/* <hr></hr> */}
               <span className="title">Additional Notes: </span>
               <span className="content">{additionalNotes}</span>
             </div>
           </div>
+        </div>
+        <div className="activation-btn-container">
+          <button
+            className={`btn-secondary ${buttonClassName}`}
+            onClick={() => onToggleActive(id)}
+          >
+            {isActive ? 'Deactivate' : 'Activate'}
+          </button>
         </div>
       </div>
     </>

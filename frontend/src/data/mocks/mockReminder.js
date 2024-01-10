@@ -22,6 +22,7 @@ const mockReminder = [
     price: 24,
     purchasedFrom: 'iHerb',
     additionalNotes: 'Compare prices for next purchase.',
+    isActive: true,
   },
   {
     id: 2,
@@ -43,6 +44,7 @@ const mockReminder = [
     additionalNotes:
       'Notes 2, Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     autoConsume: true,
+    isActive: true,
   },
   {
     id: 3,
@@ -64,6 +66,7 @@ const mockReminder = [
 
     additionalNotes:
       'Notes 3, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fermentum tellus elit, sit amet dignissim dui blandit eget. Duis lorem mi.',
+    isActive: true,
   },
   {
     id: 4,
@@ -84,6 +87,7 @@ const mockReminder = [
     purchasedFrom: 'Alive Health Centre',
     additionalNotes:
       'Notes 4, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fermentum tellus elit.',
+    isActive: true,
   },
 ];
 

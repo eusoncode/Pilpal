@@ -1,8 +1,22 @@
+import { useState } from 'react';
 import SupplementListCard from '../components/SupplementListCard';
 import mockReminder from '../data/mocks/mockReminder';
 
 export default function SupplementList() {
   const totalSupplements = mockReminder.length;
+  const [supplements, setSupplements] = useState(mockReminder);
+
+  const toggleActiveStatus = (id) => {
+    const updatedSupplements = supplements.map((supplement) => {
+      if (supplement.id === id) {
+        return { ...supplement, isActive: !supplement.isActive };
+      }
+      return supplement;
+    });
+
+    setSupplements(updatedSupplements);
+  };
+
   return (
     <>
       <main className="supplementlist-container container">
@@ -16,11 +30,12 @@ export default function SupplementList() {
         </section>
         <section className="container-bottom">
           <article>
-            {mockReminder.map((supplement, index) => (
+            {supplements.map((supplement, index) => (
               <SupplementListCard
                 key={supplement.id}
                 number={index + 1}
                 {...supplement}
+                onToggleActive={toggleActiveStatus}
               />
             ))}
           </article>

@@ -62,6 +62,16 @@
     background-color: $light-gray-color;
   }
 
+  &.deactivated {
+    background-color: $light-gray-color;
+    border-color: $black-color;
+
+    .number,
+    .details__supplement-name {
+      color: $black-color;
+    }
+  }
+
   .number {
     position: absolute;
     left: -50px;
@@ -128,4 +138,9 @@
   &:hover {
     color: $black-color;
   }
+}
+
+.activation-btn-container {
+  text-align: right;
+  margin-top: $spacing-sm;
 }
