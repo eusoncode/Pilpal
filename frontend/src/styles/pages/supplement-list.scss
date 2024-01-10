@@ -1,7 +1,8 @@
 .supplementlist-container {
   .accent {
-    font-size: $font-size-xl;
+    font-size: $font-size-xxl;
     margin-bottom: $spacing-md;
+    font-weight: 800;
     span {
       font-size: $font-size-xxl;
     }
@@ -24,11 +25,22 @@
   }
 }
 
+.info {
+  padding: $spacing-sm $spacing-md;
+  background-color: $light-gray-color;
+  border-radius: 8px;
+  display: inline-block;
+  span {
+    font-weight: 700;
+  }
+}
+
 .supplementListCard {
   position: relative;
   width: 80%;
-  margin: 0 auto $spacing-lg;
+  margin: 0 auto $spacing-xxl;
   font-size: $font-size-large;
+  cursor: crosshair;
 }
 
 .card {
@@ -46,14 +58,18 @@
   transition: $transition;
 
   &:hover {
-    box-shadow: 0px 1px 10px -1px $shadow-color;
+    // box-shadow: 0px 1px 10px -1px $shadow-color;
     background-color: $light-gray-color;
   }
 
-  hr {
-    border: 0.3px solid $navy-color;
-    opacity: 50%;
-    margin-bottom: $spacing-sm;
+  .number {
+    position: absolute;
+    left: -50px;
+    top: -30px;
+    font-size: $font-size-h1;
+    font-weight: 700;
+    font-style: italic;
+    color: $orange-color;
   }
 
   .details {
@@ -95,6 +111,10 @@
         margin-bottom: $spacing-sm;
       }
     }
+  }
+
+  .details__notes {
+    margin-top: $spacing-sm;
   }
 
   span.title {

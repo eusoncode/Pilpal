@@ -4,6 +4,7 @@ export default function SupplementListCard({
   id,
   name,
   time,
+  manufacturer,
   intakeFrequency,
   intakeQuantity,
   stockQuantity,
@@ -16,6 +17,7 @@ export default function SupplementListCard({
   price,
   purchasedFrom,
   additionalNotes,
+  number, // For numbering each supplement
 }) {
   // Importing images
   const imageUrl = image.src;
@@ -29,13 +31,16 @@ export default function SupplementListCard({
     <>
       <div className="supplementListCard">
         <div className="card">
+          <div className="number">{number}.</div>
           <div className="skip-btn" onClick={handleEditClick}>
             edit
           </div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />
-              <span>{name}</span>
+              <span>
+                {name} ({manufacturer})
+              </span>
             </div>
             <div className="details__contents">
               <div className="details__contents--left">
@@ -73,7 +78,7 @@ export default function SupplementListCard({
               </div>
             </div>
             <div className="details__notes">
-              <hr></hr>
+              {/* <hr></hr> */}
               <span className="title">Additional Notes: </span>
               <span className="content">{additionalNotes}</span>
             </div>
