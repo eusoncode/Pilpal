@@ -1,4 +1,3 @@
-import '../styles/supplementlist.scss';
 import SupplementListCard from '../components/SupplementListCard';
 import mockReminder from '../data/mocks/mockReminder';
 

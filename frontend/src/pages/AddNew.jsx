@@ -1,4 +1,3 @@
-import '../styles/addnew.scss';
 import Image from '../assets/image-07.png';
 
 export default function AddNew() {

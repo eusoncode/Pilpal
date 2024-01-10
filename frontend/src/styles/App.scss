@@ -1,6 +1,16 @@
-@import './variables';
-@import './header';
-@import './calendar';
+@import 'base/variables';
+@import 'base/base';
+
+// Layouts
+@import 'layouts/header';
+@import 'components/calendar';
+
+// Pages
+@import 'pages/login';
+@import 'pages/user-register.scss';
+@import 'pages/dashboard';
+@import 'pages/addnew';
+@import 'pages/supplement-list';
 
 // Global
 .container {
@@ -79,81 +89,5 @@ form {
     border-style: initial;
     font-weight: 600;
     cursor: pointer;
-  }
-}
-
-// Login Page
-.login-container {
-  display: flex;
-  align-items: center;
-
-  a {
-    color: $orange-color;
-  }
-
-  .login-container-left {
-    flex: 1;
-
-    img {
-      padding: $spacing-lg;
-    }
-  }
-
-  .login-container-right {
-    flex: 1;
-    padding: $spacing-sm;
-
-    h1 {
-      font-size: $font-size-h1;
-    }
-
-    .accent {
-      font-size: $font-size-large;
-      span {
-        font-size: $font-size-xxl;
-      }
-    }
-  }
-}
-
-// User Register Page
-.userRegister-container {
-  display: flex;
-  align-items: center;
-  min-height: 700px;
-  height: 100vh;
-  padding: 0;
-
-  h1 {
-    font-size: $font-size-h1;
-    margin-bottom: $spacing-sm;
-  }
-
-  .accent {
-    font-size: $font-size-large;
-    span {
-      font-size: $font-size-xxl;
-    }
-  }
-
-  a {
-    color: $orange-color;
-  }
-
-  .userRegister-container-left {
-    flex: 1;
-
-    img {
-      padding: $spacing-lg;
-    }
-  }
-
-  .userRegister-container-right {
-    flex: 1;
-    padding: $spacing-sm;
-  }
-
-  form {
-    margin-top: 1rem;
   }
 }
