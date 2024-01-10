@@ -2,15 +2,30 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import SupplementCard from '../components/SupplementCard';
+import userProfileImage from '../assets/user-profile.png';
 import mockReminder from '../data/mocks/mockReminder';
+import SupplementCard from '../components/SupplementCard';
 import mockPillIntakes from '../data/mocks/mockPillIntakes';
+import PillIntakeDetails from '../components/PillIntakeDetails';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const isFutureDate = selectedDate > new Date();
+
+  // Format Date to Day - Date, Year
+  function formatDate(date) {
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+    const monthName = date.toLocaleDateString('en-US', { month: 'long' });
+    const dayNumber = date.getDate();
+    const year = date.getFullYear();
+
+    return `${dayName} ${monthName} ${dayNumber}, ${year}`;
+  }
+
+  // Check if the current date is the same as the selected date
+  const isToday = selectedDate.toDateString() === new Date().toDateString();
 
   // Check if the selected date falls within the supplement's date range
   const supplementsForSelectedDate = mockReminder.filter((supplement) => {
@@ -50,16 +65,34 @@ export default function Dashboard() {
     <>
       <main className="dashboard-container container">
         <section className="container-top">
-          <h1 className="accent">
+          {/* <h1 className="accent">
             Pilpal Dashboard<span>✷</span>
-          </h1>
-          <h2>
-            Hi, Luwam! <br></br>Let’s make today a healthy one.
-          </h2>
+          </h1> */}
+          <p className="title-date">{formatDate(new Date())}</p>
+          <div className="greetings">
+            <h2>
+              Hi, Luwam! <br></br>Let’s make today a healthy one.
+            </h2>
+            <div className="profile-image-container">
+              <img src={userProfileImage} alt="User Profile" />
+            </div>
+          </div>
         </section>
         <section className="container-bottom">
           <article className="container-left">
-            <h3>Reminders for {selectedDate.toDateString()}</h3>
+            <p className="today-title">
+              {isToday ? (
+                <>
+                  Your reminders for
+                  <span> today</span>
+                </>
+              ) : (
+                <>
+                  Your reminders for
+                  <span> {formatDate(selectedDate)}</span>
+                </>
+              )}
+            </p>
             {/* Check if there are supplements for the selected date */}
             {supplementsForSelectedDate.length > 0 ? (
               supplementsForSelectedDate.map((reminder) => (
@@ -95,22 +128,14 @@ export default function Dashboard() {
                   ) : null
                 }
               />
-
-              {/* Pill Details Display */}
-              {selectedDate && (
-                <div className="pill-details">
-                  <h4>Pills Taken on {selectedDate.toDateString()}:</h4>
-                  <ul>
-                    {pillDetailsForSelectedDate.map((intake, index) => (
-                      <li key={index}>
-                        {intake.name} - {intake.quantity} {intake.dosageType} at{' '}
-                        {intake.time}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </div>
+            {/* Pill Intake & Skipped Details Display */}
+            {selectedDate && (
+              <PillIntakeDetails
+                pillIntakes={pillDetailsForSelectedDate}
+                selectedDate={selectedDate}
+              />
+            )}
           </article>
         </section>
       </main>
