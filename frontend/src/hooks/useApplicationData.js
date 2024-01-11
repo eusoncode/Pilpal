@@ -183,7 +183,7 @@ const useApplicationData = () => {
       'formData': formData
     }
 
-    console.log(body);
+    console.log('Request body:', body);
     
     axios.post('http://localhost:8080/supplements/editSupplement', body, { withCredentials: true })
       .then((response) => {

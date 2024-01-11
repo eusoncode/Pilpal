@@ -63,8 +63,8 @@ router.post("/addSupplement", (req, res) => {
         !newSupplement.name ||
         !newSupplement.description ||
         !newSupplement.manufacturer ||
-        !newSupplement.price ||
-        !newSupplement.quantity
+        !newSupplement.price
+        // !newSupplement.quantity
         // !newSupplement.name ||
         // !newSupplement.id ||
         // !newSupplement.name ||
@@ -131,16 +131,16 @@ router.post("/addSupplement", (req, res) => {
 });
 
 
-//Edit a supplement by user
+// Edit a supplement by user
 // router.post("/editSupplement", (req, res) => {
 //   const idFromCookie = req.session.userId;
 //   const editedSupplementToBeUpdated = req.body.formData;
 
-//   // console.log({
-//   //   editedSupplementToBeUpdated: editedSupplementToBeUpdated,
-//   //   editedSupplementToBeUpdatedId: editedSupplementToBeUpdated.id
-//   //   // idFromCookie: idFromCookie
-//   // });
+//   console.log({
+//     editedSupplementToBeUpdated: editedSupplementToBeUpdated,
+//     editedSupplementToBeUpdatedId: editedSupplementToBeUpdated.id
+//     // idFromCookie: idFromCookie
+//   });
 
 //   if (!idFromCookie) {
 //     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the BuyBuddy....");
@@ -256,17 +256,17 @@ router.post("/editSupplement", (req, res) => {
         !editedSupplementToBeUpdated.name ||
         !editedSupplementToBeUpdated.description ||
         !editedSupplementToBeUpdated.manufacturer ||
-        !editedSupplementToBeUpdated.price ||
-        !editedSupplementToBeUpdated.quantity ||
-        !editedSupplementToBeUpdated.stockquantity ||
-        !editedSupplementToBeUpdated.status ||
-        !editedSupplementToBeUpdated.time ||
-        !editedSupplementToBeUpdated.startdate ||
-        !editedSupplementToBeUpdated.enddate ||
-        !editedSupplementToBeUpdated.refilllevel ||
-        !editedSupplementToBeUpdated.intakequantity ||
-        !editedSupplementToBeUpdated.dosetype ||
-        !editedSupplementToBeUpdated.intakefrequency
+        !editedSupplementToBeUpdated.price
+        // !editedSupplementToBeUpdated.quantity ||
+        // !editedSupplementToBeUpdated.stockquantity ||
+        // !editedSupplementToBeUpdated.status ||
+        // !editedSupplementToBeUpdated.time ||
+        // !editedSupplementToBeUpdated.startdate ||
+        // !editedSupplementToBeUpdated.enddate ||
+        // !editedSupplementToBeUpdated.refilllevel ||
+        // !editedSupplementToBeUpdated.intakequantity ||
+        // !editedSupplementToBeUpdated.dosetype ||
+        // !editedSupplementToBeUpdated.intakefrequency
       ) {
         return Promise.reject({ status: 400, message: "Please complete the form with the required info." });
       }
