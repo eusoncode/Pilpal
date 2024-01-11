@@ -21,6 +21,7 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
     intakequantity: '',
     dosagetype: '',
     quantity: '',
+    stockquantity: '',
     refillLevel: '',
     purchasedfrom: '',
     price: '',
@@ -226,12 +227,20 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="quantity">Quantity:</label>
+                    <label htmlFor="quantity">Initial Quantity:</label>
                     <input
                       type="number"
                       id="quantity"
                       name="quantity"
                       value={formData.quantity ?? ""}
+                      onChange={handleInputChange}
+                    />
+                    <label htmlFor="stockquantity">Current Quantity:</label>
+                    <input
+                      type="number"
+                      id="stockquantity"
+                      name="stockquantity"
+                      value={formData.stockquantity ?? ""}
                       onChange={handleInputChange}
                     />
                   </div>

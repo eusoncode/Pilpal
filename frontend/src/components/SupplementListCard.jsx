@@ -32,6 +32,7 @@ export default function SupplementListCard(props) {
   //   formattedStartDate: formattedStartDate,
   //   formattedEndDate: formattedEndDate
   // });
+  // console.log({props:props});
 
   return (
     <>

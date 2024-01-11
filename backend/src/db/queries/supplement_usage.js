@@ -184,7 +184,7 @@ const refillStockLevel = (userId, supplementId) => {
 //     });
 // };
 
-const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
+const addToSupplementUsage = (userSupplementId, newSupplement, quantitySum) => {
   const {
     reminderTime,
     intakeFrequency,
@@ -196,7 +196,7 @@ const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
   console.log(reminderTimestamp);
 
   // Parse supplementId, quantitySum, and refillLevel to integers
-  const parsedSupplementId = parseInt(supplementId, 10);
+  const parsedSupplementId = parseInt(userSupplementId, 10);
   const parsedQuantitySum = parseInt(quantitySum, 10);
   const parsedRefillLevel = parseInt(refillLevel, 10);
 
@@ -220,35 +220,49 @@ const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
     });
 };
 
-const editInSupplementUsage = (editedSupplementToBeUpdated) => {
+const editInSupplementUsage = (userId, editedSupplementToBeUpdated) => {
   const {
     time,
     intakefrequency,
     refilllevel,
+    stockquantity,
     id
   } = editedSupplementToBeUpdated;
+
+  console.log({
+    timefromquery:time,
+    intakefrequency:intakefrequency,
+    refilllevel: refilllevel,
+    stockquantity:stockquantity,
+    id:id
+  });
 
   // Convert reminderTime to a PostgreSQL compatible timestamp string
   const reminderTimestamp = convertReminderTimeHelper(time);
   // console.log(reminderTimestamp);
 
   // Parse supplementId, quantitySum, and refillLevel to integers
-  const parsedSupplementId = parseInt(id, 10);
-  const parsedIntakeFrequency = parseInt(intakefrequency, 10);
-  const parsedRefillLevel = parseInt(refilllevel, 10);
+  // const parsedSupplementId = parseInt(id, 10);
+  // const parsedRefillLevel = parseInt(refilllevel, 10);
 
   const query = `
-    UPDATE supplement_usage 
-    SET 
-      time_to_be_taken = $1,
-      intakefrequency = $2,
-      refilllevel = $3,
-      updated_at = CURRENT_TIMESTAMP
-    WHERE usersupplementid = $4
-    RETURNING *
-  `;
+  WITH selected_userSupplement AS (
+    SELECT *
+    FROM user_supplements
+    WHERE user_supplements.userid = $5 AND user_supplements.supplementid = $6
+  )
+  UPDATE supplement_usage 
+  SET 
+    time_to_be_taken = $1,
+    intakefrequency = $2,
+    refilllevel = $3,
+    stocklevel = $4,
+    updated_at = CURRENT_TIMESTAMP
+  WHERE supplement_usage.userSupplementId = (SELECT id FROM selected_userSupplement)
+  RETURNING *
+`;
 
-  const queryParam = [reminderTimestamp, parsedIntakeFrequency, parsedRefillLevel, parsedSupplementId];
+  const queryParam = [reminderTimestamp, intakefrequency, refilllevel, stockquantity, userId, id];
 
   return db
     .query(query, queryParam)

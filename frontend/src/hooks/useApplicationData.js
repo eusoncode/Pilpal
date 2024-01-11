@@ -121,7 +121,7 @@ const useApplicationData = () => {
       axios.get('http://localhost:8080/user_supplements', { withCredentials: true })
         .then((response) => {
           const userSupplements = response.data.userSupplements;
-            // console.log('userSupplements - ', userSupplements);
+            console.log('userSupplements - ', userSupplements);
           dispatch({ type: ACTIONS.GET_SUPPLEMENTS_FOR_USER, payload: { userSupplements } });
           // setRefreshDashboard();
         })
