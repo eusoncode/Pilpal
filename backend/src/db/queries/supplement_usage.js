@@ -222,29 +222,29 @@ const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
 
 const editInSupplementUsage = (editedSupplementToBeUpdated) => {
   const {
-    reminderTime,
-    intakeFrequency,
-    refillLevel,
+    time,
+    intakefrequency,
+    refilllevel,
     id
   } = editedSupplementToBeUpdated;
 
   // Convert reminderTime to a PostgreSQL compatible timestamp string
-  const reminderTimestamp = convertReminderTimeHelper(reminderTime);
+  const reminderTimestamp = convertReminderTimeHelper(time);
   // console.log(reminderTimestamp);
 
   // Parse supplementId, quantitySum, and refillLevel to integers
   const parsedSupplementId = parseInt(id, 10);
-  const parsedIntakeFrequency = parseInt(intakeFrequency, 10);
-  const parsedRefillLevel = parseInt(refillLevel, 10);
+  const parsedIntakeFrequency = parseInt(intakefrequency, 10);
+  const parsedRefillLevel = parseInt(refilllevel, 10);
 
   const query = `
     UPDATE supplement_usage 
     SET 
       time_to_be_taken = $1,
-      intakeFrequency = $2,
-      refillLevel = $3,
+      intakefrequency = $2,
+      refilllevel = $3,
       updated_at = CURRENT_TIMESTAMP
-    WHERE supplementid = $4
+    WHERE usersupplementid = $4
     RETURNING *
   `;
 

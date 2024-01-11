@@ -143,26 +143,26 @@ const addToUserSupplement = (userId, supplementId, newSupplement) => {
  * @param {{userId: Integer, supplementId: Integer}}
  * @return {Promise<{}>} A promise to the user.
  */
-const editUserSupplement = (userId, supplementId, editedSupplementToBeUpdated) => {
+const editInUserSupplement = (userid, editedSupplementToBeUpdated) => {
   
   const {
-    dosagePerIntake,
+    intakequantity,
     effectiveness,
-    additionalNotes,
+    additionalnotes,
     id
   } = editedSupplementToBeUpdated;
 
   const query = `
     UPDATE user_supplements 
     SET 
-      dosagePerIntake = $1,
+      dosage_per_intake = $1,
       effectiveness = $2,
-      additionalNotes = $3,
+      additionalnotes = $3
     WHERE userid = $4 AND supplementid = $5
     RETURNING *
   `;
 
-  const queryParam = [dosagePerIntake, effectiveness, additionalNotes, userId, id];
+  const queryParam = [intakequantity, effectiveness, additionalnotes, userid, id];
 
   return db
     .query(query, queryParam)
@@ -210,6 +210,6 @@ const removeFromUserSupplement = (userId, supplementId) => {
 module.exports = {
   getUserSupplements,
   removeFromUserSupplement,
-  editUserSupplement,
+  editInUserSupplement,
   addToUserSupplement
 };

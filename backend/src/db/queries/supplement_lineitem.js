@@ -72,10 +72,10 @@ const addToSupplementLineItem = (supplementId, newSupplement) => {
 const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
   const {
     quantity,
-    supplementType,
-    startingDate,
-    endingDate,
-    purchasedFrom,
+    dosagetype,
+    startdate,
+    enddate,
+    purchasedfrom,
     price,
     status,
     id
@@ -91,10 +91,10 @@ const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
     UPDATE supplement_lineitem 
     SET 
       quantity = $1,
-      supplementType = $2,
-      startDate = $3,
-      endDate = $4,
-      purchasedFrom = $5,
+      supplementtype = $2,
+      startdate = $3,
+      enddate = $4,
+      purchasedfrom = $5,
       price = $6,
       status = $7,
       status_reason = $8,
@@ -103,7 +103,7 @@ const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
     RETURNING *
   `;
 
-  const queryParam = [parsedQuantity, supplementType, startingDate, endingDate, purchasedFrom, parsedPrice, status, statusReason, id];
+  const queryParam = [parsedQuantity, dosagetype, startdate, enddate, purchasedfrom, parsedPrice, status, statusReason, id];
 
   return db
     .query(query, queryParam)

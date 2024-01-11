@@ -75,6 +75,10 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
     }
   }, [id, getSupplementById])
 
+  // console.log({
+  //   producturl: formData.producturl
+  // });
+
   
   // const { saveImage, setSaveImage } = useState({image: ''});
   const navigate = useNavigate();
@@ -103,9 +107,9 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
   //   producturl:producturl
   // });
 
-  // console.log({
-  //   formData: formData
-  // });
+  console.log({
+    formData: formData
+  });
 
 
   // console.log({
@@ -188,6 +192,7 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                       name="intakefrequency" 
                       value={formData.intakefrequency ?? ""}
                       onChange={handleInputChange}>
+                      <option value=""></option>
                       <option value="Everyday">Everyday</option>
                       <option value="Specific days of the week">Specific days of the week</option>
                     </select>
@@ -283,11 +288,12 @@ export default function EditSupplement({ editSupplement, getSupplementById }) {
                       name="effectiveness"
                       value={formData.effectiveness ?? ""}
                       onChange={handleInputChange}> 
+                      <option value=""></option>
                       <option value="Needs More Time To Evaluate">Needs More Time To Evaluate</option>
                       <option value="Not Effective">Not Effective</option>
                       <option value="Effective">Effective</option>
                       <option value="Moderately Effective">Moderately Effective</option>
-                      <option value="Highly Effective">Highly Effective</option>
+                      <option value="Very Effective">Very Effective</option>
                     </select>
                   </div>
 

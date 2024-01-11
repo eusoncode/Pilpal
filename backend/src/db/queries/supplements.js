@@ -86,13 +86,13 @@ const editSupplement = function(editedSupplementToBeUpdated) {
   const {
     name,
     manufacturer,
-    productUrl,
+    producturl,
     description,
     id
   } = editedSupplementToBeUpdated;
 
   
-  const images = { src: productUrl};
+  const images = { src: producturl};
   const imagesString = JSON.stringify(images); // Convert object to JSON string
   console.log(imagesString);
 

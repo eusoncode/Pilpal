@@ -176,7 +176,7 @@ router.post("/editSupplement", (req, res) => {
 
       console.log("Supplement edited in the user_supplements table");
 
-      return supplementUsageQueries.editSupplementUsage(editedSupplementToBeUpdated);
+      return supplementUsageQueries.editInSupplementUsage(editedSupplementToBeUpdated);
     })
     .then((supplementsUsageEdited) => {
       if (!supplementsUsageEdited) {
