@@ -4,7 +4,27 @@ export default function PillIntakeDetails({ pillIntakes, selectedDate }) {
 
   return (
     <div className="pill-details">
-      <h4>Pills Taken</h4>
+      <h4>
+        <span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-pill"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+            stroke="#000000"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M4.5 12.5l8 -8a4.94 4.94 0 0 1 7 7l-8 8a4.94 4.94 0 0 1 -7 -7" />
+            <path d="M8.5 8.5l7 7" />
+          </svg>
+        </span>
+        Pills Taken
+      </h4>
       {takenPills.length > 0 ? (
         <ul className="pills-details-taken">
           {takenPills.map((intake, index) => (
@@ -30,7 +50,28 @@ export default function PillIntakeDetails({ pillIntakes, selectedDate }) {
           <p>No Intakes Recorded</p>
         </div>
       )}
-      <h4>Pills Skipped</h4>
+      <h4>
+        <span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-pill-off"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+            stroke="#000000"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M10.495 6.505l2 -2a4.95 4.95 0 0 1 7 7l-2 2m-2 2l-4 4a4.95 4.95 0 0 1 -7 -7l4 -4" />
+            <path d="M8.5 8.5l7 7" />
+            <path d="M3 3l18 18" />
+          </svg>
+        </span>
+        Pills Skipped
+      </h4>
       {skippedPills.length > 0 ? (
         <ul className="pills-details-skipped">
           {skippedPills.map((intake, index) => (
