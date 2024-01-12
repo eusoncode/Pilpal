@@ -87,6 +87,14 @@ const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
   const parsedQuantity = parseInt(quantity, 10);
   const parsedPrice = parseInt(price, 10);
 
+  // Convert status to "First Alphabet in Capital Letter and the rest in small letter"
+  // let formattedStatus = '';
+  // if (!status === 'Active' || !status === 'Suspended') {
+  //   formattedStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+  // } else {
+  //   formattedStatus = status;
+  // }
+
   const query = `
     UPDATE supplement_lineitem 
     SET 

@@ -44,7 +44,7 @@ export default function Dashboard({ user, userSupplements, takeSupplement, handl
   // console.log('takenSupplements:', takenSupplements);
   //  console.log('skippedSupplements:', skippedSupplements);
 
-  const filteredSupplements = userSupplements.filter((supplement) => !takenSupplements.includes(supplement.id) && !skippedSupplements.includes(supplement.id) && supplement.status === 'Active');
+  const filteredSupplements = userSupplements.filter((supplement) => !takenSupplements.includes(supplement.id) && !skippedSupplements.includes(supplement.id) && supplement.status === 'Active' || supplement.status === 'active');
   
   //  ---------------------------------------------------------------------------------------------------
 
