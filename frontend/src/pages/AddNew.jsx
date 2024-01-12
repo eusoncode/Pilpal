@@ -1,16 +1,9 @@
 import '../styles/addnew.scss';
-import Header from '../components/Header';
 import Image from '../assets/image-07.png';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function AddNew({
-  logout,
-  handleAddNew,
-  user,
-  handleShowSupplementList,
-  goBackToDashboard,
-  addNewSupplement
-}) {
+export default function AddNew({addNewSupplement}) {
   const [formData, setFormData] = useState({
     name: '',
     manufacturer: '',
@@ -31,16 +24,17 @@ export default function AddNew({
   });
   
   // const { saveImage, setSaveImage } = useState({image: ''});
-
-  // const handleSubmit = (e) => e.preventDefault();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Access form data
-    // console.log('Form Data:', formData);
-    // Perform form submission or any other necessary actions
     addNewSupplement(formData);
+    navigate('/dashboard'); 
   };
+
+  console.log({
+    formData:formData
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,27 +44,9 @@ export default function AddNew({
       [name]: value
     });
   };
-  
-  // const handleInputChange = (e) => {
-  //   const { name, value, files } = e.target;
-
-  //   if (name === 'image') {
-  //     // Handle image file change
-  //     setSaveImage({
-  //       ...saveImage,
-  //       image: files[0] // Store the image file in state
-  //     });
-  //   } else {
-  //     setFormData({
-  //       ...formData,
-  //       [name]: value
-  //     });
-  //   }
-  // };
 
   return (
-    <>
-      <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} handleShowSupplementList={handleShowSupplementList} />
+    <>      
       <main className="supplement-details-container container">
         <section className="container-top">
           <h1 className="accent">

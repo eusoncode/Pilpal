@@ -139,7 +139,42 @@ const refillStockLevel = (userId, supplementId, newStockquantity) => {
     });
 };
 
-const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
+// const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
+//   // console.log('userId:', userId);
+//   // Note: quantity should be a sum of exist stocklevel and new quantity of the supplement
+  
+//   const {
+//     reminderTime,
+//     intakeFrequency,
+//     refillLevel
+//   } = newSupplement;
+
+//   // Convert reminderTime to a PostgreSQL compatible timestamp string
+//   const reminderTimestamp = convertReminderTimeHelper(reminderTime);
+//   console.log(reminderTimestamp);
+  
+//   const query = `
+//     INSERT INTO supplement_usage (userSupplementId, time_to_be_taken, stocklevel, intakeFrequency, refillLevel)
+//     VALUES ($1, $2, $3, $4, $5) RETURNING *
+//   `;
+
+//   const queryParam = [supplementId, reminderTimestamp, quantitySum, intakeFrequency, refillLevel];
+
+
+//   return db
+//     .query(query, queryParam)
+//     .then(result => {
+//       const updatedSupplementUsage = result.rows[0];
+//       // console.log(updatedSupplementUsage);
+//       return Promise.resolve(updatedSupplementUsage);
+//     })
+//     .catch((err) => {
+//       console.error('Error adding new supplement to supplement usage:', err.message);
+//       throw err;
+//     });
+// };
+
+const addToSupplementUsage = (userSupplementId, newSupplement, quantitySum) => {
   const {
     reminderTime,
     intakeFrequency,
@@ -159,7 +194,7 @@ const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
 
 
   // Parse supplementId, quantitySum, and refillLevel to integers
-  const parsedSupplementId = parseInt(supplementId, 10);
+  const parsedSupplementId = parseInt(userSupplementId, 10);
   const parsedQuantitySum = parseInt(quantitySum, 10);
   const parsedRefillLevel = parseInt(refillLevel, 10);
 
@@ -183,56 +218,6 @@ const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
     });
 };
 
-// const updateTimeTakenAndSetNextIntakeDate = (userId, supplementId) => {
-  
-//   const formattedTimeTaken = new Date().toLocaleString('en-US', {
-//     timeZone: 'America/Edmonton',
-//     hour12: false,
-//     hour: '2-digit',
-//     minute: '2-digit'
-//   });
-
-//   console.log({
-//     timeTaken: formattedTimeTaken
-//   });
-
-//   // Convert reminderTime to a PostgreSQL compatible timestamp string
-//   const timeTaken = convertReminderTimeHelper(formattedTimeTaken);
-
-//   console.log({
-//     timeTaken: timeTaken
-//   });
-
-
-//   // Parse supplementId, quantitySum, and refillLevel to integers
-//   const parsedSupplementId = parseInt(supplementId, 10);
-//   const parsedUserId = parseInt(userId, 10);
-
-
-//   const query = `
-//     UPDATE user_supplements AS us
-//     SET time_taken = $1
-//     FROM user_supplements AS us
-//     WHERE us.userid = $2
-//     AND us.supplementid = $3
-//     RETURNING *
-//   `;
-
-//   // const queryParam = [timeTaken, parsedUserId, parsedSupplementId];
-
-//   return db
-//     .query(query, queryParam)
-//     .then(result => {
-//       const updatedSupplementUsage = result.rows[0];
-//       console.log({updatedSupplementUsage: updatedSupplementUsage});
-//       return Promise.resolve(updatedSupplementUsage);
-//     })
-//     .catch((err) => {
-//       console.error('Error adding new supplement to supplement usage:', err.message);
-//       throw err;
-//     });
-// };
-
 
 
 
@@ -241,7 +226,6 @@ module.exports = {
   updateUserSupplementStockLevel,
   updateSupplementType,
   refillStockLevel,
-  addToSupplementUsage,
-  // updateTimeTakenAndSetNextIntakeDate
+  addToSupplementUsage
   // getSupplementUsageById
 };

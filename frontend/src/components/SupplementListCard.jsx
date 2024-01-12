@@ -1,42 +1,10 @@
 import { reconvertReminderTime } from "../helper/reconvertReminderTime";
+import { useNavigate } from 'react-router-dom';
 
-export default function SupplementListCard(/**{
-  name,
-  time,
-  intakeFrequency,
-  intakeQuantity,
-  stockQuantity,
-  image,
-  effectiveness,
-  refilLevel,
-  dosageType,
-  startDate,
-  endDate,
-  price,
-  purchasedFrom,
-  additionalNotes,
-  setEditClicked
-}**/props) {
+export default function SupplementListCard(props) {
 
-  // const {
-  //   name,
-  //   time,
-  //   intakeFrequency,
-  //   intakeQuantity,
-  //   stockQuantity,
-  //   image,
-  //   effectiveness,
-  //   refillLevel,
-  //   dosageType,
-  //   startDate,
-  //   endDate,
-  //   price,
-  //   purchasedFrom,
-  //   additionalNotes,
-  //   setEditClicked
-  // } = props;
+  // console.log ({props:props})
 
-  // console.log (props)
   // Importing images
   const imageUrl = props.image.src;
 
@@ -69,6 +37,7 @@ export default function SupplementListCard(/**{
   // console.log ({
   //   StartDate: props
   // });
+  const navigate = useNavigate();
   
   // Format time to HH:MM AM OR PM and format start date and end date to 'YYYY-MM-DD' format
   const formatedTime = reconvertReminderTime(props.time);
@@ -80,16 +49,33 @@ export default function SupplementListCard(/**{
     reason = true;
   }
   
+  const handleEditClick = () => {
+    // props.supplementToBeEdited(props.id);
+    navigate(`/edit/${props.id}`); // Navigate to the edit page for this supplement
+  };
+  
+  // console.log({supplementid:props.id});
+
+  // console.log({
+  //   inputTime: props.time,
+  //   inputStartDate: props.startdate,
+  //   inputEndDate: props.enddate
+  // });
+
   // console.log ({
+  //   formatedTime: formatedTime,
   //   formattedStartDate: formattedStartDate,
   //   formattedEndDate: formattedEndDate
   // });
+  // console.log({props:props});
 
   return (
     <>
       <div className="supplementListCard">
         <div className={reason ? 'suspend' : 'card'}>
           <div className="skip-btn" onClick={props.setEditClicked}>edit</div>
+        <div className="card">
+          <div className="skip-btn" onClick={handleEditClick}>edit</div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />
@@ -149,4 +135,3 @@ export default function SupplementListCard(/**{
     </>
   );
 }
-

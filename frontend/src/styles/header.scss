@@ -16,6 +16,11 @@ header {
     justify-content: space-between;
     align-items: center;
 
+    .nav-container {
+      display: flex;
+      align-items: center;
+    }
+
     .logout-btn {
       position: relative;
       &::after {
@@ -37,26 +42,28 @@ header {
       list-style: none;
       padding: 0;
 
-      li {
+      .menu-item {
         padding: $spacing-md;
         transition: $transition;
         border-radius: 34px 34px 0 0;
         margin: 0 $spacing-md 0 0;
         cursor: pointer;
+        color: $white-color;
+        text-decoration: none;
       }
 
-      li:not(.nav-container--right li):hover,
-      li.active {
+      .menu-item:not(.logout-btn):hover,
+      .menu-item.active {
         background-color: $white-color;
         color: $black-color;
         font-weight: 700;
       }
 
-      li:not(.nav-container--left li):hover {
+      .logout-btn:hover {
         color: $pink-color;
       }
 
-      li:not(.nav-container--left li):hover::after {
+      .logout-btn:hover::after {
         background-color: $pink-color;
       }
     }

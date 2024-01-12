@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import '../styles/dashboard.scss';
-import Header from '../components/Header';
-import SupplementCard from '../components/SupplementCard';
-// import mockReminder from '../data/mocks/mockReminder';
-import mockPillIntakes from '../data/mocks/mockPillIntakes';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import SupplementCard from '../components/SupplementCard';
+import mockPillIntakes from '../data/mocks/mockPillIntakes';
+import 'react-calendar/dist/Calendar.css';
 
-export default function Dashboard({ logout, user, userSupplements, handleAddNew, takeSupplement, handleShowSupplementList, handleRefillAlert }) {
+export default function Dashboard({ user, userSupplements, takeSupplement, handleRefillAlert }) {
   const [takenSupplements, setTakenSupplements] = useState([]);
   const [skippedSupplements, setSkippedSupplements] = useState([]);
-
-  // console.log('takenSupplements:', takenSupplements);
   
-  // console.log('userSupplements:', userSupplements);
+  // console.log({
+    // userSupplements: userSupplements
+    // user: user
+  // });
 
   const hideCard = (supplementCardId, cardStockQuantity, CardIntakeQuantity) => {
     setTakenSupplements([...takenSupplements, supplementCardId]); 
@@ -70,13 +70,13 @@ export default function Dashboard({ logout, user, userSupplements, handleAddNew,
 
   return (
     <>
-      <Header logout={logout} handleAddNew={handleAddNew} handleShowSupplementList={handleShowSupplementList} />
+      {/* <Header /> */}
       <main className="dashboard-container container">
         <section className="container-top">
           <h1 className="accent">
             Pilpal Dashboard<span>✷</span>
           </h1>
-          <h2>Hi, {user.username}! Let’s make today a healthy one.</h2>
+          {user && <h2>Hi, {user.username}! Let’s make today a healthy one.</h2>}
         </section>
         <section className="container-bottom">          
           <article className="container-left">

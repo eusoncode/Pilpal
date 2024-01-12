@@ -21,30 +21,34 @@ const getUserSupplements = (id) => {
   //   JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id
   //   WHERE user_supplements.userId = $1;
   // `;
+
   const query = `
     SELECT supplements.name,
-      TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE current_setting('TIMEZONE'), 'YYYY-MM-DD HH12:MI AM') AS time,
-      supplement_usage.intakeFrequency,
+      TO_CHAR(supplement_usage.time_to_be_taken AT TIME ZONE 'UTC', 'YYYY-MM-DD HH12:MI AM') AS time,
+      supplement_usage.intakefrequency,
       user_supplements.dosage_per_intake AS intakeQuantity,
       supplement_usage.stocklevel AS stockQuantity,
       supplements.images AS image,
       user_supplements.effectiveness,
-      supplement_usage.refillLevel,
-      supplement_lineitem.supplementType AS dosageType,
-      supplement_lineitem.startDate,
-      supplement_lineitem.endDate,
+      supplement_usage.refilllevel,
+      supplement_lineitem.supplementtype AS dosageType,
+      supplement_lineitem.startdate,
+      supplement_lineitem.enddate,
       supplement_lineitem.price,
       supplement_lineitem.purchasedFrom,
+      supplement_lineitem.quantity,
+      user_supplements.additionalnotes,
+      supplement_lineitem.type,
       supplement_lineitem.status,
       supplement_lineitem.status_reason,
-      user_supplements.additionalNotes,
-      supplement_lineitem.type,
-      supplements.id
+      supplements.id,
+      supplements.description,
+      supplements.manufacturer
     FROM supplements 
     JOIN user_supplements ON supplements.id = user_supplements.supplementId
     JOIN supplement_usage ON supplement_usage.usersupplementid = user_supplements.id 
     JOIN supplement_lineitem ON supplement_lineitem.supplementId = supplements.id
-    WHERE user_supplements.userId = $1;
+    WHERE user_supplements.userid = $1;
   `;
 
   return db
@@ -115,12 +119,23 @@ const addToUserSupplement = (userId, supplementId, newSupplement) => {
     additionalNotes
   } = newSupplement;
   
+  console.log({
+    userId:userId,
+    supplementId:supplementId,
+    dosagePerIntake:dosagePerIntake,
+    effectiveness:effectiveness,
+    additionalNotes:additionalNotes
+  });
+  
+  // Parse supplementId, quantitySum, and refillLevel to integers
+  const parsedDosagePerIntake = parseInt(dosagePerIntake, 10);
+
   const query = `
     INSERT INTO user_supplements (userId, supplementId, dosage_per_intake, time_taken, effectiveness, additionalNotes)
     VALUES ($1, $2, $3, NOW(), $4, $5) RETURNING *
   `;
 
-  const queryParam = [userId, supplementId, dosagePerIntake, effectiveness, additionalNotes];
+  const queryParam = [userId, supplementId, parsedDosagePerIntake, effectiveness, additionalNotes];
 
   return db
     .query(query, queryParam)
@@ -139,15 +154,33 @@ const addToUserSupplement = (userId, supplementId, newSupplement) => {
  * @param {{userId: Integer, supplementId: Integer}}
  * @return {Promise<{}>} A promise to the user.
  */
-const editUserSupplement = (userId, supplementId, numberOfPillsTaken, timeTaken, effectiveness) => {
+const editInUserSupplement = (userid, editedSupplementToBeUpdated) => {
+  
+  const {
+    intakequantity,
+    effectiveness,
+    additionalnotes,
+    id
+  } = editedSupplementToBeUpdated;
+
+  console.log({
+    intakequantity,
+    effectiveness,
+    additionalnotes,
+    id
+  });
+
   const query = `
     UPDATE user_supplements 
-    SET number_of_pills_taken = $3, time_taken = $4, effectiveness = $5 
-    WHERE userId = $1 AND supplementId = $2 
+    SET 
+      dosage_per_intake = $1,
+      effectiveness = $2,
+      additionalnotes = $3
+    WHERE userid = $4 AND supplementid = $5
     RETURNING *
   `;
-  
-  const queryParam = [userId, supplementId, numberOfPillsTaken, timeTaken, effectiveness];
+
+  const queryParam = [intakequantity, effectiveness, additionalnotes, userid, id];
 
   return db
     .query(query, queryParam)
@@ -160,6 +193,7 @@ const editUserSupplement = (userId, supplementId, numberOfPillsTaken, timeTaken,
       throw err; // Rethrow the error to be handled elsewhere
     });
 };
+
 
 /**
  * Add a new user to the database.
@@ -194,6 +228,6 @@ const removeFromUserSupplement = (userId, supplementId) => {
 module.exports = {
   getUserSupplements,
   removeFromUserSupplement,
-  editUserSupplement,
+  editInUserSupplement,
   addToUserSupplement
 };

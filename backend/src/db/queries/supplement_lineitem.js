@@ -69,7 +69,57 @@ const addToSupplementLineItem = (supplementId, newSupplement) => {
     });
 };
 
+const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
+  const {
+    quantity,
+    dosagetype,
+    startdate,
+    enddate,
+    purchasedfrom,
+    price,
+    status,
+    id
+  } = editedSupplementToBeUpdated;
+
+  const statusReason = editedSupplementToBeUpdated.status_reason;
+
+  // Parse supplementId, quantity, and price to integers
+  const parsedQuantity = parseInt(quantity, 10);
+  const parsedPrice = parseInt(price, 10);
+
+  const query = `
+    UPDATE supplement_lineitem 
+    SET 
+      quantity = $1,
+      supplementtype = $2,
+      startdate = $3,
+      enddate = $4,
+      purchasedfrom = $5,
+      price = $6,
+      status = $7,
+      status_reason = $8,
+      updated_at = CURRENT_TIMESTAMP
+    WHERE supplementid = $9
+    RETURNING *
+  `;
+
+  const queryParam = [parsedQuantity, dosagetype, startdate, enddate, purchasedfrom, parsedPrice, status, statusReason, id];
+
+  return db
+    .query(query, queryParam)
+    .then(result => {
+      const updatedSupplementLineItem = result.rows[0];
+      console.log({ updatedSupplementLineItem: updatedSupplementLineItem });
+      return Promise.resolve(updatedSupplementLineItem);
+    })
+    .catch((err) => {
+      console.error('Error adding new supplement to supplement lineItem:', err.message);
+      throw err;
+    });
+};
+
 
 module.exports = {
-  addToSupplementLineItem
+  addToSupplementLineItem,
+  editInSupplementLineItem
 };

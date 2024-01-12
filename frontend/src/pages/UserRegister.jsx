@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import signupImage from '../assets/image-01.png';
 
-export default function UserRegister({signUp, goBackToLogin}) {
+export default function UserRegister({signUp}) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,8 +28,8 @@ export default function UserRegister({signUp, goBackToLogin}) {
         </section>
 
         <section className="userRegister-container-right">
-          <p className="accent" onClick={goBackToLogin}>
-            <a href="#">Pilpal</a><span>✷</span>
+          <p className="accent">
+            <Link to="/">Pilpal</Link><span>✷</span>
           </p>
           <h1>
             Create Your <br></br>Pilpal Account

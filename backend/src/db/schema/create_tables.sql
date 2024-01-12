@@ -55,6 +55,8 @@ CREATE TABLE supplement_lineItem (
     endDate TIMESTAMPTZ,
     purchasedFrom VARCHAR(255),
     price NUMERIC(10, 2),
+    status VARCHAR(255) DEFAULT 'Active',
+    status_reason VARCHAR(255),
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,

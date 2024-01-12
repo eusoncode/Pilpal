@@ -1,15 +1,15 @@
 
--- INSERT INTO users (username, email, password, created_at, updated_at) VALUES
--- ('user1', 'user1@example.com', 'password1', NOW(), NOW()),
--- ('user2', 'user2@example.com', 'password2', NOW(), NOW()),
--- ('user3', 'user3@example.com', 'password3', NOW(), NOW()),
--- ('user4', 'user4@example.com', 'password4', NOW(), NOW()),
--- ('user5', 'user5@example.com', 'password5', NOW(), NOW()),
--- ('user6', 'user6@example.com', 'password6', NOW(), NOW()),
--- ('user7', 'user7@example.com', 'password7', NOW(), NOW()),
--- ('user8', 'user8@example.com', 'password8', NOW(), NOW()),
--- ('user9', 'user9@example.com', 'password9', NOW(), NOW()),
--- ('user10', 'user10@example.com', 'password10', NOW(), NOW());
+INSERT INTO users (username, email, password, created_at, updated_at) VALUES
+('user1', 'user1@example.com', 'password1', NOW(), NOW()),
+('user2', 'user2@example.com', 'password2', NOW(), NOW()),
+('user3', 'user3@example.com', 'password3', NOW(), NOW()),
+('user4', 'user4@example.com', 'password4', NOW(), NOW()),
+('user5', 'user5@example.com', 'password5', NOW(), NOW()),
+('user6', 'user6@example.com', 'password6', NOW(), NOW()),
+('user7', 'user7@example.com', 'password7', NOW(), NOW()),
+('user8', 'user8@example.com', 'password8', NOW(), NOW()),
+('user9', 'user9@example.com', 'password9', NOW(), NOW()),
+('user10', 'user10@example.com', 'password10', NOW(), NOW());
 
 -- Inserting values into the supplements table
 

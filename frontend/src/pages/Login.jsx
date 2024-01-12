@@ -4,15 +4,18 @@
  * @return {} login page
  */
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import loginImage from '../assets/image-01.png';
 
-export default function Login({login, clickSignUp}) {
+export default function Login({login}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   
   const onSubmit = e => {
     e.preventDefault();
     email && login(email, password);
+    navigate('/dashboard'); 
   }
 
   return (
@@ -27,7 +30,8 @@ export default function Login({login, clickSignUp}) {
           </p>
           <h1>Login to your Account</h1>
           <span>
-            Doesn't have the account yet? <a href="#" onClick={clickSignUp}>Sign up</a>
+            Doesn't have the account yet? 
+            <Link to="/register">Sign up</Link>
           </span>
           <form onSubmit={onSubmit}>
             <label htmlFor="email">Email</label>
