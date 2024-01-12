@@ -163,7 +163,7 @@ const useApplicationData = () => {
   // }, [state.user, state.refreshDashboard]); // Run effect when user state changes
 
   const handleRefillAlert = (supplementId, stockquantity) => {
-  const handleRefillAlert = (supplementId) => {
+  // const handleRefillAlert = (supplementId) => {
     const confirmRefill = () => {
       const response = prompt("Are you sure you want to refill? (Yes/No)");
       
