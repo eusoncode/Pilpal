@@ -73,7 +73,7 @@ export default function SupplementListCard(props) {
     <>
       <div className="supplementListCard">
         <div className={reason ? 'suspend' : 'card'}>
-          <div className="skip-btn" onClick={props.setEditClicked}>edit</div>
+          <div className="skip-btn" onClick={handleEditClick}>edit</div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />

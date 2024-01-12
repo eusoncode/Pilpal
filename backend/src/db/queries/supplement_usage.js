@@ -219,8 +219,6 @@ const addToSupplementUsage = (userSupplementId, newSupplement, quantitySum) => {
 };
 
 
-
-
 module.exports = {
   getSupplementUsage,
   updateUserSupplementStockLevel,
