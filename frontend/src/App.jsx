@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './styles/App.scss';
-import LayoutWithHeader from './components/LayoutWithHeader';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddNew from './pages/AddNew';
@@ -8,6 +7,7 @@ import useApplicationData from './hooks/useApplicationData';
 import SupplementList from './pages/SupplementList';
 import EditSupplement from './pages/EditSupplement';
 import UserRegister from './pages/UserRegister';
+import LayoutWithHeader from './components/LayoutWithHeader';
 
 function App() {
   // Use the custom hook to manage application data
