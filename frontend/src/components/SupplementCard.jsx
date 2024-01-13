@@ -6,7 +6,7 @@ export default function SupplementCard({
   time,
   intakequantity,
   stockquantity,
-  intakefrequency,
+  // intakefrequency,
   image,
   type,
   hideCard,
@@ -44,10 +44,10 @@ export default function SupplementCard({
     //   nextDateToTakeSupplement.setDate(currentDate.getDate() + 1);
     // }
 
-    console.log({
-      currentDate: currentDate,
-      nextDateToTakeSupplement: nextDateToTakeSupplement
-    });
+    // console.log({
+    //   currentDate: currentDate,
+    //   nextDateToTakeSupplement: nextDateToTakeSupplement
+    // });
 
     hideCard(id, stockquantity, intakequantity, currentDate, nextDateToTakeSupplement);
   };

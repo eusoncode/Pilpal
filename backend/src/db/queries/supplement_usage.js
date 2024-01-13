@@ -127,9 +127,6 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId, currentD
     });
 };
 
-
-
-
 const updateSupplementType = (userId, supplementId) => {
   
   // console.log(
