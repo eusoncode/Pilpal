@@ -18,7 +18,7 @@ router.post("/updateStockLevel", (req, res) => {
   const idFromCookie = req.session.userId;
   const stockLevelUpdate = req.body;
   // console.log('stockLevelUpdate:',stockLevelUpdate);
-  const { supplementId, newValue } = stockLevelUpdate;
+  const { supplementId, newValue , currentDate, nextDateToTakeSupplement} = stockLevelUpdate;
 
   if (!idFromCookie) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the Pilpal....");
@@ -30,7 +30,7 @@ router.post("/updateStockLevel", (req, res) => {
         return res.status(404).send("No user with that ID");
       }
 
-      return supplementUsageQueries.updateUserSupplementStockLevel(newValue, user.id, supplementId);
+      return supplementUsageQueries.updateUserSupplementStockLevel(newValue, user.id, supplementId, currentDate, nextDateToTakeSupplement);
     })
     .then((response) => {
       // console.log(response.data);
@@ -45,7 +45,7 @@ router.post("/updateStockLevel", (req, res) => {
       // });
         
       if (response.refilllevel === response.stocklevel) {
-        return supplementUsageQueries.updateSupplementType(response.userid, response.supplementid);
+        return supplementUsageQueries.updateSupplementType(response.userid, response.supplementid, currentDate);
       }
       
       return response;
@@ -118,7 +118,6 @@ router.post("/:id", (req, res) => {
       res.status(500).send("Error fetching data");
     });
 });
-
 
 
 module.exports = router;
