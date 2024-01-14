@@ -15,7 +15,7 @@ export default function Dashboard({ user, userSupplements, takeSupplement, handl
     // user: user
   // });
 
-  const hideCard = (supplementCardId, cardStockQuantity, CardIntakeQuantity) => {
+  const hideCard = (supplementCardId, cardStockQuantity, CardIntakeQuantity, currentDate, nextDateToTakeSupplement) => {
     setTakenSupplements([...takenSupplements, supplementCardId]); 
 
     const stockLevelEstimate = (arg1, arg2) => {
@@ -26,7 +26,7 @@ export default function Dashboard({ user, userSupplements, takeSupplement, handl
     const newStockLevel = stockLevelEstimate(cardStockQuantity, CardIntakeQuantity);  
     // console.log('newStockLevel:', newStockLevel);
 
-    takeSupplement(supplementCardId, newStockLevel);
+    takeSupplement(supplementCardId, newStockLevel, currentDate, nextDateToTakeSupplement);
   };
 
   const skipCard = (supplementCardId) => {

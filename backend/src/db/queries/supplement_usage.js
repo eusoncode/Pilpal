@@ -1,4 +1,5 @@
 const { convertReminderTimeHelper } = require('../../convertReminderTimeHelper');
+const { formatDate } = require('../../formatDateTime');
 const db = require('../connection');
 
 // Get request query
@@ -32,33 +33,96 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
  * @param {{newValue: Integer, userId: Integer, supplementId: Integer}}
  * @return {Promise<{}>} A promise to the user.
  */
-const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
+// const updateUserSupplementStockLevel = (newValue, userId, supplementId, nextDateToTakeSupplement) => {
 
-  // console.log(
-  //   {newValue: newValue, userId: userId, supplementId: supplementId}
-  // );
+//   // console.log(
+//   //   {newValue: newValue, userId: userId, supplementId: supplementId}
+//   // );
 
-  const query = `
-    UPDATE supplement_usage AS su
-    SET stocklevel = $1
-    FROM user_supplements AS us
-    WHERE su.usersupplementid = us.id
-    AND us.userid = $2
-    AND us.supplementid = $3
-    RETURNING *
-  `;
+//   const formattedNextDateSupplement = formatedDateTime(nextDateToTakeSupplement);
 
-  const queryParam = [newValue, userId, supplementId];
+//   const query = `
+//     UPDATE supplement_usage AS su
+//     SET stocklevel = $1, time_to_be_taken = $2
+//     FROM user_supplements AS us
+//     WHERE su.usersupplementid = us.id
+//     AND us.userid = $3
+//     AND us.supplementid = $4
+//     RETURNING *
+//   `;
 
-  return db
-    .query(query, queryParam)
-    .then(result => {
-      const editedSupplementUsage = result.rows[0];
-      // console.log('Supplement Usage after updateUserSupplementStockLevel:', editedSupplementUsage);
-      return Promise.resolve(editedSupplementUsage);
+//   const queryParam = [newValue, formattedNextDateSupplement, userId, supplementId];
+
+//   return db
+//     .query(query, queryParam)
+//     .then(result => {
+//       const editedSupplementUsage = result.rows[0];
+//       // console.log('Supplement Usage after updateUserSupplementStockLevel:', editedSupplementUsage);
+//       return Promise.resolve(editedSupplementUsage);
+//     })
+//     .catch((err) => {
+//       console.error('Error updating supplement usage stocklevel:', err.message);
+//       throw err;
+//     });
+// };
+
+const updateUserSupplementStockLevel = (newValue, userId, supplementId, currentDate, nextDateToTakeSupplement) => {
+  const formattedNextDateSupplement = formatDate(nextDateToTakeSupplement);
+  const formattedCurrentDateSupplement = formatDate(currentDate);
+
+  console.log({
+    formattedNextDateSupplement: formattedNextDateSupplement,
+    formattedCurrentDateSupplement: formattedCurrentDateSupplement
+  });
+
+  return db.connect()
+    .then(client => {
+      // Start a transaction
+      return client.query('BEGIN')
+        .then(() => {
+          // Update user_supplements table
+          return client.query(`
+            UPDATE user_supplements
+            SET time_taken = $1
+            WHERE userid = $2 AND supplementid = $3
+          `, [formattedCurrentDateSupplement, userId, supplementId]);
+        })
+        .then(() => {
+          // Update supplement_usage table
+          return client.query(`
+            UPDATE supplement_usage
+            SET stocklevel = $1, time_to_be_taken = $2, updated_at = $3
+            FROM user_supplements
+            WHERE supplement_usage.usersupplementid = user_supplements.id
+            AND user_supplements.userid = $4
+            AND user_supplements.supplementid = $5
+            RETURNING supplement_usage.*;
+          `, [newValue, formattedNextDateSupplement, formattedCurrentDateSupplement, userId, supplementId]);
+        })
+        .then(result => {
+          // Commit the transaction
+          return client.query('COMMIT')
+            .then(() => {
+              const editedSupplementUsage = result.rows[0];
+              console.log('Updated time_taken in user_supplements and time_to_taken and stocklevel in supplement_usage tables');
+              return Promise.resolve(editedSupplementUsage);
+            });
+        })
+        .catch(err => {
+          // Rollback the transaction in case of an error
+          return client.query('ROLLBACK')
+            .then(() => {
+              console.error('Error updating supplement usage and user supplement time_taken:', err.message);
+              throw err;
+            });
+        })
+        .finally(() => {
+          // Release the client back to the pool
+          client.release();
+        });
     })
-    .catch((err) => {
-      console.error('Error updating supplement usage stocklevel:', err.message);
+    .catch(err => {
+      console.error('Error connecting to Postgres server:', err.message);
       throw err;
     });
 };
@@ -283,5 +347,4 @@ module.exports = {
   refillStockLevel,
   addToSupplementUsage,
   editInSupplementUsage
-  // getSupplementUsageById
 };

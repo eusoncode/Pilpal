@@ -53,6 +53,7 @@ INSERT INTO user_supplements (userId, supplementId, dosage_per_intake, time_take
 (3, 9, 1, NOW(), 'Moderate', NULL),
 (1, 10, 2, NOW(), 'Very Effective', NULL);
 
+
 -- Inserting values into the supplement_usage table
 
 INSERT INTO supplement_usage (userSupplementId, time_to_be_taken, intakeFrequency, stocklevel, refillLevel, updated_at)

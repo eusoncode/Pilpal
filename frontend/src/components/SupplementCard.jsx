@@ -6,6 +6,7 @@ export default function SupplementCard({
   time,
   intakequantity,
   stockquantity,
+  // intakefrequency,
   image,
   type,
   hideCard,
@@ -22,20 +23,33 @@ export default function SupplementCard({
     setIsHovered(false);
   };
 
-  const handleTake = () => {
-    
+  const handleTake = () => {    
     // const formattedTimeTaken = new Date().toLocaleString('en-US', {
     //   timeZone: 'America/Edmonton',
     //   hour12: false,
     //   hour: '2-digit',
     //   minute: '2-digit'
-    // }); 
+    // });
 
     // console.log({
     //   timeTaken: formattedTimeTaken
     // });
 
-    hideCard(id, stockquantity, intakequantity);
+    const currentDate = new Date();
+    const nextDateToTakeSupplement = new Date(currentDate);
+    nextDateToTakeSupplement.setDate(currentDate.getDate() + 1);
+    // if (intakefrequency === 'Everyday') {
+    //   nextDateToTakeSupplement.setDate(currentDate.getDate() + 1);
+    // } else {
+    //   nextDateToTakeSupplement.setDate(currentDate.getDate() + 1);
+    // }
+
+    // console.log({
+    //   currentDate: currentDate,
+    //   nextDateToTakeSupplement: nextDateToTakeSupplement
+    // });
+
+    hideCard(id, stockquantity, intakequantity, currentDate, nextDateToTakeSupplement);
   };
 
   const handleSkip = () => {

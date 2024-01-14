@@ -80,10 +80,12 @@ const useApplicationData = () => {
       });
   };
 
-  const takeSupplement = (supplementId, newValue) => {
+  const takeSupplement = (supplementId, newValue, currentDate, nextDateToTakeSupplement) => {
     const body = {
       "supplementId": supplementId,
-      "newValue": newValue    
+      "newValue": newValue,
+      'currentDate': currentDate,
+      'nextDateToTakeSupplement': nextDateToTakeSupplement
     }
 
     // console.log(body);
