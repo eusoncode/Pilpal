@@ -85,7 +85,7 @@ const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
 
   // Parse supplementId, quantity, and price to integers
   const parsedQuantity = parseInt(quantity, 10);
-  const parsedPrice = parseInt(price, 10);
+  // const parsedPrice = parseInt(price, 10);
 
   // Convert status to "First Alphabet in Capital Letter and the rest in small letter"
   // let formattedStatus = '';
@@ -111,7 +111,7 @@ const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
     RETURNING *
   `;
 
-  const queryParam = [parsedQuantity, dosagetype, startdate, enddate, purchasedfrom, parsedPrice, status, statusReason, id];
+  const queryParam = [parsedQuantity, dosagetype, startdate, enddate, purchasedfrom, price, status, statusReason, id];
 
   return db
     .query(query, queryParam)

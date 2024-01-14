@@ -56,7 +56,7 @@ const getUserSupplements = (id) => {
     .query(query, [id])
     .then(result => {
       const userSupplements = result.rows;
-      // console.log('userSupplements:', userSupplements);
+      // console.log('userSupplementsfromquery:', userSupplements);
       return userSupplements || []; // Return an empty array if no user supplements found
     })
     .catch(error => {
