@@ -318,5 +318,56 @@ router.post("/editSupplement", (req, res) => {
     });
 });
 
+router.post("/markSupplementAsDeleted", (req, res) => {
+  const idFromCookie = req.session.userId;
+  const supplementId = req.body.supplementId;
+
+  if (!idFromCookie) {
+    return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the BuyBuddy....");
+  }
+
+  let userData;
+
+  userQueries
+    .getUserById(idFromCookie)
+    .then((user) => {
+      if (!user) {
+        return Promise.reject({ status: 404, message: "No user with that ID" });
+      }
+
+      userData = {
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        id: user.id,
+      };
+
+      console.log({supplementId:supplementId});
+
+      if (
+        !supplementId
+      ) {
+        return Promise.reject({ status: 400, message: "No supplement id found." });
+      }
+
+      return supplementLineItemQueries.markSupplementAsDeleted(supplementId);
+    })
+    .then((supplementsMarkedToBeDeleted) => {
+      if (!supplementsMarkedToBeDeleted) {
+        return Promise.reject({ status: 404, message: "Could not mark supplement as deleted in supplement_lineitem table" });
+      }
+
+      console.log("Supplement marked as deleted in the supplement_lineitem table");
+
+      res.status(200).json({ message: supplementsMarkedToBeDeleted});
+    })
+    .catch((error) => {
+      console.error(error);
+      const status = error.status || 500;
+      const message = error.message || "Error fetching data";
+      res.status(status).send(message);
+    });
+});
+
 
 module.exports = router;

@@ -6,12 +6,12 @@ import SupplementCard from '../components/SupplementCard';
 import mockPillIntakes from '../data/mocks/mockPillIntakes';
 import 'react-calendar/dist/Calendar.css';
 
-export default function Dashboard({ user, userSupplements, takeSupplement, handleRefillAlert }) {
+export default function Dashboard({ user, filteredUserSupplements, takeSupplement, handleRefillAlert }) {
   const [takenSupplements, setTakenSupplements] = useState([]);
   const [skippedSupplements, setSkippedSupplements] = useState([]);
   
   // console.log({
-    // userSupplements: userSupplements
+    // filteredUserSupplements: filteredUserSupplements
     // user: user
   // });
 
@@ -44,7 +44,7 @@ export default function Dashboard({ user, userSupplements, takeSupplement, handl
   // console.log('takenSupplements:', takenSupplements);
   //  console.log('skippedSupplements:', skippedSupplements);
 
-  const filteredSupplements = userSupplements.filter((supplement) => !takenSupplements.includes(supplement.id) && !skippedSupplements.includes(supplement.id) && (supplement.status === 'Active' || supplement.status === 'active'));
+  const filteredSupplements = filteredUserSupplements.filter((supplement) => !takenSupplements.includes(supplement.id) && !skippedSupplements.includes(supplement.id) && (supplement.status === 'Active' || supplement.status === 'active'));
   
   //  ---------------------------------------------------------------------------------------------------
 

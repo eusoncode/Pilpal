@@ -64,18 +64,18 @@ const addNewSupplement = (newSupplement) => {
 };
 
 // ----------------------- removeSupplement
-const removeSupplement = function(supplementId) {
-  return db
-    .query(`DELETE FROM supplements WHERE id = $1 RETURNING *`, [supplementId])
-    .then((result) => {
-      const removedSupplement = result.rows[0];
-      return Promise.resolve(removedSupplement);
-    })
-    .catch((err) => {
-      console.error('Error removing supplement:', err.message);
-      throw err; // Rethrow the error to be handled elsewhere
-    });
-};
+// const removeSupplement = function(supplementId) {
+//   return db
+//     .query(`DELETE FROM supplements WHERE id = $1 RETURNING *`, [supplementId])
+//     .then((result) => {
+//       const removedSupplement = result.rows[0];
+//       return Promise.resolve(removedSupplement);
+//     })
+//     .catch((err) => {
+//       console.error('Error removing supplement:', err.message);
+//       throw err; // Rethrow the error to be handled elsewhere
+//     });
+// };
 
 // ----------------------- markSupplementAsOutofStock
 
@@ -129,6 +129,6 @@ module.exports = {
   // getSupplementByName,
   editSupplement,
   addNewSupplement,
-  removeSupplement,
+  // removeSupplement,
   // markSupplementAsOutofStock
 };

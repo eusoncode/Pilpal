@@ -41,6 +41,7 @@ const getUserSupplements = (id) => {
       supplement_lineitem.type,
       supplement_lineitem.status,
       supplement_lineitem.status_reason,
+      supplement_lineitem.to_be_deleted,
       supplements.id,
       supplements.description,
       supplements.manufacturer

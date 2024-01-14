@@ -7,6 +7,7 @@ export default function SupplementListCard(props) {
 
   // Importing images
   const imageUrl = props.image.src;
+  const {markAsDeleted} = props;
 
   // console.log({
   //   name: name,
@@ -35,8 +36,9 @@ export default function SupplementListCard(props) {
   // });
 
   // console.log ({
-  //   StartDate: props
+  //   removeSupplementFromUserList: props
   // });
+
   const navigate = useNavigate();
   
   // Format time to HH:MM AM OR PM and format start date and end date to 'YYYY-MM-DD' format
@@ -52,6 +54,10 @@ export default function SupplementListCard(props) {
   const handleEditClick = () => {
     // props.supplementToBeEdited(props.id);
     navigate(`/edit/${props.id}`); // Navigate to the edit page for this supplement
+  };
+
+  const handleDeleteClick = () => {
+    markAsDeleted(props.id);
   };
   
   // console.log({supplementid:props.id});
@@ -74,6 +80,24 @@ export default function SupplementListCard(props) {
       <div className="supplementListCard">
         <div className={reason ? 'suspend' : 'card'}>
           <div className="skip-btn" onClick={handleEditClick}>edit</div>
+          <div className="delete-btn" onClick={handleDeleteClick}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-x"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              stroke-width="2.0"
+              stroke="#ffffff"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M18 6l-12 12" />
+              <path d="M6 6l12 12" />
+            </svg>
+          </div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />

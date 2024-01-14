@@ -1,7 +1,7 @@
 import '../styles/supplementlist.scss';
 import SupplementListCard from '../components/SupplementListCard';
 
-export default function SupplementList({userSupplements}) {
+export default function SupplementList({filteredUserSupplements, markAsDeleted}) {
   
   return (
     <>
@@ -13,8 +13,8 @@ export default function SupplementList({userSupplements}) {
         </section>
         <section className="container-bottom">
           <article>
-            {userSupplements.map((supplement) => (
-              <SupplementListCard key={supplement.id} {...supplement} />
+            {filteredUserSupplements.map((supplement) => (
+              <SupplementListCard key={supplement.id} {...supplement} markAsDeleted={markAsDeleted} />
             ))}
           </article>
         </section>

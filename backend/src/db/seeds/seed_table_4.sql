@@ -27,17 +27,17 @@ INSERT INTO supplements (name, description, manufacturer, images, created_at, up
 
 -- Inserting values into the supplement_lineitem table
 
-INSERT INTO supplement_lineitem (supplementId, quantity, type, supplementType, status, statusReason, startDate, endDate, purchasedFrom, price, created_at, updated_at, deleted_at) VALUES
-(1, 60, 'intake', 'capsule', 'active', NULL, '2023-12-31', '2025-07-31', 'iHerb', 49.99, NOW(), NOW(), NULL),
-(2, 30, 'intake', 'tablet', 'active', NULL, '2023-12-31', '2024-02-12', 'Amazon', 60.99, NOW(), NOW(), NULL),
-(3, 60, 'intake', 'tablet', 'active', NULL, '2023-12-31', '2024-09-24', 'Alive Health', 60.74, NOW(), NOW(), NULL),
-(4, 90, 'intake', 'softgel', 'active', NULL, '2023-12-31', '2025-10-02', 'iHerb', 49.95, NOW(), NOW(), NULL),
-(5, 60, 'restock', 'capsule', 'active', NULL, '2023-12-31', '2025-07-31', 'iHerb', 53.99, NOW(), NOW(), NULL),
-(6, 30, 'intake', 'capsule', 'active', NULL, '2023-12-31', '2024-05-16', 'Alive Health', 60.99, NOW(), NOW(), NULL),
-(7, 60, 'intake', 'capsule', 'active', NULL, '2023-12-31', '2024-08-25', 'Amazon', 34.99, NOW(), NOW(), NULL),
-(8, 30, 'restock', 'capsule', 'active', NULL, '2023-12-31', '2025-06-29', 'iHerb', 40.99, NOW(), NOW(), NULL),
-(9, 60, 'intake', 'softgel', 'active', NULL, '2023-12-31', '2025-03-21', 'Alive Health', 56.99, NOW(), NOW(), NULL),
-(10, 120, 'intake', 'capsule', 'active', NULL, '2023-12-31', '2025-04-10', 'iHerb', 77.99, NOW(), NOW(), NULL);
+INSERT INTO supplement_lineitem (supplementId, quantity, type, supplementType, status, statusReason, startDate, endDate, purchasedFrom, price, to_be_deleted, created_at, updated_at, deleted_at) VALUES
+(1, 60, 'intake', 'capsule', 'Active', NULL, '2023-12-31', '2025-07-31', 'iHerb', 49.99, False, NOW(), NOW(), NULL),
+(2, 30, 'intake', 'tablet', 'Active', NULL, '2023-12-31', '2024-02-12', 'Amazon', 60.99, False, NOW(), NOW(), NULL),
+(3, 60, 'intake', 'tablet', 'Active', NULL, '2023-12-31', '2024-09-24', 'Alive Health', 60.74,  False, NOW(), NOW(), NULL),
+(4, 90, 'intake', 'softgel', 'Active', NULL, '2023-12-31', '2025-10-02', 'iHerb', 49.95,  False, NOW(), NOW(), NULL),
+(5, 60, 'restock', 'capsule', 'Active', NULL, '2023-12-31', '2025-07-31', 'iHerb', 53.99,  False, NOW(), NOW(), NULL),
+(6, 30, 'intake', 'capsule', 'Active', NULL, '2023-12-31', '2024-05-16', 'Alive Health', 60.99,  False, NOW(), NOW(), NULL),
+(7, 60, 'intake', 'capsule', 'Active', NULL, '2023-12-31', '2024-08-25', 'Amazon', 34.99,  False, NOW(), NOW(), NULL),
+(8, 30, 'restock', 'capsule', 'Active', NULL, '2023-12-31', '2025-06-29', 'iHerb', 40.99,  False, NOW(), NOW(), NULL),
+(9, 60, 'intake', 'softgel', 'Active', NULL, '2023-12-31', '2025-03-21', 'Alive Health',  False, 56.99, NOW(), NOW(), NULL),
+(10, 120, 'intake', 'capsule', 'Active', NULL, '2023-12-31', '2025-04-10', 'iHerb', 77.99,  False, NOW(), NOW(), NULL);
 
 -- Inserting values into the user_supplements table
 

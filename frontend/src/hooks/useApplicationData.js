@@ -237,10 +237,22 @@ const useApplicationData = () => {
       });    
   };
 
-  const getSupplementById  = (supplementId) => {
-    return state.userSupplements.find(supplement => supplement.id === parseInt(supplementId));
-  };
+  const markAsDeleted = (supplementId) => {
+    const body = {
+      'supplementId': supplementId
+    }
 
+    console.log('Request body:', body);
+    
+    axios.post('http://localhost:8080/supplements/markSupplementAsDeleted', body, { withCredentials: true })
+      .then((response) => {
+        console.log('Supplement successfully marked as deleted:', response.data);
+        setRefreshDashboard();
+      })
+      .catch((error) => {
+        console.error('Error while making POST request:', error);
+      });    
+  }
 
 
   return {
@@ -253,7 +265,7 @@ const useApplicationData = () => {
       takeSupplement,
       handleRefillAlert,
       editSupplement,
-      getSupplementById
+      markAsDeleted
     },
   };
 };

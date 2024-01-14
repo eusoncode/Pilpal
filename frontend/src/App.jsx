@@ -13,7 +13,15 @@ function App() {
   // Use the custom hook to manage application data
   const { state, actions } = useApplicationData();
   const { user, userSupplements} = state;
-  const { login, logout, addNewSupplement, signUp, takeSupplement, handleRefillAlert, editSupplement, getSupplementById } = actions; 
+  const { login, logout, addNewSupplement, signUp, takeSupplement, handleRefillAlert, editSupplement, markAsDeleted } = actions; 
+
+  const filteredUserSupplements = userSupplements.filter((supplement) => supplement.to_be_deleted === false);
+  
+  // console.log('filteredUserSupplements - ', filteredUserSupplements);
+
+  const getSupplementById  = (supplementId) => {
+    return filteredUserSupplements.find(supplement => supplement.id === parseInt(supplementId));
+  };
 
   return (
     <Router>
@@ -24,7 +32,7 @@ function App() {
             <LayoutWithHeader logout={logout}>
               <Dashboard
                 user={user}
-                userSupplements={userSupplements}
+                filteredUserSupplements={filteredUserSupplements}
                 takeSupplement={takeSupplement}
                 handleRefillAlert={handleRefillAlert}
               />
@@ -36,7 +44,8 @@ function App() {
           element={
             <LayoutWithHeader logout={logout}>
               <SupplementList
-                userSupplements={userSupplements}
+                filteredUserSupplements={filteredUserSupplements}
+                markAsDeleted={markAsDeleted}
               />
             </LayoutWithHeader>
           } 
@@ -58,7 +67,7 @@ function App() {
               <EditSupplement
                 editSupplement={editSupplement}
                 getSupplementById={getSupplementById}
-                userSupplements={userSupplements} />
+                filteredUserSupplements={filteredUserSupplements} />
             </LayoutWithHeader>
           }
         />

@@ -126,8 +126,35 @@ const editInSupplementLineItem = (editedSupplementToBeUpdated) => {
     });
 };
 
+const markSupplementAsDeleted = function(supplementId) {
+
+  const query = `
+    UPDATE supplement_lineitem
+    SET to_be_deleted = $1,
+        updated_at = CURRENT_TIMESTAMP AT TIME ZONE 'MDT',
+        deleted_at = CURRENT_TIMESTAMP AT TIME ZONE 'MDT'
+    WHERE supplementid = $2
+    RETURNING *
+  `;
+
+  const queryParam = [true, supplementId];
+
+  return db
+    
+    .query(query, queryParam)
+    .then((result) => {
+      const removedSupplement = result.rows[0];
+      return Promise.resolve(removedSupplement);
+    })
+    .catch((err) => {
+      console.error('Error removing supplement:', err.message);
+      throw err; // Rethrow the error to be handled elsewhere
+    });
+};
+
 
 module.exports = {
   addToSupplementLineItem,
-  editInSupplementLineItem
+  editInSupplementLineItem,
+  markSupplementAsDeleted
 };

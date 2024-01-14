@@ -199,7 +199,39 @@
 
 .skip-btn {
   color: $dark-gray-color;
+  text-decoration: underline;
+  font-size: $font-size-base;
+  cursor: pointer;
   &:hover {
     color: $black-color;
+  }
+}
+
+.delete-btn,
+.edit-btn {
+  color: $dark-gray-color;
+  position: absolute;
+  transition: $transition;
+}
+
+.edit-btn {
+  top: 8px;
+  right: 24px;
+  color: $navy-color;
+  cursor: pointer;
+  &:hover {
+    color: $dark-gray-color;
+  }
+}
+
+.delete-btn {
+  top: -12px;
+  right: -12px;
+  padding: 4px;
+  background-color: $black-color;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    scale: 1.1;
   }
 }
