@@ -17,6 +17,14 @@ export default function SupplementList() {
     setSupplements(updatedSupplements);
   };
 
+  const handleDelete = (id) => {
+    const updatedSupplements = supplements.filter(
+      (supplement) => supplement.id !== id
+    );
+    setSupplements(updatedSupplements);
+    // backend: request to delete here!
+  };
+
   return (
     <>
       <main className="supplementlist-container container">
@@ -36,6 +44,7 @@ export default function SupplementList() {
                 number={index + 1}
                 {...supplement}
                 onToggleActive={toggleActiveStatus}
+                onDelete={handleDelete}
               />
             ))}
           </article>

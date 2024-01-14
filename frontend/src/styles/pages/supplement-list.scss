@@ -40,7 +40,6 @@
   width: 80%;
   margin: 0 auto $spacing-xxl;
   font-size: $font-size-large;
-  cursor: crosshair;
 }
 
 .card {
@@ -132,11 +131,38 @@
     font-weight: 600;
   }
 }
-
 .skip-btn {
+  text-decoration: underline;
+  font-size: $font-size-base;
+  cursor: pointer;
+}
+
+.delete-btn,
+.edit-btn {
   color: $dark-gray-color;
+  position: absolute;
+  transition: $transition;
+}
+
+.edit-btn {
+  top: 8px;
+  right: 24px;
+  color: $navy-color;
+  cursor: pointer;
   &:hover {
-    color: $black-color;
+    color: $dark-gray-color;
+  }
+}
+
+.delete-btn {
+  top: -12px;
+  right: -12px;
+  padding: 4px;
+  background-color: $black-color;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    scale: 1.1;
   }
 }
 

@@ -20,6 +20,7 @@ export default function SupplementListCard({
   number, // For numbering each supplement
   isActive,
   onToggleActive,
+  onDelete,
 }) {
   // Importing images
   const imageUrl = image.src;
@@ -33,14 +34,37 @@ export default function SupplementListCard({
   const cardClassName = `${isActive ? '' : 'deactivated'}`;
   const buttonClassName = `${isActive ? 'active' : ''}`;
 
+  const handleDeleteClick = () => {
+    onDelete(id);
+  };
+
   return (
     <>
       <div className="supplementListCard">
         <div className={`card ${cardClassName}`}>
           <div className="number">{number}.</div>
-          <div className="skip-btn" onClick={handleEditClick}>
+          <div className="edit-btn" onClick={handleEditClick}>
             edit
           </div>
+          <div className="delete-btn" onClick={handleDeleteClick}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-x"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              stroke-width="2.0"
+              stroke="#ffffff"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M18 6l-12 12" />
+              <path d="M6 6l12 12" />
+            </svg>
+          </div>
+
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />
