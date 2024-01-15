@@ -1,12 +1,10 @@
 import '../styles/supplementlist.scss';
-import Header from '../components/Header';
 import SupplementListCard from '../components/SupplementListCard';
-import mockReminder from '../data/mocks/mockReminder';
 
-export default function SupplementList() {
+export default function SupplementList({userSupplements}) {
+  
   return (
     <>
-      <Header />
       <main className="supplementlist-container container">
         <section className="container-top">
           <h1 className="accent">
@@ -15,7 +13,7 @@ export default function SupplementList() {
         </section>
         <section className="container-bottom">
           <article>
-            {mockReminder.map((supplement) => (
+            {userSupplements.map((supplement) => (
               <SupplementListCard key={supplement.id} {...supplement} />
             ))}
           </article>

@@ -4,6 +4,7 @@ const router  = express.Router();
 // const userSupplementQueries = require('../db/queries/user_supplement');
 const userQueries = require('../db/queries/users');
 const supplementUsageQueries = require('../db/queries/supplement_usage');
+const supplementSearchHelper = require('../supplementSearchHelper');
 
 
 // Get requests
@@ -17,7 +18,7 @@ router.post("/updateStockLevel", (req, res) => {
   const idFromCookie = req.session.userId;
   const stockLevelUpdate = req.body;
   // console.log('stockLevelUpdate:',stockLevelUpdate);
-  const {supplementId, newValue} = stockLevelUpdate;
+  const { supplementId, newValue } = stockLevelUpdate;
 
   if (!idFromCookie) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the Pilpal....");
@@ -67,8 +68,14 @@ router.post("/updateStockLevel", (req, res) => {
 
 router.post("/:id", (req, res) => {
   const supplementId = req.params.id;
-  const userId = req.body.userId;
-  // console.log('supplementId:', supplementId, 'userId:', userId);
+  const { userId, stockquantity } = req.body;
+  const parsedSupplementId = parseInt(supplementId, 10);
+  
+  // console.log({
+  //   fromSupplementUsageRouteSsupplementId: parsedSupplementId,
+  //   userId: userId,
+  //   stockquantity: stockquantity
+  // });
 
   if (!userId) {
     return res.status(403).send("😒😒😒😒You are not logged in!!! Log in to use the Pilpal....");
@@ -84,7 +91,19 @@ router.post("/:id", (req, res) => {
         return res.status(404).send("No user with that ID");
       }
 
-      return supplementUsageQueries.refillStockLevel(userId, supplementId);
+      return supplementSearchHelper.getSupplementInitialQuantity(userId, parsedSupplementId);
+    })
+    .then((supplementInitialQuantity) => {
+      if (!supplementInitialQuantity) {
+        return res.status(404).send("No quantity found for the supplement");
+      }
+
+      const newStockquantity = supplementInitialQuantity + stockquantity;
+      // console.log({
+      //   newStockquantity: newStockquantity
+      // });
+
+      return supplementUsageQueries.refillStockLevel(userId, supplementId, newStockquantity);
     })
     .then((response) => {
       // console.log(response.data);
@@ -92,7 +111,7 @@ router.post("/:id", (req, res) => {
         return res.status(404).send("Could not update the supplement stocklevel");
       }
 
-      res.status(200).json({ message: "Supplement stocklevel was successful refilled" });
+      res.status(200).json({ message: "Supplement stocklevel was successful refilled"});
     })
     .catch((error) => {
       console.error(error);

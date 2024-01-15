@@ -1,4 +1,4 @@
--- CREATE DATABASE pilpal_development;
+-- -- CREATE DATABASE pilpal_development;
 
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS supplements CASCADE;
@@ -15,6 +15,25 @@ CREATE TABLE users (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
+
+-- CREATE TABLE supplements (
+--     id serial PRIMARY KEY,
+--     name VARCHAR(255) NOT NULL,
+--     description VARCHAR(512) NOT NULL,
+--     manufacturer VARCHAR(255) NOT NULL,
+--     cost NUMERIC(10, 2),
+--     quantity INTEGER,
+--     type VARCHAR(255) NOT NULL,
+--     images JSONB,
+--     dosageType VARCHAR(255),
+--     startDate TIMESTAMPTZ,
+--     endDate TIMESTAMPTZ,
+--     purchasedFrom VARCHAR(255),
+--     price NUMERIC(10, 2);
+--     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+--     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+--     deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+-- );
 
 CREATE TABLE supplements (
     id serial PRIMARY KEY,
@@ -37,6 +56,8 @@ CREATE TABLE supplement_lineItem (
     endDate TIMESTAMPTZ,
     purchasedFrom VARCHAR(255),
     price NUMERIC(10, 2),
+    status VARCHAR(255) DEFAULT 'Active',
+    status_reason VARCHAR(255),
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,

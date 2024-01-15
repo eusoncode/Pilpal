@@ -81,3 +81,9 @@ module.exports = {
   getUserWithEmail,
   getUserWithUsername
 };
+
+
+module.exports = {
+  getUserWithEmail,
+  getUserWithUsername
+};

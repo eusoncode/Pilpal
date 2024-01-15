@@ -1,86 +1,91 @@
 import React, { useState } from 'react';
 
 export default function SupplementCard({
+  id,
   name,
   time,
-  intakeQuantity,
-  stockQuantity,
+  intakequantity,
+  stockquantity,
   image,
   type,
+  hideCard,
+  skipCard,
+  handleRefillAlert
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Handle mouse enter event
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
-
-  // Handle mouse leave event
+  
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
 
-  // Importing images
+  const handleTake = () => {
+    
+    // const formattedTimeTaken = new Date().toLocaleString('en-US', {
+    //   timeZone: 'America/Edmonton',
+    //   hour12: false,
+    //   hour: '2-digit',
+    //   minute: '2-digit'
+    // }); 
+
+    // console.log({
+    //   timeTaken: formattedTimeTaken
+    // });
+
+    hideCard(id, stockquantity, intakequantity);
+  };
+
+  const handleSkip = () => {
+    skipCard(id);
+  };
+
+  const handleRefillButton = () => {
+    handleRefillAlert(id, stockquantity);
+  }
+  
   const imageUrl = image.src;
   const cardStyles = type === 'restock' ? 'restock-card' : 'intake-card';
 
   return (
-    <>
-      <div
-        className="notification"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <div className={`notification-card ${cardStyles}`}>
-          <div className="skip-btn">skip</div>
-
-          <img src={imageUrl} alt="pills" />
-          <div className="details">
-            {type === 'intake' && (
-              <>
-                <div className="details--message">
-                  Time to Take Your Pill 💊
-                </div>
-                <div className="details--supplement-name">{name}</div>
-                <div className="details--reminder">
-                  <span className="time">{time}</span>
-                  <span>, </span>
-                  <span className="quantity">{intakeQuantity} pills</span>
-                </div>
-              </>
-            )}
-            {type === 'restock' && (
-              <>
-                <div className="details--message">
-                  Running Low! Time to Restock 🛍
-                </div>
-                <div className="details--supplement-name">{name}</div>
-                <div className="details--quantity-left">
-                  {stockQuantity} left
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+    <div className="notification" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div className={`notification-card ${cardStyles}`}>
         {type === 'intake' && (
-          <div
-            className={`notification-card-btn intake-card-btn ${
-              isHovered ? 'active' : ''
-            }`}
-          >
-            <span className="btn-cta">take</span>
-          </div>
+          <>
+            <div className="skip-btn" onClick={handleSkip}>skip</div>
+            <img src={imageUrl} alt="pills" />
+            <div className="details">
+              <div className="details--message">Time to Take Your Pill 💊</div>
+              <div className="details--supplement-name">{name}</div>
+              <div className="details--reminder">
+                <span className="time">{time}</span>, <span className="quantity">{intakequantity} pills</span>
+              </div>
+            </div>
+          </>
         )}
         {type === 'restock' && (
-          <div
-            className={`notification-card-btn restock-card-btn ${
-              isHovered ? 'active' : ''
-            }`}
-          >
-            <span className="btn-cta-restock">order</span>
-          </div>
+          <>
+            <img src={imageUrl} alt="pills" />
+            <div className="details">
+              <div className="details--message">Running Low! Time to Restock 🛍</div>
+              <div className="details--supplement-name">{name}</div>
+              <div className="details--quantity-left">{stockquantity} left</div>
+            </div>
+          </>
         )}
       </div>
-    </>
+      {type === 'intake' && (
+        <div className={`notification-card-btn intake-card-btn ${isHovered ? 'active' : ''}`}>
+          <span className="btn-cta" onClick={handleTake}>take</span>
+        </div>
+      )}
+      {type === 'restock' && (
+        <div className={`notification-card-btn restock-card-btn ${isHovered ? 'active' : ''}`}>
+          <span className="btn-cta-restock" onClick={handleRefillButton}>refill</span>
+        </div>
+      )}
+    </div>
   );
 }

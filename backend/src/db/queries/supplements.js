@@ -28,7 +28,8 @@ const getSupplements = () => {
 
 // ----------------------- addSupplement
 const addNewSupplement = (newSupplement) => {
-  console.log(newSupplement);
+
+  // console.log({newSupplement: newSupplement});
   
   const {
     name,
@@ -37,9 +38,9 @@ const addNewSupplement = (newSupplement) => {
     description
   } = newSupplement;
 
-  const images = { src: productUrl };
+  const images = { src: productUrl};
   const imagesString = JSON.stringify(images); // Convert object to JSON string
-  console.log(imagesString);
+  // console.log(imagesString);
 
   const query = `
     INSERT INTO supplements (name, description, manufacturer, images) 
@@ -47,12 +48,10 @@ const addNewSupplement = (newSupplement) => {
     RETURNING *
   `;
 
+  const queryParam = [name, description, manufacturer, imagesString];
+
   return db
-    .query(query, [
-      name,
-      description,
-      manufacturer,
-      imagesString])
+    .query(query, queryParam)
     .then((result) => {
       const newsupplementAdded = result.rows[0];
       // console.log(newsupplementAdded);
@@ -81,23 +80,38 @@ const removeSupplement = function(supplementId) {
 // ----------------------- markSupplementAsOutofStock
 
 // ----------------------- editSupplement
-const editSupplement = function(updatedSupplement) {
-  const { id, name, description, manufacturer, cost, quantity, images } = updatedSupplement;
+const editSupplement = function(editedSupplementToBeUpdated) {
+  // const { id, name, description, manufacturer, cost, quantity, images } = editedSupplementToBeUpdated;
+
+  const {
+    name,
+    manufacturer,
+    producturl,
+    description,
+    id
+  } = editedSupplementToBeUpdated;
+
+  
+  const images = { src: producturl};
+  const imagesString = JSON.stringify(images); // Convert object to JSON string
+  console.log(imagesString);
+
+  const query = `
+    UPDATE supplements 
+    SET 
+      name = $1,
+      manufacturer = $2,
+      images = $3,
+      description = $4,
+      updated_at = CURRENT_TIMESTAMP
+    WHERE id = $5
+    RETURNING *
+  `;
+
+  const queryParam = [name, manufacturer, imagesString, description, id];
   
   return db
-    .query(`
-      UPDATE supplements 
-      SET 
-        name = $1,
-        description = $2,
-        manufacturer = $3,
-        cost = $4,
-        quantity = $5,
-        images = $6,
-        updated_at = CURRENT_TIMESTAMP
-      WHERE id = $7
-      RETURNING *
-    `, [name, description, manufacturer, cost, quantity, images, id])
+    .query(query, queryParam)
     .then((result) => {
       const editedSupplement = result.rows[0];
       return Promise.resolve(editedSupplement);

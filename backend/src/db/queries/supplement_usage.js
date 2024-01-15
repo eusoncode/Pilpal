@@ -1,3 +1,4 @@
+const { convertReminderTimeHelper } = require('../../convertReminderTimeHelper');
 const db = require('../connection');
 
 // Get request query
@@ -62,7 +63,6 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId) => {
     });
 };
 
-
 const updateSupplementType = (userId, supplementId) => {
   
   // console.log(
@@ -99,24 +99,13 @@ const updateSupplementType = (userId, supplementId) => {
     });
 };
 
-const refillStockLevel = (userId, supplementId) => {
-  // console.log('userId:', userId);
-  // const query = `
-  //   WITH updated_supplement AS (
-  //     UPDATE supplements
-  //     SET type = $3
-  //     WHERE id = $2
-  //     RETURNING *
-  //   )
-  //   UPDATE supplement_usage
-  //   SET stocklevel = updated_supplement.quantity
-  //   FROM updated_supplement
-  //   JOIN user_supplements ON user_supplements.supplementid = updated_supplement.id
-  //   WHERE user_supplements.userid = $1
-  //   AND user_supplements.supplementid = $2
-  //   AND supplement_usage.usersupplementid = user_supplements.id
-  //   RETURNING supplement_usage.*;
-  // `;
+const refillStockLevel = (userId, supplementId, newStockquantity) => {
+
+  // console.log({
+  //   userId: userId
+  //   supplementId: supplementId
+  //   newStockquantity: newStockquantity
+  // });
 
   const query = `
     WITH updated_supplementLineItem AS (
@@ -126,7 +115,7 @@ const refillStockLevel = (userId, supplementId) => {
       RETURNING *
     )
     UPDATE supplement_usage
-    SET stocklevel = updated_supplementLineItem.quantity
+    SET stocklevel = $4
     FROM updated_supplementLineItem
     JOIN user_supplements ON user_supplements.supplementid = updated_supplementLineItem.id
     WHERE user_supplements.userid = $1
@@ -135,7 +124,7 @@ const refillStockLevel = (userId, supplementId) => {
     RETURNING supplement_usage.*;
   `;
   
-  const queryParam = [userId, supplementId, 'intake'];
+  const queryParam = [userId, supplementId, 'intake', newStockquantity];
 
   return db
     .query(query, queryParam)
@@ -150,30 +139,77 @@ const refillStockLevel = (userId, supplementId) => {
     });
 };
 
-const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
-  // console.log('userId:', userId);
-  // Note: quantity should be a sum of exist stocklevel and new quantity of the supplement
+// const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
+//   // console.log('userId:', userId);
+//   // Note: quantity should be a sum of exist stocklevel and new quantity of the supplement
   
+//   const {
+//     reminderTime,
+//     intakeFrequency,
+//     refillLevel
+//   } = newSupplement;
+
+//   // Convert reminderTime to a PostgreSQL compatible timestamp string
+//   const reminderTimestamp = convertReminderTimeHelper(reminderTime);
+//   console.log(reminderTimestamp);
+  
+//   const query = `
+//     INSERT INTO supplement_usage (userSupplementId, time_to_be_taken, stocklevel, intakeFrequency, refillLevel)
+//     VALUES ($1, $2, $3, $4, $5) RETURNING *
+//   `;
+
+//   const queryParam = [supplementId, reminderTimestamp, quantitySum, intakeFrequency, refillLevel];
+
+
+//   return db
+//     .query(query, queryParam)
+//     .then(result => {
+//       const updatedSupplementUsage = result.rows[0];
+//       // console.log(updatedSupplementUsage);
+//       return Promise.resolve(updatedSupplementUsage);
+//     })
+//     .catch((err) => {
+//       console.error('Error adding new supplement to supplement usage:', err.message);
+//       throw err;
+//     });
+// };
+
+const addToSupplementUsage = (userSupplementId, newSupplement, quantitySum) => {
   const {
     reminderTime,
     intakeFrequency,
     refillLevel
   } = newSupplement;
-
   
+  console.log({
+    reminderTime: reminderTime
+  });
+
+
+  // Convert reminderTime to a PostgreSQL compatible timestamp string
+  const reminderTimestamp = convertReminderTimeHelper(reminderTime);
+  console.log({
+    reminderTimestamp: reminderTimestamp
+  });
+
+
+  // Parse supplementId, quantitySum, and refillLevel to integers
+  const parsedSupplementId = parseInt(userSupplementId, 10);
+  const parsedQuantitySum = parseInt(quantitySum, 10);
+  const parsedRefillLevel = parseInt(refillLevel, 10);
+
   const query = `
     INSERT INTO supplement_usage (userSupplementId, time_to_be_taken, stocklevel, intakeFrequency, refillLevel)
     VALUES ($1, $2, $3, $4, $5) RETURNING *
   `;
 
-  const queryParam = [supplementId, reminderTime, quantitySum, intakeFrequency, refillLevel];
-
+  const queryParam = [parsedSupplementId, reminderTimestamp, parsedQuantitySum, intakeFrequency, parsedRefillLevel];
 
   return db
     .query(query, queryParam)
     .then(result => {
       const updatedSupplementUsage = result.rows[0];
-      // console.log(updatedSupplementUsage);
+      console.log({updatedSupplementUsage: updatedSupplementUsage});
       return Promise.resolve(updatedSupplementUsage);
     })
     .catch((err) => {
@@ -182,13 +218,70 @@ const addToSupplementUsage = (supplementId, newSupplement, quantitySum) => {
     });
 };
 
+const editInSupplementUsage = (userId, editedSupplementToBeUpdated) => {
+  const {
+    time,
+    intakefrequency,
+    refilllevel,
+    stockquantity,
+    id
+  } = editedSupplementToBeUpdated;
 
+  console.log({
+    timefromquery:time,
+    intakefrequency:intakefrequency,
+    refilllevel: refilllevel,
+    stockquantity:stockquantity,
+    id:id
+  });
+
+
+  // Convert reminderTime to a PostgreSQL compatible timestamp string
+  const reminderTimestamp = convertReminderTimeHelper(time);
+  // console.log(reminderTimestamp);
+
+  // Parse supplementId, quantitySum, and refillLevel to integers
+  // const parsedSupplementId = parseInt(id, 10);
+  // const parsedRefillLevel = parseInt(refilllevel, 10);
+
+  const query = `
+  WITH selected_userSupplement AS (
+    SELECT *
+    FROM user_supplements
+    WHERE user_supplements.userid = $5 AND user_supplements.supplementid = $6
+  )
+  UPDATE supplement_usage 
+  SET 
+    time_to_be_taken = $1,
+    intakefrequency = $2,
+    refilllevel = $3,
+    stocklevel = $4,
+    updated_at = CURRENT_TIMESTAMP
+  WHERE supplement_usage.userSupplementId = (SELECT id FROM selected_userSupplement)
+  RETURNING *
+`;
+
+  const queryParam = [reminderTimestamp, intakefrequency, refilllevel, stockquantity, userId, id];
+
+  return db
+    .query(query, queryParam)
+    .then(result => {
+      const updatedSupplementUsage = result.rows[0];
+      // console.log({updatedSupplementUsage: updatedSupplementUsage});
+      return Promise.resolve(updatedSupplementUsage);
+    })
+    .catch((err) => {
+      console.error('Error adding new supplement to supplement usage:', err.message);
+      throw err;
+    });
+};
 
 module.exports = {
   getSupplementUsage,
   updateUserSupplementStockLevel,
   updateSupplementType,
   refillStockLevel,
-  addToSupplementUsage
+  addToSupplementUsage,
+  editInSupplementUsage
   // getSupplementUsageById
 };

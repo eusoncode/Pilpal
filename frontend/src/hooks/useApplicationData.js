@@ -4,32 +4,21 @@ import axios from 'axios';
 
 // Define the initial state for the reducer
 const initialState = {
-  addNewSupplimentClicked: false,
   user: null,
   userSupplements: [],
-  userSignUpClicked: false,
-  showSupplementListClicked: false,
-  editButtonClicked: false,
   refreshDashboard: false
 };
 
 // Define action types as constants
 const ACTIONS = {
-  SET_NEW_SUPPLIMENT_CLICKED: 'SET_NEW_SUPPLIMENT_CLICKED',
   SET_USER: 'SET_USER',
   GET_SUPPLEMENTS_FOR_USER: 'SET_SUPPLEMENTS_FOR_USER',
-  SET_USER_SIGNUP_CLICKED: 'SET_USER_SIGNUP_CLICKED',
-  SET_SHOW_USER_SUPPLEMENT_LIST: 'SET_SHOW_USER_SUPPLEMENT_LIST',
-  SET_EDIT_BUTTON_CLICKED: 'SET_EDIT_BUTTON_CLICKED',
   SET_REFRESHDASHBOARD: 'SET_REFRESHDASHBOARD'
 };
 
 // Define the reducer function to handle state updates
 const appReducer = (state, action) => {
   switch (action.type) {
-    case ACTIONS.SET_NEW_SUPPLIMENT_CLICKED:
-      // Handle adding a favorite photo
-      return { ...state, addNewSupplimentClicked:  action.payload.isClicked };
 
     case ACTIONS.SET_USER:
       // Handle setting the modal open state
@@ -55,6 +44,10 @@ const appReducer = (state, action) => {
       // Handle setting the user supplement list state
       return { ...state, refreshDashboard: !state.refreshDashboard };
       
+    case ACTIONS.SET_REFRESHDASHBOARD:
+      // Handle setting the user supplement list state
+      return { ...state, refreshDashboard: !state.refreshDashboard };
+      
     default:
       return state;
   }
@@ -65,10 +58,9 @@ const useApplicationData = () => {
   // Use the useReducer hook to manage state with the appReducer function
   const [state, dispatch] = useReducer(appReducer, initialState);
 
-  // Action functions for updating the state
-  const setNewSupplimentClicked = (isClicked) => {
-    dispatch({ type: ACTIONS.SET_NEW_SUPPLIMENT_CLICKED, payload: { isClicked } });
-  };
+  const setRefreshDashboard = () => {    
+    dispatch({ type: ACTIONS.SET_REFRESHDASHBOARD });
+  }  
 
   const setUserSignUpClicked = (isClicked) => {
     dispatch({ type: ACTIONS.SET_USER_SIGNUP_CLICKED, payload: { isClicked } });
@@ -82,9 +74,7 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_EDIT_BUTTON_CLICKED, payload: { isClicked } });
   }
 
-  const setRefreshDashboard = () => {    
-    dispatch({ type: ACTIONS.SET_REFRESHDASHBOARD });
-  }
+ 
 
   
 
@@ -115,8 +105,7 @@ const useApplicationData = () => {
     axios.post('http://localhost:8080/users/signup', body, { withCredentials: true })
       .then((response) => {
         // console.log("response:", response.data);
-        // setNewSupplimentClicked(false);
-        setUserSignUpClicked(false);
+        console.log('User successfully registered:', response.data);
       })
       .catch((error) => {
         console.error('Error while making POST request:', error);
@@ -145,17 +134,18 @@ const useApplicationData = () => {
     const body = {
       'formData': formData
     }
+
+    console.log(body);
+    
     axios.post('http://localhost:8080/supplements/addSupplement', body, { withCredentials: true })
       .then((response) => {
-        const loggedUser = response.data.userFound;
-        // console.log(response.data.userFound);
-        dispatch({ type: ACTIONS.SET_USER, payload: { user: loggedUser } });
+        console.log('Supplement successfully add:', response.data);
+        setRefreshDashboard();
       })
       .catch((error) => {
         console.error('Error while making POST request:', error);
       });
   };
-
 
   // Fetch user's supplements when the user logs in
   useEffect(() => {
@@ -204,13 +194,13 @@ const useApplicationData = () => {
   //   // };
   // }, [state.user, state.refreshDashboard]); // Run effect when user state changes
 
-  const handleRefillAlert = (supplementId) => {
+  const handleRefillAlert = (supplementId, stockquantity) => {
+  // const handleRefillAlert = (supplementId) => {
     const confirmRefill = () => {
       const response = prompt("Are you sure you want to refill? (Yes/No)");
       
       if (response === null || response.trim() === "") {
         console.log("Refill canceled");
-        goBackToDashboard();
         return; // Exit the function or handle accordingly
       }
     
@@ -218,8 +208,16 @@ const useApplicationData = () => {
     
       if (cleanedResponse === "yes") {
         // Handle refill logic when the user confirms "Yes"
+        
+        console.log({
+           from_useApplicationData_stockquantity: stockquantity,
+          supplementId: supplementId,
+          userId: state.user.id
+        });
+
         const body = {
-          "userId": state.user.id
+          "userId": state.user.id,
+          "stockquantity": stockquantity
         }
         axios.post(`http://localhost:8080/supplement_usage/${supplementId}`, body, { withCredentials: true })
           .then((response) => {
@@ -238,7 +236,6 @@ const useApplicationData = () => {
       } else if (cleanedResponse === "no") {
         // Handle when the user responds with "No"
         console.log("Refill canceled");
-        goBackToDashboard();
       } else {
         // If the response is neither "Yes" nor "No", prompt again for valid input
         console.log("Please enter a valid response (Yes/No)");
@@ -251,51 +248,30 @@ const useApplicationData = () => {
 
   const logout = () => {
     dispatch({ type: ACTIONS.SET_USER, payload: { user: null } });
-    // setNewSupplimentClicked(false);
-    // goBackToDashboard();
   };
 
-  const handleAddNew = () => {
-    setNewSupplimentClicked(true);
-    setShowSupplementList(false);
-    setUserSignUpClicked(false);
-    setEditButtonClicked(false);
-    setRefreshDashboard();
-  }
+  const editSupplement = (formData) => {
+    const body = {
+      'formData': formData
+    }
 
-  const goBackToDashboard = () => {    
-    setNewSupplimentClicked(false);
-    setShowSupplementList(false);
-    setUserSignUpClicked(false);
-    setEditButtonClicked(false);
-    setRefreshDashboard();
-  }
+    console.log('Request body:', body);
+    
+    axios.post('http://localhost:8080/supplements/editSupplement', body, { withCredentials: true })
+      .then((response) => {
+        console.log('Supplement successfully edited:', response.data);
+        setRefreshDashboard();
+      })
+      .catch((error) => {
+        console.error('Error while making POST request:', error);
+      });    
+  };
 
-  const clickSignUp = () => {
-    setUserSignUpClicked(true);
-    setNewSupplimentClicked(false);
-    setShowSupplementList(false);
-    setEditButtonClicked(false);
-  }
-  
-  const handleShowSupplementList = () => {
-    setShowSupplementList(true);   
-    setNewSupplimentClicked(false);
-    setUserSignUpClicked(false);
-    setEditButtonClicked(false);
-    setRefreshDashboard();
-  }
+  const getSupplementById  = (supplementId) => {
+    return state.userSupplements.find(supplement => supplement.id === parseInt(supplementId));
+  };
 
-  const goBackToLogin = () => {
-    goBackToDashboard();
-  }
 
-  const setEditClicked = () => {
-    setEditButtonClicked(true)    
-    setNewSupplimentClicked(false);
-    setShowSupplementList(false);
-    setUserSignUpClicked(false);
-  }
 
   return {
     state,
@@ -303,15 +279,11 @@ const useApplicationData = () => {
       login,
       logout,
       addNewSupplement,
-      handleAddNew,
-      goBackToDashboard,
-      clickSignUp,
       signUp,
       takeSupplement,
-      handleShowSupplementList,
-      goBackToLogin,
-      setEditClicked,
-      handleRefillAlert
+      handleRefillAlert,
+      editSupplement,
+      getSupplementById
     },
   };
 };

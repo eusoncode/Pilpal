@@ -1,56 +1,52 @@
 import '../styles/addnew.scss';
-import Header from '../components/Header';
 import Image from '../assets/image-07.png';
-import React, {useState} from 'react';
-import axios from 'axios';
-export default function AddNew({logout, handleAddNew, goBackToDashboard}) {
-  
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+export default function AddNew({addNewSupplement}) {
   const [formData, setFormData] = useState({
-    supplementName: '',
-    brandName: '',
+    name: '',
+    manufacturer: '',
     startingDate: '',
     endingDate: '',
     reminderTime: '',
     intakeFrequency: '',
     dosagePerIntake: '',
-    type: '',
-    currentQuantity: '',
-    notifyToReorderAt: '',
-    autoConsume: '',
+    dosageType: '',
+    quantity: '',
+    refillLevel: '',
     purchasedFrom: '',
-    pricePaid: '',
+    price: '',
     productUrl: '',
     effectiveness: '',
-    additionalNote: ''
-});
-
+    description: '',
+    additionalNotes: ''
+  });
+  
+  // const { saveImage, setSaveImage } = useState({image: ''});
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    
-  e.preventDefault();
+    e.preventDefault();
+    addNewSupplement(formData);
+    navigate('/dashboard'); 
+  };
 
-  axios.post('http://localhost:8005/supplements/addSupplement', formData, { withCredentials: true })
-  .then((response) => {
-    
-    console.log('Data saved successfully:', response.data);
-    
-  })
-  .catch((error) => {
-    console.error('Error saving data:', error);
+  console.log({
+    formData:formData
   });
-};
 
-const handleChange = (e) => {
-  setFormData({
-    ...formData,
-    [e.target.name]: e.target.value,
-  });
-};
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
 
   return (
-    <>
-      <Header logout={logout} handleAddNew={handleAddNew} goBackToDashboard={goBackToDashboard} />
+    <>      
       <main className="supplement-details-container container">
         <section className="container-top">
           <h1 className="accent">
@@ -63,25 +59,30 @@ const handleChange = (e) => {
             <form onSubmit={handleSubmit} className="supplement-form">
               <div className="form-group image-upload">
                 <label htmlFor="image">Image:</label>
-                <img src={Image} alt="User Uploaded" />
-                <input type="file" id="image" name="image" accept="image/*" />
+                <img src={/**saveImage.image ? URL.createObjectURL(saveImage.image) : **/Image} alt="User Uploaded"/>
+                <input type="file" id="image" name="image" accept="image/*" onChange={handleInputChange}/>
               </div>
               <div className="flex-container">
                 <div className="container-left">
                   <div className="form-group">
-                    <label htmlFor="supplementName">Supplement Name:</label>
+                    <label htmlFor="name">Supplement Name:</label>
                     <input
                       type="text"
-                      id="supplementName"
-                      name="supplementName"
-                      value={formData.supplementName}
-                      onChange={handleChange}
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="brandName">Brand Name:</label>
-                    <input type="text" id="brandName" name="brandName" />
+                    <label htmlFor="brandName">Manufacturer:</label>
+                    <input
+                      type="text"
+                      id="manufacturer"
+                      name="manufacturer" 
+                      value={formData.manufacturer}
+                      onChange={handleInputChange} />
                   </div>
 
                   <div className="flex-container--row">
@@ -92,43 +93,56 @@ const handleChange = (e) => {
                         id="startingDate"
                         name="startingDate"
                         value={formData.startingDate}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="form-group">
                       <label htmlFor="endingDate">Ending Date:</label>
-                      <input type="date" id="endingDate" name="endingDate" />
+                      <input
+                        type="date"
+                        id="endingDate"
+                        name="endingDate" 
+                        value={formData.endingDate}
+                        onChange={handleInputChange}/>
                     </div>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="reminderTime">Reminder Time:</label>
-                    <input type="time" id="reminderTime" name="reminderTime" />
+                    <input
+                      type="time"
+                      id="reminderTime"
+                      name="reminderTime" 
+                      value={formData.reminderTime}
+                      onChange={handleInputChange}/>
                     <label htmlFor="intakeFrequency">Intake Frequency:</label>
-                    <select id="intakeFrequency" name="intakeFrequency">
+                    <select
+                      id="intakeFrequency"
+                      name="intakeFrequency" 
+                      value={formData.intakeFrequency}
+                      onChange={handleInputChange}>
                       <option value="Everyday">Everyday</option>
-                      <option value="Everyday">
-                        Specific days of the week
-                      </option>
+                      <option value="Specific days of the week">Specific days of the week</option>
                     </select>
                   </div>
                   <div className="flex-container--row">
                     <div className="form-group">
-                      <label htmlFor="dosagePerIntake">
-                        Dosage per Intake:
-                      </label>
+                      <label htmlFor="dosagePerIntake">Dosage per Intake:</label>
                       <input
                         type="number"
                         id="dosagePerIntake"
                         name="dosagePerIntake"
                         value={formData.dosagePerIntake}
-                        onChange={handleChange}
-                        
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="type">Type:</label>
-                      <select id="type" name="type">
+                      <label htmlFor="dosageType">Dosage Type:</label>
+                      <select
+                        id="dosageType"
+                        name="dosageType"
+                        value={formData.dosageType}
+                        onChange={handleInputChange}>
                         <option value="Capsule">Capsule</option>
                         <option value="Tablet">Tablet</option>
                         <option value="Spray">Spray</option>
@@ -143,38 +157,24 @@ const handleChange = (e) => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="currentQuantity">Current Quantity:</label>
+                    <label htmlFor="currentQuantity">Quantity:</label>
                     <input
                       type="number"
-                      id="currentQuantity"
-                      name="currentQuantity"
-                      value={formData.currentQuantity}
-                      onChange={handleChange}
+                      id="quantity"
+                      name="quantity"
+                      value={formData.quantity}
+                      onChange={handleInputChange}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="notifyToReorderAt">
-                      Notify to Reorder At:
-                    </label>
+                    <label htmlFor="refillLevel">Refill Level:</label>
                     <input
                       type="number"
-                      id="notifyToReorderAt"
-                      name="notifyToReorderAt"
-                      defaultValue={10}
-                      value={formData.notifyToReorderAt}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="autoConsume">Auto Consume:</label>
-                    <input
-                      type="checkbox"
-                      id="autoConsume"
-                      name="autoConsume"
-                      value={formData.autoConsume}
-                      onChange={handleChange}
+                      id="refillLevel"
+                      name="refillLevel"
+                      value={formData.refillLevel}
+                      onChange={handleInputChange}
                     />
                   </div>
                 </div>
@@ -187,56 +187,62 @@ const handleChange = (e) => {
                       id="purchasedFrom"
                       name="purchasedFrom"
                       value={formData.purchasedFrom}
-                      onChange={handleChange}
+                      onChange={handleInputChange}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="pricePaid">Price Paid:</label>
+                    <label htmlFor="price">Price:</label>
                     <span className="prefix">$</span>
                     <input
-                     type="text"
-                      id="pricePaid" 
-                      name="pricePaid"
-                      value={formData.pricePaid}
-                      onChange={handleChange}
-                      />
+                      type="text"
+                      id="price"
+                      name="price" 
+                      value={formData.price}
+                      onChange={handleInputChange}/>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="productUrl">Product URL (Optional):</label>
-                    <input 
-                    type="url" 
-                    id="productUrl" 
-                    name="productUrl"
-                    value={formData.productUrl}
-                    onChange={handleChange}
-                    />
+                    <input
+                      type="url"
+                      id="productUrl"
+                      name="productUrl"
+                      value={formData.productUrl}
+                      onChange={handleInputChange} />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="effectiveness">Effectiveness:</label>
-                    <select id="effectiveness" name="effectiveness">
-                      <option value="Needs More Time To Evaluate">
-                        Needs More Time To Evaluate
-                      </option>
+                    <select
+                      id="effectiveness"
+                      name="effectiveness"
+                      value={formData.effectiveness}
+                      onChange={handleInputChange}> 
+                      <option value="Needs More Time To Evaluate">Needs More Time To Evaluate</option>
                       <option value="Not Effective">Not Effective</option>
-                      <option value="Slightly Effective">
-                        Slightly Effective
-                      </option>
-                      <option value="Moderately Effective">
-                        Moderately Effective
-                      </option>
+                      <option value="Slightly Effective">Slightly Effective</option>
+                      <option value="Moderately Effective">Moderately Effective</option>
                       <option value="Highly Effective">Highly Effective</option>
                     </select>
                   </div>
 
                   <div className="form-group">
+                    <label htmlFor="description">Description:</label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows="4"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                    ></textarea>                    
                     <label htmlFor="additionalNotes">Additional Notes:</label>
                     <textarea
                       id="additionalNotes"
                       name="additionalNotes"
                       rows="4"
+                      value={formData.additionalNotes}
+                      onChange={handleInputChange}
                     ></textarea>
                   </div>
                 </div>
