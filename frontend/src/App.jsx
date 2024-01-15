@@ -8,6 +8,7 @@ import SupplementList from './pages/SupplementList';
 import UserRegister from './pages/UserRegister';
 import EditSupplement from './pages/EditSupplement';
 import mockReminder from './data/mocks/mockReminder';
+import Landing from './pages/Landing';
 
 function App() {
   const getSupplementById = (id) => {
@@ -51,6 +52,7 @@ function App() {
             </LayoutWithHeader>
           }
         />
+        <Route path="/landing" element={<Landing />} />
       </Routes>
     </Router>
   );
