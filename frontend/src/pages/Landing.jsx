@@ -13,7 +13,10 @@ export default function Landing({ login, signUp }) {
     <>
       <main className="container home-container">
         <div className="login">
-          already have an account?<Link to="/login" >Login</Link>
+          already have an account?{' '}
+          <span>
+            <Link to="/login">Login</Link>
+          </span>
         </div>
         <section className="hero">
           <div className="hero-left">
@@ -24,10 +27,10 @@ export default function Landing({ login, signUp }) {
               Your personal supplement assistant, helping you stay on track with
               your health goals every day.
             </p>
-            <Link to="/register" className="btn-main">Get Started</Link>
-            {/* <button onClick={signUp} className="btn-main">
-              Get Started
-            </button> */}
+
+            <button className="btn-main">
+              <Link to="/register">Get Started</Link>
+            </button>
           </div>
           <div className="hero-right">
             <div className="circle"></div>

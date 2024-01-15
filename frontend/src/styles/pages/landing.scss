@@ -6,7 +6,8 @@
     right: 0;
     color: $white-color;
     margin-right: $spacing-lg;
-    span {
+    span a {
+      color: $white-color;
       font-weight: 700;
       text-decoration: underline;
       cursor: pointer;
@@ -22,6 +23,7 @@
       h1 {
         font-size: $font-size-h2;
         max-width: 800px;
+        font-weight: 700;
         span {
           position: relative;
           &::after {
@@ -42,6 +44,12 @@
         font-size: $font-size-large;
         margin-top: $spacing-md;
         max-width: 600px;
+      }
+      .btn-main a {
+        color: $white-color;
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
 
