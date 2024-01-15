@@ -1,38 +1,43 @@
 @import './App.scss';
 @import './variables';
-@import './header';
-@import './footer';
+// @import './header';
+
 @import './dashboard';
 
+@import './footer';
 
 
 
 
-header {
-  width: 100%;
-  background-color: $black-color;
-  position: fixed;
-  z-index: 99;
+// headers {
+//   width: 100%;
+//    background-color:blanchedalmond;
+//   position: fixed;
+//   z-index: 99;
 
-  nav {
-    padding-top: $spacing-lg;
-    max-width: 1200px;
-    margin: 0 auto;
-    color: $white-color;
-    font-family: $font-family-primary;
+//   nav {
+//      width: 100%;
+    
+//      position: left;
+//     // z-index: 99;
+//     padding-top: $spacing-lg;
+//     max-width: 1200px;
+//     margin: 0 auto;
+//     color: $white-color;
+//     font-family: $font-family-primary;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//   }
+// }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh; 
   margin: 0;
-  background-image: url('../assets/image-01.png');
+  //background-image: url('../assets/image-01.png');
   background-size: cover; 
   background-position: center; 
   background-repeat: no-repeat;
@@ -44,17 +49,33 @@ body {
 
 
 
-.logo {
-  display: flex;
-  align-items: center;
+// .logo {
+//   display: flex;
+//   align-items: center;
+// }
+// .logo span {
+//   color: #ffc107; 
+//    font-size: 5rem;
+// }
+
+
+.main-section{
+  width: 30%;
+  align-content: center;
+  background-color: #ffc107;
+  padding: 10px;
+  margin-top: auto;
 }
-.logo span {
-  color: #ffc107; 
-   font-size: 5rem;
+.second-section {
+  width: 15%;
+  align-content: center;
+  background-color: #7a7460;
+  padding: 2px;
+  margin-top: auto;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
 }
-
-
-
 
 .container-top {
   text-align: center;
@@ -62,7 +83,7 @@ body {
 }
 
 .container-top h1 {
-  font-size: 5rem;
+  font-size: 3rem;
   margin-bottom: 10px;
 }
 
@@ -71,7 +92,7 @@ body {
 }
 
 .container-top h2 {
-  font-size: 2.5rem;
+  font-size: 1rem;
   color: #3b21bf; 
 }
 
@@ -90,9 +111,28 @@ body {
   font-size: 2rem;
   margin-bottom: 10px;
 }
-
+.btn-container {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 100px;
+}
 .container-left p {
   font-size: 1.5rem;
   color: #9c91b8;
+}
+.article-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.article-container h2 {
+  flex: 1; 
+  margin-right: 20px;
+}
+
+.article-container img {
+  max-width: 100%; 
 }
 

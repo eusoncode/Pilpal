@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import AboutUs from '../pages/AboutUs';
+import facebookImage from '../assets/facebook-icon.png';
+import twitterImage from '../assets/icon-x.png';
+import linkedinImage from '../assets/icon-linkedin.png';
 
 export default function Header({ logout, handleAddNew, goBackToDashboard }) {
 
@@ -13,16 +16,23 @@ export default function Header({ logout, handleAddNew, goBackToDashboard }) {
     <footer>
       <div id="container">
         <div className="footer-section">
-          <h3>Contact Us</h3>
-          <ul >
-            <li className='logout-btn'>Facebook</li>
-            <li className='logout-btn'>Twitter</li>
-            <li className='logout-btn'>Email</li>
-          </ul>
+          <h6>GET IN TOUCH</h6>
+          <ul className='social-media'>
+            <div className="profile-image-container">
+              <img src={facebookImage} alt="facebook" />
+            </div>
+            <div className="profile-image-container">
+              <img src={twitterImage} alt="twitter" />
+            </div>
+            <div className="profile-image-container">
+              <img src={linkedinImage} alt="linkedin" />
+            </div>
+            </ul>
+         
         </div>
 
         <div className="footer-section">
-          <h3>About Us</h3>
+          <h6>ABOUT US</h6>
           <ul>
           
             <li className='logout-btn' onClick={toggleAboutUs}>Our Team</li>
@@ -32,7 +42,7 @@ export default function Header({ logout, handleAddNew, goBackToDashboard }) {
         </div>
         {showAboutUs && <AboutUs />}
         <div className="footer-section">
-          <h3>Quick Links</h3>
+          <h6>QUICK LINKS</h6>
           <ul>
             <li className='logout-btn'>Home</li>
             <li className='logout-btn'>Contact</li>
