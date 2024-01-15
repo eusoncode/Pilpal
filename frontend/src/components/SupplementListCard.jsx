@@ -1,76 +1,83 @@
+import { reconvertReminderTime } from "../helper/reconvertReminderTime";
 import { useNavigate } from 'react-router-dom';
 
-export default function SupplementListCard({
-  id,
-  name,
-  time,
-  manufacturer,
-  intakeFrequency,
-  intakeQuantity,
-  stockQuantity,
-  image,
-  effectiveness,
-  reorderLevel,
-  dosageType,
-  startDate,
-  endDate,
-  price,
-  purchasedFrom,
-  additionalNotes,
-  number, // For numbering each supplement
-  isActive,
-  onToggleActive,
-  onDelete,
-}) {
+export default function SupplementListCard(props) {
+
+  // console.log ({props:props})
+
   // Importing images
-  const imageUrl = image.src;
+  const imageUrl = props.image.src;
+
+  // console.log({
+  //   name: name,
+  //   time: time,
+  //   intakeFrequency: intakeFrequency,
+  //   intakeQuantity: intakeQuantity,
+  //   stockQuantity: stockQuantity,
+  //   image: image,
+  //   effectiveness: effectiveness,
+  //   refilLevel: refilLevel,
+  //   dosageType: dosageType,
+  //   startDate: startDate,
+  //   endDate: endDate,
+  //   price: price,
+  //   purchasedFrom: purchasedFrom,
+  //   additionalNotes: additionalNotes
+  // })
+
+  // const handleEditButton = () => {
+  //   props.setEditClicked();
+  // };
+
+  // console.log ({
+    // StartDate: props.startdate,
+  //   EndDate: props.enddate
+  // });
+
+  // console.log ({
+  //   StartDate: props
+  // });
   const navigate = useNavigate();
+  
+  // Format time to HH:MM AM OR PM and format start date and end date to 'YYYY-MM-DD' format
+  const formatedTime = reconvertReminderTime(props.time);
+  const formattedStartDate = props.startdate ? props.startdate.split('T')[0] : '';
+  const formattedEndDate = props.enddate ? props.enddate.split('T')[0] : '';
 
+  let reason = false;  
+  if (props.status === 'Suspended') {
+    reason = true;
+  }
+  
   const handleEditClick = () => {
-    navigate(`/edit/${id}`); // Navigate to the edit page for this supplement
+    // props.supplementToBeEdited(props.id);
+    navigate(`/edit/${props.id}`); // Navigate to the edit page for this supplement
   };
+  
+  // console.log({supplementid:props.id});
 
-  // Conditional class names
-  const cardClassName = `${isActive ? '' : 'deactivated'}`;
-  const buttonClassName = `${isActive ? 'active' : ''}`;
+  // console.log({
+  //   inputTime: props.time,
+  //   inputStartDate: props.startdate,
+  //   inputEndDate: props.enddate
+  // });
 
-  const handleDeleteClick = () => {
-    onDelete(id);
-  };
+  // console.log ({
+  //   formatedTime: formatedTime,
+  //   formattedStartDate: formattedStartDate,
+  //   formattedEndDate: formattedEndDate
+  // });
+  // console.log({props:props});
 
   return (
     <>
       <div className="supplementListCard">
-        <div className={`card ${cardClassName}`}>
-          <div className="number">{number}.</div>
-          <div className="edit-btn" onClick={handleEditClick}>
-            edit
-          </div>
-          <div className="delete-btn" onClick={handleDeleteClick}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-x"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              stroke-width="2.0"
-              stroke="#ffffff"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M18 6l-12 12" />
-              <path d="M6 6l12 12" />
-            </svg>
-          </div>
-
+        <div className={reason ? 'suspend' : 'card'}>
+          <div className="skip-btn" onClick={handleEditClick}>edit</div>
           <div className="details">
             <div className="details__supplement-name">
               <img src={imageUrl} alt="pills" />
-              <span>
-                {name} ({manufacturer})
-              </span>
+              <span>{props.name}</span>
             </div>
             <div className="details__contents">
               <div className="details__contents--left">
@@ -116,18 +123,11 @@ export default function SupplementListCard({
               </div>
             </div>
             <div className="details__notes">
+              <hr></hr>
               <span className="title">Additional Notes: </span>
               <span className="content">{props.additionalnotes}</span>
             </div>
           </div>
-        </div>
-        <div className="activation-btn-container">
-          <button
-            className={`btn-secondary ${buttonClassName}`}
-            onClick={() => onToggleActive(id)}
-          >
-            {isActive ? 'Deactivate' : 'Activate'}
-          </button>
         </div>
       </div>
     </>

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 export default function SupplementCard({
   id,
   name,
-  manufacturer,
   time,
   intakequantity,
   stockquantity,
@@ -49,9 +48,6 @@ export default function SupplementCard({
   
   const imageUrl = image.src;
   const cardStyles = type === 'restock' ? 'restock-card' : 'intake-card';
-
-  // Determine if the buttons should be disabled
-  const disabledClass = isFutureDate ? 'disabled' : '';
 
   return (
     <div className="notification" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

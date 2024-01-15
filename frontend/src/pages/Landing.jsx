@@ -7,13 +7,13 @@ import leftBorderImage from '../assets/line2.png';
 import iconFacebook from '../assets/icon-facebook.png';
 import iconX from '../assets/icon-x.png';
 import iconLinkedin from '../assets/icon-linkedin.png';
-
-export default function Landing({ userLoginClicked, clickSignUp }) {
+import { useNavigate, Link } from 'react-router-dom';
+export default function Landing({ login, signUp }) {
   return (
     <>
       <main className="container home-container">
         <div className="login">
-          already have an account? <span onClick={userLoginClicked}>Login</span>
+          already have an account?<Link to="/login" >Login</Link>
         </div>
         <section className="hero">
           <div className="hero-left">
@@ -24,9 +24,10 @@ export default function Landing({ userLoginClicked, clickSignUp }) {
               Your personal supplement assistant, helping you stay on track with
               your health goals every day.
             </p>
-            <button onClick={clickSignUp} className="btn-main">
+            <Link to="/register" className="btn-main">Get Started</Link>
+            {/* <button onClick={signUp} className="btn-main">
               Get Started
-            </button>
+            </button> */}
           </div>
           <div className="hero-right">
             <div className="circle"></div>
