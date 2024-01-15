@@ -1,0 +1,22 @@
+.react-calendar {
+  border: 0px !important;
+  font-family: $font-family-primary !important;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  background-color: $white-color;
+  color: $black-color;
+  font-family: $font-family-secondary;
+  abbr[title] {
+    text-decoration: underline !important;
+  }
+}
+
+.react-calendar__tile--active {
+  background-color: $black-color !important;
+}
+
+.react-calendar__tile--now {
+  background-color: $orange-color !important;
+  color: $white-color;
+}

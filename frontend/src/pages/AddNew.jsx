@@ -1,52 +1,7 @@
-import '../styles/addnew.scss';
-import Image from '../assets/image-07.png';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-export default function AddNew({addNewSupplement}) {
-  const [formData, setFormData] = useState({
-    name: '',
-    manufacturer: '',
-    startingDate: '',
-    endingDate: '',
-    reminderTime: '',
-    intakeFrequency: '',
-    dosagePerIntake: '',
-    dosageType: '',
-    quantity: '',
-    refillLevel: '',
-    purchasedFrom: '',
-    price: '',
-    productUrl: '',
-    effectiveness: '',
-    description: '',
-    additionalNotes: ''
-  });
-  
-  // const { saveImage, setSaveImage } = useState({image: ''});
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addNewSupplement(formData);
-    navigate('/dashboard'); 
-  };
-
-  console.log({
-    formData:formData
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
+export default function AddNew() {
+  const handleSubmit = (e) => e.preventDefault();
   return (
-    <>      
+    <>
       <main className="supplement-details-container container">
         <section className="container-top">
           <h1 className="accent">
@@ -57,32 +12,51 @@ export default function AddNew({addNewSupplement}) {
           <article className="container-left"></article>
           <article className="container-right">
             <form onSubmit={handleSubmit} className="supplement-form">
-              <div className="form-group image-upload">
-                <label htmlFor="image">Image:</label>
-                <img src={/**saveImage.image ? URL.createObjectURL(saveImage.image) : **/Image} alt="User Uploaded"/>
-                <input type="file" id="image" name="image" accept="image/*" onChange={handleInputChange}/>
+              <div className="form-group">
+                <label htmlFor="productUrl">Img URL</label>
+                <span class="prefix">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-photo-plus"
+                    width="26"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    stroke-width="2.0"
+                    stroke="#000000"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M15 8h.01" />
+                    <path d="M12.5 21h-6.5a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6.5" />
+                    <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l4 4" />
+                    <path d="M14 14l1 -1c.67 -.644 1.45 -.824 2.182 -.54" />
+                    <path d="M16 19h6" />
+                    <path d="M19 16v6" />
+                  </svg>
+                </span>
+                <input
+                  type="url"
+                  id="productUrl"
+                  name="productUrl"
+                  placeholder="https://google.ca/img.jpg"
+                />
               </div>
               <div className="flex-container">
                 <div className="container-left">
                   <div className="form-group">
-                    <label htmlFor="name">Supplement Name:</label>
+                    <label htmlFor="supplementName">Supplement Name:</label>
                     <input
                       type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
+                      id="supplementName"
+                      name="supplementName"
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="brandName">Manufacturer:</label>
-                    <input
-                      type="text"
-                      id="manufacturer"
-                      name="manufacturer" 
-                      value={formData.manufacturer}
-                      onChange={handleInputChange} />
+                    <label htmlFor="brandName">Brand Name:</label>
+                    <input type="text" id="brandName" name="brandName" />
                   </div>
 
                   <div className="flex-container--row">
@@ -92,57 +66,39 @@ export default function AddNew({addNewSupplement}) {
                         type="date"
                         id="startingDate"
                         name="startingDate"
-                        value={formData.startingDate}
-                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="form-group">
                       <label htmlFor="endingDate">Ending Date:</label>
-                      <input
-                        type="date"
-                        id="endingDate"
-                        name="endingDate" 
-                        value={formData.endingDate}
-                        onChange={handleInputChange}/>
+                      <input type="date" id="endingDate" name="endingDate" />
                     </div>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="reminderTime">Reminder Time:</label>
-                    <input
-                      type="time"
-                      id="reminderTime"
-                      name="reminderTime" 
-                      value={formData.reminderTime}
-                      onChange={handleInputChange}/>
+                    <input type="time" id="reminderTime" name="reminderTime" />
                     <label htmlFor="intakeFrequency">Intake Frequency:</label>
-                    <select
-                      id="intakeFrequency"
-                      name="intakeFrequency" 
-                      value={formData.intakeFrequency}
-                      onChange={handleInputChange}>
+                    <select id="intakeFrequency" name="intakeFrequency">
                       <option value="Everyday">Everyday</option>
-                      <option value="Specific days of the week">Specific days of the week</option>
+                      <option value="Everyday">
+                        Specific days of the week
+                      </option>
                     </select>
                   </div>
                   <div className="flex-container--row">
                     <div className="form-group">
-                      <label htmlFor="dosagePerIntake">Dosage per Intake:</label>
+                      <label htmlFor="dosagePerIntake">
+                        Dosage per Intake:
+                      </label>
                       <input
                         type="number"
                         id="dosagePerIntake"
                         name="dosagePerIntake"
-                        value={formData.dosagePerIntake}
-                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="dosageType">Dosage Type:</label>
-                      <select
-                        id="dosageType"
-                        name="dosageType"
-                        value={formData.dosageType}
-                        onChange={handleInputChange}>
+                      <label htmlFor="type">Type:</label>
+                      <select id="type" name="type">
                         <option value="Capsule">Capsule</option>
                         <option value="Tablet">Tablet</option>
                         <option value="Spray">Spray</option>
@@ -157,24 +113,32 @@ export default function AddNew({addNewSupplement}) {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="currentQuantity">Quantity:</label>
+                    <label htmlFor="currentQuantity">Current Quantity:</label>
                     <input
                       type="number"
-                      id="quantity"
-                      name="quantity"
-                      value={formData.quantity}
-                      onChange={handleInputChange}
+                      id="currentQuantity"
+                      name="currentQuantity"
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="refillLevel">Refill Level:</label>
+                    <label htmlFor="notifyToReorderAt">
+                      Notify to Reorder At:
+                    </label>
                     <input
                       type="number"
-                      id="refillLevel"
-                      name="refillLevel"
-                      value={formData.refillLevel}
-                      onChange={handleInputChange}
+                      id="notifyToReorderAt"
+                      name="notifyToReorderAt"
+                      defaultValue={10}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="autoConsume">Auto Consume:</label>
+                    <input
+                      type="checkbox"
+                      id="autoConsume"
+                      name="autoConsume"
                     />
                   </div>
                 </div>
@@ -186,63 +150,38 @@ export default function AddNew({addNewSupplement}) {
                       type="text"
                       id="purchasedFrom"
                       name="purchasedFrom"
-                      value={formData.purchasedFrom}
-                      onChange={handleInputChange}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="price">Price:</label>
-                    <span className="prefix">$</span>
-                    <input
-                      type="text"
-                      id="price"
-                      name="price" 
-                      value={formData.price}
-                      onChange={handleInputChange}/>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="productUrl">Product URL (Optional):</label>
-                    <input
-                      type="url"
-                      id="productUrl"
-                      name="productUrl"
-                      value={formData.productUrl}
-                      onChange={handleInputChange} />
+                    <label htmlFor="pricePaid">Price Paid:</label>
+                    <span class="prefix">$</span>
+                    <input type="text" id="pricePaid" name="pricePaid" />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="effectiveness">Effectiveness:</label>
-                    <select
-                      id="effectiveness"
-                      name="effectiveness"
-                      value={formData.effectiveness}
-                      onChange={handleInputChange}> 
-                      <option value="Needs More Time To Evaluate">Needs More Time To Evaluate</option>
+                    <select id="effectiveness" name="effectiveness">
+                      <option value="Needs More Time To Evaluate">
+                        Needs More Time To Evaluate
+                      </option>
                       <option value="Not Effective">Not Effective</option>
-                      <option value="Slightly Effective">Slightly Effective</option>
-                      <option value="Moderately Effective">Moderately Effective</option>
+                      <option value="Slightly Effective">
+                        Slightly Effective
+                      </option>
+                      <option value="Moderately Effective">
+                        Moderately Effective
+                      </option>
                       <option value="Highly Effective">Highly Effective</option>
                     </select>
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="description">Description:</label>
-                    <textarea
-                      id="description"
-                      name="description"
-                      rows="4"
-                      value={formData.description}
-                      onChange={handleInputChange}
-                    ></textarea>                    
                     <label htmlFor="additionalNotes">Additional Notes:</label>
                     <textarea
                       id="additionalNotes"
                       name="additionalNotes"
                       rows="4"
-                      value={formData.additionalNotes}
-                      onChange={handleInputChange}
                     ></textarea>
                   </div>
                 </div>

@@ -1,8 +1,29 @@
-import '../styles/supplementlist.scss';
+import { useState } from 'react';
 import SupplementListCard from '../components/SupplementListCard';
 
-export default function SupplementList({userSupplements}) {
-  
+export default function SupplementList() {
+  const totalSupplements = mockReminder.length;
+  const [supplements, setSupplements] = useState(mockReminder);
+
+  const toggleActiveStatus = (id) => {
+    const updatedSupplements = supplements.map((supplement) => {
+      if (supplement.id === id) {
+        return { ...supplement, isActive: !supplement.isActive };
+      }
+      return supplement;
+    });
+
+    setSupplements(updatedSupplements);
+  };
+
+  const handleDelete = (id) => {
+    const updatedSupplements = supplements.filter(
+      (supplement) => supplement.id !== id
+    );
+    setSupplements(updatedSupplements);
+    // backend: request to delete here!
+  };
+
   return (
     <>
       <main className="supplementlist-container container">
@@ -10,11 +31,20 @@ export default function SupplementList({userSupplements}) {
           <h1 className="accent">
             Pilpal Supplement List<span>✷</span>
           </h1>
+          <p className="info">
+            You're Managing <span>{totalSupplements} Supplements</span>
+          </p>
         </section>
         <section className="container-bottom">
           <article>
-            {userSupplements.map((supplement) => (
-              <SupplementListCard key={supplement.id} {...supplement} />
+            {supplements.map((supplement, index) => (
+              <SupplementListCard
+                key={supplement.id}
+                number={index + 1}
+                {...supplement}
+                onToggleActive={toggleActiveStatus}
+                onDelete={handleDelete}
+              />
             ))}
           </article>
         </section>

@@ -1,0 +1,345 @@
+.dashboard-container {
+  .accent {
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-md;
+    span {
+      font-size: $font-size-xxl;
+    }
+  }
+
+  h2 {
+    font-size: $font-size-h2;
+  }
+
+  .title-date {
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-sm;
+    font-family: $font-family-secondary;
+    font-weight: 700;
+    position: relative;
+    width: 100%;
+  }
+
+  .skip-btn.disabled {
+    display: none;
+  }
+
+  .no-reminders {
+    height: 324px;
+    width: 80%;
+    border-radius: 8px;
+    background-color: $light-gray-color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: $spacing-lg;
+    p {
+      text-align: center;
+      margin-bottom: $spacing-md;
+      font-size: $font-size-xl;
+      font-weight: 500;
+    }
+  }
+
+  .icon {
+    display: inline-block;
+    margin-right: 2px;
+  }
+
+  .container-top {
+    padding-bottom: $spacing-xxl;
+
+    .greetings {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .profile-image-container {
+        cursor: pointer;
+        position: relative;
+        margin-right: $spacing-md;
+        img {
+          width: 120px;
+          border-radius: 50%;
+          border: 4px solid $orange-color;
+          position: relative;
+          transition: $transition;
+          &:hover {
+            scale: 1.045;
+          }
+        }
+        &::before {
+          content: 'edit';
+          position: absolute;
+          bottom: 0;
+          z-index: 1;
+          right: 0;
+          font-size: $font-size-small;
+          color: $navy-color;
+          font-weight: 500;
+          background-color: $pink-color;
+          padding: 2px 4px;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+
+  .container-bottom {
+    display: flex;
+
+    .container-left {
+      flex: 2;
+      .today-title {
+        font-size: $font-size-xl;
+        font-weight: 500;
+        margin-bottom: $spacing-sm;
+        span {
+          font-weight: 700;
+          color: $orange-color;
+        }
+      }
+    }
+
+    .container-right {
+      flex: 1;
+
+      .container-right--box {
+        background-color: $light-gray-color;
+        padding: $spacing-md;
+        border-radius: 8px;
+      }
+    }
+  }
+}
+
+.notification {
+  position: relative;
+  margin-bottom: $spacing-lg;
+  display: flex;
+}
+
+.notification-card {
+  position: relative;
+  z-index: 2;
+  background-color: $white-color;
+  display: flex;
+  border: 2px solid $orange-color;
+  border-radius: 15px;
+  padding: $spacing-md;
+  align-items: center;
+  max-width: 650px;
+  width: 80%;
+  transition: $transition;
+  font-size: $font-size-base;
+
+  img {
+    width: 120px;
+    border-radius: 50%;
+    margin-right: $spacing-lg;
+  }
+
+  .details--supplement-name {
+    color: $orange-color;
+    font-weight: 700;
+    font-size: $font-size-xxl;
+    line-height: 1.2;
+  }
+
+  &.restock-card {
+    background-color: $navy-color;
+    color: $white-color;
+    border: 2px solid $navy-color;
+
+    .details--supplement-name {
+      color: $white-color;
+    }
+  }
+}
+
+.notification-card-btn {
+  width: 125px;
+  border-radius: 0 15px 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 27px;
+  transition: $transition;
+  z-index: 1;
+  cursor: pointer;
+  transform: translateX(-110px);
+
+  &.active {
+    transform: translateX(-12px);
+  }
+
+  &.active.disabled {
+    transform: translateX(-110px);
+  }
+
+  span {
+    color: $white-color;
+    font-size: $font-size-xxl;
+    font-family: $font-family-primary;
+    font-weight: 700;
+    margin-right: $spacing-lg;
+  }
+}
+
+.intake-card-btn {
+  background-color: $orange-color;
+
+  &.disabled {
+    background-color: $light-gray-color;
+  }
+}
+
+.restock-card-btn {
+  background-color: $pink-color;
+  &.disabled {
+    background-color: $light-gray-color;
+  }
+}
+
+.skip-btn {
+  position: absolute;
+  top: 8px;
+  right: 24px;
+  text-decoration: underline;
+  font-size: $font-size-base;
+  cursor: pointer;
+}
+
+.intake-card .skip-btn {
+  color: $dark-gray-color;
+  &:hover {
+    color: $black-color;
+  }
+}
+
+.restock-card .skip-btn {
+  color: $dark-gray-color;
+  &:hover {
+    color: $white-color;
+  }
+}
+
+// Calendar
+.react-calendar__tile {
+  position: relative;
+}
+
+.pill-taken-indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: $orange-color;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// Pills intake & skipped details
+.pill-details {
+  margin: $spacing-lg 0;
+  padding: $spacing-md;
+  background-color: $light-gray-color;
+  border-radius: 8px;
+  h4 {
+    font-family: $font-family-secondary;
+    font-size: $font-size-large;
+    font-weight: 600;
+  }
+  ul {
+    margin-bottom: $spacing-xl;
+    padding: 0;
+    li {
+      list-style: none;
+      display: flex;
+      margin-top: $spacing-sm;
+      padding: $spacing-md;
+      // border-bottom: 1px solid $orange-color;
+      background-color: $white-color;
+      border-radius: 8px;
+      img {
+        width: 60px;
+        height: 100%;
+        border-radius: 50%;
+        margin-right: $spacing-sm;
+      }
+    }
+
+    span {
+      display: block;
+      &:first-child {
+        font-weight: 600;
+      }
+      &:nth-child(2) {
+        font-size: $font-size-base;
+      }
+    }
+  }
+  .no-reminder-intakes-skipped {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    padding: $spacing-md;
+    background-color: $white-color;
+    margin: $spacing-sm 0 $spacing-xl;
+    border-radius: 8px;
+    p {
+      font-weight: 500;
+      text-align: center;
+    }
+    span {
+      font-size: $font-size-small;
+      text-align: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .dashboard-container {
+    .container-bottom {
+      flex-direction: column;
+      .container-left {
+        padding-top: $spacing-lg;
+
+        order: 2;
+      }
+      .container-right {
+        order: 1;
+
+        .container-right--box {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  .notification-card {
+    img {
+      width: 80px;
+    }
+  }
+
+  .no-reminders {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .dashboard-container {
+    .container-right--box {
+      flex-direction: column;
+    }
+  }
+
+  .notification-card {
+    img {
+      width: 80px;
+    }
+  }
+}
