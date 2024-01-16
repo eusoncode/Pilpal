@@ -1,0 +1,204 @@
+.home-container {
+  position: relative;
+  .login {
+    position: absolute;
+    top: $spacing-md;
+    right: 0;
+    color: $white-color;
+    margin-right: $spacing-lg;
+    span {
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+      &:hover {
+        color: $navy-color;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .btn-main {
+    position: absolute;
+    &:hover {
+      color: $white-color;
+      background-color: $orange-color;
+      cursor: pointer;
+    }
+  }
+  .hero {
+    display: flex;
+    .hero-left {
+      flex: 2;
+      h1 {
+        font-size: $font-size-h2;
+        max-width: 800px;
+        span {
+          position: relative;
+          &::after {
+            content: '';
+            left: 0;
+            bottom: 5px;
+            background-image: url(/assets/underline.png);
+            background-size: 100%;
+            position: absolute;
+            width: 100%;
+            display: inline-block;
+            height: 26%;
+            z-index: -1;
+          }
+        }
+      }
+      p {
+        font-size: $font-size-large;
+        margin-top: $spacing-md;
+        max-width: 600px;
+      }
+    }
+
+    .hero-right {
+      flex: 1;
+      position: absolute;
+      top: 15%;
+      left: 60%;
+      img {
+        max-width: 500px;
+      }
+      .circle {
+        display: inline-block;
+        width: 700px;
+        height: 700px;
+        border-radius: 50%;
+        background-color: $orange-color;
+        position: absolute;
+        z-index: -1;
+        top: -80%;
+      }
+    }
+  }
+
+  section.intro {
+    margin: $spacing-xxl 0;
+    display: flex;
+    align-items: center;
+    .intro-left {
+      flex: 70px;
+      img {
+        width: 30px;
+      }
+    }
+    .intro-right {
+      flex: 100%;
+      ul.hashtags {
+        padding: 0;
+        list-style: none;
+        display: flex;
+        margin-bottom: $spacing-lg;
+
+        img {
+          width: 30px;
+        }
+
+        li:not(:first-child) {
+          background-color: $light-gray-color;
+          padding: $spacing-sm $spacing-md;
+          margin-right: $spacing-sm;
+          border-radius: 8px;
+          font-size: $font-size-base;
+          font-weight: 500;
+        }
+      }
+      h2 {
+        font-family: $font-family-secondary;
+        margin-bottom: $spacing-sm;
+      }
+      p {
+        max-width: 550px;
+      }
+    }
+  }
+
+  section.blurbs {
+    display: flex;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xxl;
+
+    .blurb {
+      background-color: hsl(20, 100%, 50%, 12%);
+      border-radius: 24px;
+      padding: $spacing-xl;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 3px 5px 19px -5px rgba(184, 184, 184, 0.57);
+      -webkit-box-shadow: 3px 5px 19px -5px rgba(184, 184, 184, 0.57);
+      -moz-box-shadow: 3px 5px 19px -5px rgba(184, 184, 184, 0.57);
+      img {
+        width: 40px;
+      }
+      h3 {
+        font-family: $font-family-secondary;
+        color: $orange-color;
+        padding: $spacing-md 0;
+      }
+      p {
+        font-size: 17px;
+      }
+    }
+  }
+}
+
+footer {
+  ul,
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+  width: 100%;
+  background-color: $black-color;
+  color: $white-color;
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $spacing-xxl $spacing-lg;
+  }
+  h4 {
+    font-family: $font-family-secondary;
+    text-transform: uppercase;
+    margin-bottom: $spacing-md;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $spacing-xxl;
+    .footer-top-left {
+      .socials {
+        display: flex;
+        flex-direction: row;
+        img {
+          width: 50px;
+          height: 50px;
+          margin-right: $spacing-md;
+          cursor: pointer;
+          transition: $transition;
+          &:hover {
+            scale: 1.1;
+          }
+        }
+      }
+    }
+    .footer-top-right {
+      display: flex;
+      gap: $spacing-xxl;
+      ul {
+        li {
+          margin-bottom: $spacing-sm;
+        }
+      }
+    }
+  }
+  .footer-bottom {
+    font-size: $font-size-small;
+  }
+}

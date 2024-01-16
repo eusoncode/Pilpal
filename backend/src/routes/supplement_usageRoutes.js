@@ -52,6 +52,10 @@ router.post("/updateStockLevel", (req, res) => {
     })
     .then((response) => {
 
+      console.log({
+        type: response
+      });
+
       console.log('response after updateSupplementType:', response);
       
       if (!response) {

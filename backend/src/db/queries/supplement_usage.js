@@ -96,7 +96,7 @@ const updateUserSupplementStockLevel = (newValue, userId, supplementId, currentD
             WHERE supplement_usage.usersupplementid = user_supplements.id
             AND user_supplements.userid = $4
             AND user_supplements.supplementid = $5
-            RETURNING supplement_usage.*;
+            RETURNING *;
           `, [newValue, formattedNextDateSupplement, formattedCurrentDateSupplement, userId, supplementId]);
         })
         .then(result => {

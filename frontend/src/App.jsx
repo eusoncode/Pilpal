@@ -81,14 +81,14 @@ function App() {
           }
         />
         <Route
-          path="/"
+          path="/login"
           element={
             <Login
               login={login}
             />
           }
         />
-        <Route path="/landing" element={<Landing />} />
+        <Route path="/" element={<Landing />} />
       </Routes>
     </Router>
   );

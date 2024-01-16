@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 import signupImage from '../assets/image-01.png';
 
 export default function UserRegister({signUp}) {
@@ -8,16 +7,16 @@ export default function UserRegister({signUp}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
     }
-
     email && password && confirmPassword && signUp({username, email, password});
+    navigate('/login'); 
   };
 
   return (

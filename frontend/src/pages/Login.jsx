@@ -26,13 +26,9 @@ export default function Login({login}) {
         </section>
         <section className="login-container-right">
           <p className="accent">
-            Pilpal<span>✷</span>
+            <Link to="/">Pilpal</Link><span>✷</span>
           </p>
           <h1>Login to your Account</h1>
-          <span>
-            Doesn't have the account yet? 
-            <Link to="/register">Sign up</Link>
-          </span>
           <form onSubmit={onSubmit}>
             <label htmlFor="email">Email</label>
             <input
