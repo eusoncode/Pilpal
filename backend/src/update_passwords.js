@@ -7,7 +7,8 @@ const updateEncryptedPassword = (userId, userPassword) => {
     const updateQuery = `UPDATE users SET password = $1 WHERE id = $2`;
     const queryParams = [hashedPassword, userId];
 
-    return db.query(updateQuery, queryParams)
+    return db
+      .query(updateQuery, queryParams)
       .then(() => {
         console.log(`Password updated for user with ID ${userId}`);
       })
@@ -24,12 +25,14 @@ const updateEncryptedPassword = (userId, userPassword) => {
 const getUsers = () => {
   return db
     .query('SELECT * FROM users;')
-    .then(result => {
+    .then((result) => {
       const users = result.rows;
-      const editedUsers = users.filter(user => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(user.id));
+      const editedUsers = users.filter((user) =>
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(user.id)
+      );
       return Promise.resolve(editedUsers);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error fetching users:', error.message);
       throw error;
     });
@@ -52,7 +55,6 @@ const updatePasswords = async () => {
 module.exports = {
   updatePasswords,
 };
-
 
 // Note: Use this to reset the passwords to original state. It must be executed in the database terminal
 

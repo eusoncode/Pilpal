@@ -13,15 +13,29 @@ import Landing from './pages/Landing';
 function App() {
   // Use the custom hook to manage application data
   const { state, actions } = useApplicationData();
-  const { user, userSupplements} = state;
-  const { login, logout, addNewSupplement, signUp, takeSupplement, handleRefillAlert, editSupplement, markAsDeleted } = actions; 
+  const { user, userSupplements } = state;
+  const {
+    login,
+    logout,
+    addNewSupplement,
+    signUp,
+    takeSupplement,
+    handleRefillAlert,
+    editSupplement,
+    markAsDeleted,
+  } = actions;
 
-  const filteredUserSupplements = userSupplements.filter((supplement) => supplement.to_be_deleted === false);
-  
+  // const filteredUserSupplements = userSupplements.filter((supplement) => supplement.to_be_deleted === false);
+  const filteredUserSupplements = userSupplements.filter(
+    (supplement) => !supplement.to_be_deleted
+  );
+
   // console.log('filteredUserSupplements - ', filteredUserSupplements);
 
-  const getSupplementById  = (supplementId) => {
-    return filteredUserSupplements.find(supplement => supplement.id === parseInt(supplementId));
+  const getSupplementById = (supplementId) => {
+    return filteredUserSupplements.find(
+      (supplement) => supplement.id === parseInt(supplementId)
+    );
   };
 
   return (
@@ -49,15 +63,13 @@ function App() {
                 markAsDeleted={markAsDeleted}
               />
             </LayoutWithHeader>
-          } 
+          }
         />
         <Route
           path="/add-new"
           element={
             <LayoutWithHeader logout={logout}>
-              <AddNew
-                  addNewSupplement={addNewSupplement}
-              />
+              <AddNew addNewSupplement={addNewSupplement} />
             </LayoutWithHeader>
           }
         />
@@ -68,26 +80,13 @@ function App() {
               <EditSupplement
                 editSupplement={editSupplement}
                 getSupplementById={getSupplementById}
-                filteredUserSupplements={filteredUserSupplements} />
+                filteredUserSupplements={filteredUserSupplements}
+              />
             </LayoutWithHeader>
           }
         />
-        <Route
-          path="/register"
-          element={
-            <UserRegister
-              signUp={signUp}
-            />
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <Login
-              login={login}
-            />
-          }
-        />
+        <Route path="/register" element={<UserRegister signUp={signUp} />} />
+        <Route path="/login" element={<Login login={login} />} />
         <Route path="/" element={<Landing />} />
       </Routes>
     </Router>
@@ -95,5 +94,3 @@ function App() {
 }
 
 export default App;
-
-
