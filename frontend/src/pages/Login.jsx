@@ -7,26 +7,27 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import loginImage from '../assets/image-01.png';
 
-export default function Login({login}) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Login({ login }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  
-  const onSubmit = e => {
+
+  const onSubmit = (e) => {
     e.preventDefault();
     email && login(email, password);
-    navigate('/dashboard'); 
-  }
+    navigate('/dashboard');
+  };
 
   return (
-    <div className='jumbtron'>
-      <main className="container login-container">
+    <div className="jumbtron">
+      <main className="login-container">
         <section className="login-container-left">
           <img src={loginImage} alt="pills" />
         </section>
         <section className="login-container-right">
           <p className="accent">
-            <Link to="/">Pilpal</Link><span>✷</span>
+            <Link to="/">Pilpal</Link>
+            <span>✷</span>
           </p>
           <h1>Login to your Account</h1>
           <form onSubmit={onSubmit}>
@@ -36,8 +37,8 @@ export default function Login({login}) {
               id="email"
               name="email"
               value={email}
-              placeholder='Enter your email address'
-              onChange={e => setEmail(e.target.value)}
+              placeholder="Enter your email address"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <label htmlFor="password">Password</label>
             <input
@@ -45,13 +46,10 @@ export default function Login({login}) {
               id="password"
               name="password"
               value={password}
-              placeholder='Password'
-              onChange={e => setPassword(e.target.value)}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <input
-              type="submit"
-              value="Login"
-            />
+            <input type="submit" value="Login" />
           </form>
         </section>
       </main>

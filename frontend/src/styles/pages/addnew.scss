@@ -1,9 +1,8 @@
-@import './App.scss';
-
 .supplement-details-container {
   .accent {
-    font-size: $font-size-xl;
+    font-size: $font-size-xxl;
     margin-bottom: $spacing-md;
+    font-weight: 800;
     span {
       font-size: $font-size-xxl;
     }
@@ -14,6 +13,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 3rem;
 
   input[type='number'] {
     max-width: 130px;
@@ -67,7 +67,7 @@
   font-weight: 700;
 }
 
-#pricePaid {
-  padding-left: $spacing-lg;
+#pricePaid,
+#productUrl {
+  padding-left: $spacing-xl;
 }
-

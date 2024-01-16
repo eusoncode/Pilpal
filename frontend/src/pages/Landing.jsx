@@ -7,25 +7,16 @@ import leftBorderImage from '../assets/line2.png';
 import iconFacebook from '../assets/icon-facebook.png';
 import iconX from '../assets/icon-x.png';
 import iconLinkedin from '../assets/icon-linkedin.png';
-import { useNavigate, Link } from 'react-router-dom';
-
-export default function Landing() {  
-  const navigate = useNavigate();
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    navigate('/login'); 
-  };
-
-  const handleSignup = (e) => {
-    e.preventDefault();
-    navigate('/register'); 
-  }
+import { Link } from 'react-router-dom';
+export default function Landing() {
   return (
     <>
       <main className="container home-container">
         <div className="login">
-          already have an account? <span onClick={handleLogin}>Login</span>
+          already have an account?{' '}
+          <span>
+            <Link to="/login">Login</Link>
+          </span>
         </div>
         <section className="hero">
           <div className="hero-left">
@@ -36,8 +27,9 @@ export default function Landing() {
               Your personal supplement assistant, helping you stay on track with
               your health goals every day.
             </p>
-            <button onClick={handleSignup} className="btn-main">
-              Get Started
+
+            <button className="btn-main">
+              <Link to="/register">Get Started</Link>
             </button>
           </div>
           <div className="hero-right">
@@ -126,9 +118,9 @@ export default function Landing() {
               <div className="quick-links">
                 <h4>Quick LInks</h4>
                 <ul>
-                  <Link to={'/'}><li>Home</li></Link>
-                  <Link to={'/login'}><li>Login</li></Link>
-                  <Link to={'/register'}><li>Register</li></Link>
+                  <li>Home</li>
+                  <li>Login</li>
+                  <li>Register</li>
                 </ul>
               </div>
             </div>

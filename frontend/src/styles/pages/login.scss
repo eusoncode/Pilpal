@@ -1,0 +1,33 @@
+// Login Page
+.login-container {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  a {
+    color: $orange-color;
+  }
+
+  .login-container-left {
+    flex: 1;
+
+    img {
+      padding: $spacing-lg;
+    }
+  }
+
+  .login-container-right {
+    flex: 1;
+    padding: $spacing-sm;
+
+    h1 {
+      font-size: $font-size-h1;
+    }
+
+    .accent {
+      font-size: $font-size-large;
+      span {
+        font-size: $font-size-xxl;
+      }
+    }
+  }
+}

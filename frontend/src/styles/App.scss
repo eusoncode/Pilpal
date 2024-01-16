@@ -1,13 +1,30 @@
-@import './variables';
-@import './header';
-@import './landing';
+// Base
+@import 'base/variables';
+@import 'base/base';
+
+// Components
+
+@import 'components/buttons';
+
+// Layouts
+@import 'layouts/header';
+@import 'components/calendar';
+
+// Pages
+@import 'pages/login';
+@import 'pages/user-register.scss';
+@import 'pages/dashboard';
+@import 'pages/addnew';
+@import 'pages/supplement-list';
+@import 'pages/landing';
 
 // Global
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  height: calc(100vh - 192px);
-  padding: 192px 2% 2% 2%;
+  // height: calc(100vh - 192px);
+  height: 100%;
+  padding: 150px 2% 2% 2%;
 }
 
 .accent {
@@ -64,95 +81,5 @@ form {
   label {
     font-size: $font-size-small;
     color: $navy-color;
-  }
-
-  input[type='submit'],
-  button[type='submit'] {
-    margin-top: $spacing-xl;
-    border-radius: 32px;
-    padding: $spacing-md;
-    min-width: 140px;
-    font-family: $font-family-primary;
-    color: $white-color;
-    background-color: $orange-color;
-    border-style: initial;
-    font-weight: 600;
-    cursor: pointer;
-  }
-}
-
-// Login Page
-.login-container {
-  display: flex;
-  align-items: center;
-
-  a {
-    color: $orange-color;
-  }
-
-  .login-container-left {
-    flex: 1;
-
-    img {
-      padding: $spacing-lg;
-    }
-  }
-
-  .login-container-right {
-    flex: 1;
-    padding: $spacing-sm;
-
-    h1 {
-      font-size: $font-size-h1;
-    }
-
-    .accent {
-      font-size: $font-size-large;
-      span {
-        font-size: $font-size-xxl;
-      }
-    }
-  }
-}
-
-// User Register Page
-.userRegister-container {
-  display: flex;
-  align-items: center;
-  min-height: 700px;
-  height: 100vh;
-  padding: 0;
-
-  h1 {
-    font-size: $font-size-h1;
-    margin-bottom: $spacing-sm;
-  }
-
-  .accent {
-    font-size: $font-size-large;
-    span {
-      font-size: $font-size-xxl;
-    }
-  }
-
-  a {
-    color: $orange-color;
-  }
-
-  .userRegister-container-left {
-    flex: 1;
-
-    img {
-      padding: $spacing-lg;
-    }
-  }
-
-  .userRegister-container-right {
-    flex: 1;
-    padding: $spacing-sm;
-  }
-
-  form {
-    margin-top: 1rem;
   }
 }

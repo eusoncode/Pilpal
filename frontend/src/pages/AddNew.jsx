@@ -1,9 +1,8 @@
-import '../styles/addnew.scss';
 import Image from '../assets/image-07.png';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function AddNew({addNewSupplement}) {
+export default function AddNew({ addNewSupplement }) {
   const [formData, setFormData] = useState({
     name: '',
     manufacturer: '',
@@ -20,20 +19,20 @@ export default function AddNew({addNewSupplement}) {
     productUrl: '',
     effectiveness: '',
     description: '',
-    additionalNotes: ''
+    additionalNotes: '',
   });
-  
+
   // const { saveImage, setSaveImage } = useState({image: ''});
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     addNewSupplement(formData);
-    navigate('/dashboard'); 
+    navigate('/dashboard');
   };
 
   console.log({
-    formData:formData
+    formData: formData,
   });
 
   const handleInputChange = (e) => {
@@ -41,12 +40,12 @@ export default function AddNew({addNewSupplement}) {
 
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   return (
-    <>      
+    <>
       <main className="supplement-details-container container">
         <section className="container-top">
           <h1 className="accent">
@@ -59,8 +58,19 @@ export default function AddNew({addNewSupplement}) {
             <form onSubmit={handleSubmit} className="supplement-form">
               <div className="form-group image-upload">
                 <label htmlFor="image">Image:</label>
-                <img src={/**saveImage.image ? URL.createObjectURL(saveImage.image) : **/Image} alt="User Uploaded"/>
-                <input type="file" id="image" name="image" accept="image/*" onChange={handleInputChange}/>
+                <img
+                  src={
+                    /**saveImage.image ? URL.createObjectURL(saveImage.image) : **/ Image
+                  }
+                  alt="User Uploaded"
+                />
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="flex-container">
                 <div className="container-left">
@@ -80,9 +90,10 @@ export default function AddNew({addNewSupplement}) {
                     <input
                       type="text"
                       id="manufacturer"
-                      name="manufacturer" 
+                      name="manufacturer"
                       value={formData.manufacturer}
-                      onChange={handleInputChange} />
+                      onChange={handleInputChange}
+                    />
                   </div>
 
                   <div className="flex-container--row">
@@ -101,9 +112,10 @@ export default function AddNew({addNewSupplement}) {
                       <input
                         type="date"
                         id="endingDate"
-                        name="endingDate" 
+                        name="endingDate"
                         value={formData.endingDate}
-                        onChange={handleInputChange}/>
+                        onChange={handleInputChange}
+                      />
                     </div>
                   </div>
 
@@ -112,22 +124,28 @@ export default function AddNew({addNewSupplement}) {
                     <input
                       type="time"
                       id="reminderTime"
-                      name="reminderTime" 
+                      name="reminderTime"
                       value={formData.reminderTime}
-                      onChange={handleInputChange}/>
+                      onChange={handleInputChange}
+                    />
                     <label htmlFor="intakeFrequency">Intake Frequency:</label>
                     <select
                       id="intakeFrequency"
-                      name="intakeFrequency" 
+                      name="intakeFrequency"
                       value={formData.intakeFrequency}
-                      onChange={handleInputChange}>
+                      onChange={handleInputChange}
+                    >
                       <option value="Everyday">Everyday</option>
-                      <option value="Specific days of the week">Specific days of the week</option>
+                      <option value="Specific days of the week">
+                        Specific days of the week
+                      </option>
                     </select>
                   </div>
                   <div className="flex-container--row">
                     <div className="form-group">
-                      <label htmlFor="dosagePerIntake">Dosage per Intake:</label>
+                      <label htmlFor="dosagePerIntake">
+                        Dosage per Intake:
+                      </label>
                       <input
                         type="number"
                         id="dosagePerIntake"
@@ -142,7 +160,8 @@ export default function AddNew({addNewSupplement}) {
                         id="dosageType"
                         name="dosageType"
                         value={formData.dosageType}
-                        onChange={handleInputChange}>
+                        onChange={handleInputChange}
+                      >
                         <option value="Capsule">Capsule</option>
                         <option value="Tablet">Tablet</option>
                         <option value="Spray">Spray</option>
@@ -197,9 +216,10 @@ export default function AddNew({addNewSupplement}) {
                     <input
                       type="text"
                       id="price"
-                      name="price" 
+                      name="price"
                       value={formData.price}
-                      onChange={handleInputChange}/>
+                      onChange={handleInputChange}
+                    />
                   </div>
 
                   <div className="form-group">
@@ -209,7 +229,8 @@ export default function AddNew({addNewSupplement}) {
                       id="productUrl"
                       name="productUrl"
                       value={formData.productUrl}
-                      onChange={handleInputChange} />
+                      onChange={handleInputChange}
+                    />
                   </div>
 
                   <div className="form-group">
@@ -218,11 +239,18 @@ export default function AddNew({addNewSupplement}) {
                       id="effectiveness"
                       name="effectiveness"
                       value={formData.effectiveness}
-                      onChange={handleInputChange}> 
-                      <option value="Needs More Time To Evaluate">Needs More Time To Evaluate</option>
+                      onChange={handleInputChange}
+                    >
+                      <option value="Needs More Time To Evaluate">
+                        Needs More Time To Evaluate
+                      </option>
                       <option value="Not Effective">Not Effective</option>
-                      <option value="Slightly Effective">Slightly Effective</option>
-                      <option value="Moderately Effective">Moderately Effective</option>
+                      <option value="Slightly Effective">
+                        Slightly Effective
+                      </option>
+                      <option value="Moderately Effective">
+                        Moderately Effective
+                      </option>
                       <option value="Highly Effective">Highly Effective</option>
                     </select>
                   </div>
@@ -235,7 +263,7 @@ export default function AddNew({addNewSupplement}) {
                       rows="4"
                       value={formData.description}
                       onChange={handleInputChange}
-                    ></textarea>                    
+                    ></textarea>
                     <label htmlFor="additionalNotes">Additional Notes:</label>
                     <textarea
                       id="additionalNotes"

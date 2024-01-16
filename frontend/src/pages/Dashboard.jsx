@@ -1,51 +1,73 @@
 import React, { useState } from 'react';
-import '../styles/dashboard.scss';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import SupplementCard from '../components/SupplementCard';
 import mockPillIntakes from '../data/mocks/mockPillIntakes';
-import 'react-calendar/dist/Calendar.css';
 
-export default function Dashboard({ user, filteredUserSupplements, takeSupplement, handleRefillAlert }) {
+export default function Dashboard({
+  user,
+  filteredUserSupplements,
+  takeSupplement,
+  handleRefillAlert,
+}) {
   const [takenSupplements, setTakenSupplements] = useState([]);
   const [skippedSupplements, setSkippedSupplements] = useState([]);
-  
+
   // console.log({
-    // filteredUserSupplements: filteredUserSupplements
-    // user: user
+  // filteredUserSupplements: filteredUserSupplements
+  // user: user
   // });
 
-  const hideCard = (supplementCardId, cardStockQuantity, CardIntakeQuantity, currentDate, nextDateToTakeSupplement) => {
-    setTakenSupplements([...takenSupplements, supplementCardId]); 
+  const hideCard = (
+    supplementCardId,
+    cardStockQuantity,
+    CardIntakeQuantity,
+    currentDate,
+    nextDateToTakeSupplement
+  ) => {
+    setTakenSupplements([...takenSupplements, supplementCardId]);
 
     const stockLevelEstimate = (arg1, arg2) => {
       let result = 0;
-      return result += arg1 - arg2;       
+      return (result += arg1 - arg2);
     };
 
-    const newStockLevel = stockLevelEstimate(cardStockQuantity, CardIntakeQuantity);  
+    const newStockLevel = stockLevelEstimate(
+      cardStockQuantity,
+      CardIntakeQuantity
+    );
     // console.log('newStockLevel:', newStockLevel);
 
-    takeSupplement(supplementCardId, newStockLevel, currentDate, nextDateToTakeSupplement);
+    takeSupplement(
+      supplementCardId,
+      newStockLevel,
+      currentDate,
+      nextDateToTakeSupplement
+    );
   };
 
   const skipCard = (supplementCardId) => {
-    setSkippedSupplements([...skippedSupplements, supplementCardId]); 
+    setSkippedSupplements([...skippedSupplements, supplementCardId]);
   };
- 
+
   const clearTakenSupplements = () => {
     setTakenSupplements([]);
-  }
+  };
 
   const clearSkippedSupplements = () => {
     setSkippedSupplements([]);
- }
+  };
 
   // console.log('takenSupplements:', takenSupplements);
   //  console.log('skippedSupplements:', skippedSupplements);
 
-  const filteredSupplements = filteredUserSupplements.filter((supplement) => !takenSupplements.includes(supplement.id) && !skippedSupplements.includes(supplement.id) && (supplement.status === 'Active' || supplement.status === 'active'));
-  
+  const filteredSupplements = filteredUserSupplements.filter(
+    (supplement) =>
+      !takenSupplements.includes(supplement.id) &&
+      !skippedSupplements.includes(supplement.id) &&
+      (supplement.status === 'Active' || supplement.status === 'active')
+  );
+
   //  ---------------------------------------------------------------------------------------------------
 
   const [date, setDate] = useState(new Date());
@@ -76,31 +98,51 @@ export default function Dashboard({ user, filteredUserSupplements, takeSupplemen
           <h1 className="accent">
             Pilpal Dashboard<span>✷</span>
           </h1>
-          {user && <h2>Hi, {user.username}! Let’s make today a healthy one.</h2>}
+          {user && (
+            <h2>Hi, {user.username}! Let’s make today a healthy one.</h2>
+          )}
         </section>
-        <section className="container-bottom">          
+        <section className="container-bottom">
           <article className="container-left">
             <h3>
               Reminders <span>***</span>
             </h3>
-            {filteredSupplements && filteredSupplements.map((userSupplement) => (
-              <SupplementCard
-                key={userSupplement.id}
-                {...userSupplement}
-                hideCard={hideCard}
-                skipCard={skipCard}
-                handleRefillAlert={handleRefillAlert}
-              />
-            ))}
-            {filteredSupplements.length === 0 && <p>
-              <strong>
-                No supplements available for this user. Would you like to add new supplements?
-              </strong>
-            </p>}
-            <button className='btn success' type="button" onClick={clearTakenSupplements}>Clear Hidden Cards</button>
-            <br /><br />
-            <button className='btn success' type="button" onClick={clearSkippedSupplements}>Clear Skipped Cards</button>
-            <br /><br />
+            {filteredSupplements &&
+              filteredSupplements.map((userSupplement) => (
+                <SupplementCard
+                  key={userSupplement.id}
+                  {...userSupplement}
+                  hideCard={hideCard}
+                  skipCard={skipCard}
+                  handleRefillAlert={handleRefillAlert}
+                />
+              ))}
+            {filteredSupplements.length === 0 && (
+              <p>
+                <strong>
+                  No supplements available for this user. Would you like to add
+                  new supplements?
+                </strong>
+              </p>
+            )}
+            <button
+              className="btn success"
+              type="button"
+              onClick={clearTakenSupplements}
+            >
+              Clear Hidden Cards
+            </button>
+            <br />
+            <br />
+            <button
+              className="btn success"
+              type="button"
+              onClick={clearSkippedSupplements}
+            >
+              Clear Skipped Cards
+            </button>
+            <br />
+            <br />
           </article>
           <article className="container-right">
             <div className="container-right--box">
@@ -132,7 +174,6 @@ export default function Dashboard({ user, filteredUserSupplements, takeSupplemen
               )}
             </div>
           </article>
-
         </section>
       </main>
     </>
