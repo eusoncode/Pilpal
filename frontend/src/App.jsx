@@ -8,6 +8,7 @@ import SupplementList from './pages/SupplementList';
 import EditSupplement from './pages/EditSupplement';
 import UserRegister from './pages/UserRegister';
 import LayoutWithHeader from './components/LayoutWithHeader';
+import Landing from './pages/Landing';
 
 function App() {
   // Use the custom hook to manage application data
@@ -87,6 +88,7 @@ function App() {
             />
           }
         />
+        <Route path="/landing" element={<Landing />} />
       </Routes>
     </Router>
   );
