@@ -7,8 +7,8 @@ import leftBorderImage from '../assets/line2.png';
 import iconFacebook from '../assets/icon-facebook.png';
 import iconX from '../assets/icon-x.png';
 import iconLinkedin from '../assets/icon-linkedin.png';
-import { useNavigate, Link } from 'react-router-dom';
-export default function Landing({ login, signUp }) {
+import { Link } from 'react-router-dom';
+export default function Landing() {
   return (
     <>
       <main className="container home-container">
